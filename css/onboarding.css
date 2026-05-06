@@ -1,0 +1,90 @@
+/* ========== Onboarding Page Styles ========== */
+
+.subject-option {
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s, background 0.2s;
+}
+
+.subject-option:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.subject-option.selected {
+    border-color: var(--accent);
+    background: color-mix(in oklch, var(--accent) 8%, transparent);
+}
+
+.subject-option.selected::after {
+    content: "✓";
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--bg);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.subject-option {
+    position: relative;
+}
+
+.language-option {
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+}
+
+.language-option:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+}
+
+.language-option.selected {
+    border-color: var(--accent);
+    background: color-mix(in oklch, var(--accent) 12%, transparent);
+}
+
+.language-option .lang-flag {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+/* Progress indicator at top */
+.onboarding-progress {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.progress-step {
+    flex: 1;
+    height: 4px;
+    background: var(--bg-3);
+    border-radius: 999px;
+    transition: background 0.3s;
+}
+
+.progress-step.active {
+    background: var(--accent);
+}
+
+.progress-step.completed {
+    background: #4ade80;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .subject-option .card-title {
+        font-size: 1rem;
+    }
+    
+    .language-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

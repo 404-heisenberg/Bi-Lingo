@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bi-Lingo — Learner Onboarding</title>
+    <meta name="description" content="Set up your Bi-Lingo learning profile" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="../css/onboarding.css" />
+</head>
+<body>
+    <!-- ============ APP NAV ============ -->
+    <nav class="app-nav">
+        <div class="inner">
+            <a href="../index.html" class="brand">
+                <div class="brand-mark" aria-hidden="true">B</div>
+                <span>Bi-Lingo</span>
+            </a>
+            <div class="page-title">Learner Setup</div>
+            <div class="nav-actions">
+                <span class="badge badge-info">Step 1 of 2</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============ ONBOARDING FORM ============ -->
+    <section style="padding: 3rem 0;">
+        <div class="container" style="max-width: 800px;">
+            <div class="page-header">
+                <h1>Welcome to Bi-Lingo!</h1>
+                <p class="subtitle">Let's set up your learning profile so we can personalize your experience.</p>
+            </div>
+
+            <form id="onboarding-form" style="margin-top: 2rem;">
+                <!-- Grade Selection -->
+                <div class="form-group mb-2">
+                    <label class="form-label">Which grade are you in?</label>
+                    <select class="form-select" id="grade-select" required>
+                        <option value="">Select your grade...</option>
+                        <optgroup label="Foundation Phase">
+                            <option value="4">Grade 4</option>
+                            <option value="5">Grade 5</option>
+                            <option value="6">Grade 6</option>
+                        </optgroup>
+                        <optgroup label="Intermediate Phase">
+                            <option value="7">Grade 7</option>
+                            <option value="8">Grade 8</option>
+                            <option value="9">Grade 9</option>
+                        </optgroup>
+                        <optgroup label="Senior Phase">
+                            <option value="10">Grade 10</option>
+                            <option value="11">Grade 11</option>
+                            <option value="12">Grade 12</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <!-- Subject Selection -->
+                <div class="form-group mb-2">
+                    <label class="form-label">What subject do you want to learn?</label>
+                    <div class="form-grid" id="subject-grid">
+                        <div class="card subject-option" data-subject="science">
+                            <div class="card-header">
+                                <span style="font-size: 2rem;">🔬</span>
+                            </div>
+                            <div class="card-title">Natural Sciences</div>
+                            <div class="lesson-meta">Grades 4-12</div>
+                        </div>
+                        <div class="card subject-option" data-subject="math">
+                            <div class="card-header">
+                                <span style="font-size: 2rem;">📐</span>
+                            </div>
+                            <div class="card-title">Mathematics</div>
+                            <div class="lesson-meta">Grades 4-12</div>
+                        </div>
+                        <div class="card subject-option" data-subject="english">
+                            <div class="card-header">
+                                <span style="font-size: 2rem;">📖</span>
+                            </div>
+                            <div class="card-title">English</div>
+                            <div class="lesson-meta">Grades 4-12</div>
+                        </div>
+                        <div class="card subject-option" data-subject="biology">
+                            <div class="card-header">
+                                <span style="font-size: 2rem;">🧬</span>
+                            </div>
+                            <div class="card-title">Life Sciences</div>
+                            <div class="lesson-meta">Grades 10-12</div>
+                        </div>
+                        <div class="card subject-option" data-subject="lo">
+                            <div class="card-header">
+                                <span style="font-size: 2rem;">🧘</span>
+                            </div>
+                            <div class="card-title">Life Orientation</div>
+                            <div class="lesson-meta">Grades 4-12</div>
+                        </div>
+                        <div class="card subject-option" data-subject="ems">
+                            <div class="card-header">
+                                <span style="font-size: 2rem;">💼</span>
+                            </div>
+                            <div class="card-title">Economic Management</div>
+                            <div class="lesson-meta">Grades 7-9</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="subject-input" required />
+                </div>
+
+                <!-- Language Selection -->
+                <div class="form-group mb-2">
+                    <label class="form-label">Which language do you want to learn in?</label>
+                    <p style="font-size: 13px; color: var(--fg-dim); margin-bottom: 1rem;">
+                        Bi-Lingo will explain concepts in this language so you can understand better.
+                    </p>
+                    <div class="language-grid" id="language-grid">
+                        <!-- Languages will be populated by JS -->
+                    </div>
+                    <input type="hidden" id="language-input" required />
+                </div>
+
+                <!-- Learning Goal (Optional) -->
+                <div class="form-group mb-2">
+                    <label class="form-label">What do you want to achieve? <span style="font-weight: 400; color: var(--fg-mute);">(Optional)</span></label>
+                    <input type="text" class="form-input" id="goal-input" placeholder="e.g., Understand science better, Pass maths, etc." />
+                </div>
+
+                <!-- Submit Button -->
+                <div style="margin-top: 2.5rem; display: flex; gap: 1rem; justify-content: space-between; align-items: center;">
+                    <a href="../index.html" class="btn btn-ghost">← Back to Home</a>
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        Continue to Dashboard →
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script src="../data/mock-data.js"></script>
+    <script>
+        // Clear any existing profile when starting fresh from landing
+        if (window.location.search.includes('fresh=true')) {
+            clearLearnerProfile();
+        }
+    </script>
+    <script src="../js/onboarding.js"></script>
+</body>
+</html>

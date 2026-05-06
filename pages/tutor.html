@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bi-Lingo — AI Tutor</title>
+    <meta name="description" content="Ask Bi-Lingo any question and get answers in your language" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="../css/tutor.css" />
+</head>
+<body>
+    <!-- =========== APP NAV =========== -->
+    <nav class="app-nav">
+        <div class="inner">
+            <a href="dashboard.html" class="back-btn">
+                <span>←</span>
+                <span>Back to Dashboard</span>
+            </a>
+            <div class="page-title">AI Tutor</div>
+            <div class="nav-actions">
+                <span class="badge badge-info" id="language-badge">English</span>
+                <button onclick="exitDemo()" class="btn btn-ghost btn-sm" style="color: var(--fg-mute);">Exit Demo</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- =========== TUTOR CONTENT =========== -->
+    <section style="padding: 1.5rem 0; height: calc(100vh - 64px); display: flex; flex-direction: column;">
+        <div class="container" style="flex: 1; display: flex; flex-direction: column; max-width: 900px;">
+            <!-- Language Tabs -->
+            <div class="tabs" id="language-tabs">
+                <button class="tab active" data-lang="english">English</button>
+                <button class="tab" data-lang="isizulu">isiZulu</button>
+                <button class="tab" data-lang="sesotho">Sesotho</button>
+            </div>
+
+            <!-- Chat Container -->
+            <div class="chat-container" id="chat-container" style="flex: 1; overflow-y: auto; margin: 1.5rem 0;">
+                <!-- Messages will be populated by JS -->
+            </div>
+
+            <!-- Quick Questions -->
+            <div style="margin-bottom: 1rem;">
+                <p style="font-size: 12px; color: var(--fg-mute); margin-bottom: 0.75rem; font-family: var(--f-mono); letter-spacing: 0.05em; text-transform: uppercase;">Quick Questions:</p>
+                <div class="quick-questions" id="quick-questions">
+                    <!-- Quick question buttons will be populated by JS -->
+                </div>
+            </div>
+
+            <!-- Custom Question Input -->
+            <div class="signup" style="margin: 0;">
+                <div class="signup-fields" style="flex: 1;">
+                    <input 
+                        type="text" 
+                        id="custom-question" 
+                        class="form-input" 
+                        style="border: 0; background: transparent;"
+                        placeholder="Ask your own question..." 
+                        aria-label="Ask a question"
+                    />
+                </div>
+                <button class="btn btn-primary" id="ask-btn" style="white-space: nowrap;">
+                    Ask Tutor →
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script src="../data/mock-data.js"></script>
+    <script src="../js/tutor.js"></script>
+    <script>
+        function exitDemo() {
+            if (confirm('Exit the demo and return to the homepage?')) {
+                clearLearnerProfile();
+                window.location.href = '../index.html';
+            }
+        }
+    </script>
+</body>
+</html>

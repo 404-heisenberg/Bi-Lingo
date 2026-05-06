@@ -20,6 +20,11 @@
 
     </head>
     <body>
+        <!-- ============ DEMO BANNER ============ -->
+        <div class="demo-banner" id="demo-banner" style="display: none;">
+            🎮 Demo Mode Active — <a href="#" onclick="exitDemo(); return false;">Exit Demo</a>
+        </div>
+
         <!-- ============ NAV ============ -->
         <nav class="top">
             <div class="container inner">
@@ -32,6 +37,7 @@
                     <a href="#features">Features</a>
                     <a href="#how">How it works</a>
                     <a href="#languages">Languages</a>
+                    <a href="pages/teacher.html">Teacher View</a>
                 </div>
                 <a href="#signup" class="nav-cta">Get early access</a>
             </div>
@@ -65,9 +71,14 @@
                             of South Africans that ed-tech forgot.
                         </p>
 
-                        <a href="#signup" class="hero-cta-btn"
-                            >Get early access →</a
-                        >
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <a href="#signup" class="hero-cta-btn"
+                                >Get early access →</a
+                            >
+                            <a href="pages/onboarding.html?fresh=true" class="hero-cta-btn" style="background: transparent; border: 2px solid var(--accent); color: var(--accent);"
+                                >Try Demo →</a
+                            >
+                        </div>
                         <div class="signup-note">
                             <svg
                                 viewBox="0 0 24 24"
@@ -603,6 +614,20 @@
             </div>
         </footer>
 
+        <script src="data/mock-data.js"></script>
         <script src="script.js"></script>
+        <script>
+            // Show demo banner if in demo mode
+            if (getLearnerProfile()) {
+                document.getElementById('demo-banner').style.display = 'block';
+            }
+            
+            function exitDemo() {
+                if (confirm('Exit the demo and return to the homepage?')) {
+                    clearLearnerProfile();
+                    window.location.href = 'index.html';
+                }
+            }
+        </script>
     </body>
 </html>

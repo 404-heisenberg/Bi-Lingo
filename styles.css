@@ -142,6 +142,7 @@ nav.top .inner {
     background: transparent !important;
     border: 2px solid var(--accent);
     color: var(--accent) !important;
+    margin-right: 0 !important;
 }
 .demo-btn:hover {
     background: var(--accent) !important;

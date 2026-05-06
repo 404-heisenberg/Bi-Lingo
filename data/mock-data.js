@@ -86,6 +86,24 @@ const BiLingoData = {
                 duration: '22 min',
                 progress: 0,
                 concepts: ['Atomic structure', 'Elements', 'Compounds', 'Chemical bonds']
+            },
+            {
+                id: 'ecosystems',
+                title: 'Ecosystems and Habitats',
+                topic: 'Environmental Science',
+                difficulty: 'Medium',
+                duration: '16 min',
+                progress: 0,
+                concepts: ['Food chains', 'Biodiversity', 'Adaptation', 'Conservation']
+            },
+            {
+                id: 'electricity',
+                title: 'Basic Electricity',
+                topic: 'Physics',
+                difficulty: 'Medium',
+                duration: '14 min',
+                progress: 0,
+                concepts: ['Circuits', 'Conductors', 'Insulators', 'Safety']
             }
         ],
         math: [
@@ -124,6 +142,24 @@ const BiLingoData = {
                 duration: '12 min',
                 progress: 0,
                 concepts: ['Bar graphs', 'Pie charts', 'Mean, median, mode', 'Probability']
+            },
+            {
+                id: 'ratios',
+                title: 'Ratios and Proportions',
+                topic: 'Numbers',
+                difficulty: 'Medium',
+                duration: '16 min',
+                progress: 0,
+                concepts: ['Understanding ratios', 'Simplifying ratios', 'Proportions', 'Scale drawings']
+            },
+            {
+                id: 'patterns',
+                title: 'Geometric Patterns',
+                topic: 'Algebra',
+                difficulty: 'Easy',
+                duration: '14 min',
+                progress: 0,
+                concepts: ['Finding rules', 'Input-output', 'Sequences', 'Flow diagrams']
             }
         ],
         english: [
@@ -153,6 +189,24 @@ const BiLingoData = {
                 duration: '20 min',
                 progress: 0,
                 concepts: ['Main idea', 'Supporting details', 'Inference', 'Context clues']
+            },
+            {
+                id: 'punctuation',
+                title: 'Punctuation Rules',
+                topic: 'Writing',
+                difficulty: 'Easy',
+                duration: '12 min',
+                progress: 0,
+                concepts: ['. (full stop)', ', (comma)', '? and !', '' and "" (quotes)']
+            },
+            {
+                id: 'essay-writing',
+                title: 'Essay Structure',
+                topic: 'Writing',
+                difficulty: 'Hard',
+                duration: '25 min',
+                progress: 0,
+                concepts: ['Introduction', 'Body paragraphs', 'Conclusion', 'Transitions']
             }
         ]
     },
@@ -222,84 +276,12 @@ const BiLingoData = {
         { id: 'photosynthesis', text: 'What is photosynthesis?' },
         { id: 'fractions', text: 'What is a fraction?' },
         { id: 'nouns', text: 'What is a noun?' },
-        { id: 'water-cycle', text: 'What is the water cycle?' }
+        { id: 'water-cycle', text: 'What is the water cycle?' },
+        { id: 'forces', text: 'What are forces?' },
+        { id: 'algebra', text: 'What is algebra?' }
     ],
 
-    // Teacher dashboard data
-    teacherData: {
-        className: 'Grade 7 Science',
-        totalLearners: 32,
-        strugglingCount: 8,
-        avgConfidence: 68,
-        learners: [
-            {
-                id: 1,
-                name: 'Thabo Mokoena',
-                grade: 7,
-                language: 'isiZulu',
-                languageCode: 'zu',
-                strugglingTopic: 'Photosynthesis',
-                confidence: 45,
-                progress: 60,
-                lastActive: '2 hours ago'
-            },
-            {
-                id: 2,
-                name: 'Lerato Khumalo',
-                grade: 7,
-                language: 'Sesotho',
-                languageCode: 'st',
-                strugglingTopic: 'Fractions',
-                confidence: 52,
-                progress: 55,
-                lastActive: '1 day ago'
-            },
-            {
-                id: 3,
-                name: 'Sipho Dlamini',
-                grade: 7,
-                language: 'isiZulu',
-                languageCode: 'zu',
-                strugglingTopic: 'Water Cycle',
-                confidence: 38,
-                progress: 45,
-                lastActive: '3 hours ago'
-            },
-            {
-                id: 4,
-                name: 'Nomsa Vilakazi',
-                grade: 7,
-                language: 'isiXhosa',
-                languageCode: 'xh',
-                strugglingTopic: 'None',
-                confidence: 85,
-                progress: 88,
-                lastActive: '30 minutes ago'
-            },
-            {
-                id: 5,
-                name: 'Kagiso Molefe',
-                grade: 7,
-                language: 'Setswana',
-                languageCode: 'tn',
-                strugglingTopic: 'Forces and Motion',
-                confidence: 42,
-                progress: 50,
-                lastActive: '5 hours ago'
-            },
-            {
-                id: 6,
-                name: 'Zama Ngubane',
-                grade: 7,
-                language: 'isiZulu',
-                languageCode: 'zu',
-                strugglingTopic: 'Photosynthesis',
-                confidence: 48,
-                progress: 52,
-                lastActive: '1 hour ago'
-            }
-        ]
-    },
+
 
     // Lesson detail content
     lessonDetails: {
@@ -359,6 +341,62 @@ function saveLearnerProfile(profile) {
     localStorage.setItem('biLingoLearner', JSON.stringify(profile));
 }
 
+// Helper function to update study streak
+function updateStudyStreak() {
+    const profile = getLearnerProfile();
+    if (!profile) return;
+    
+    const today = new Date().toDateString();
+    const lastStudy = profile.lastStudyDate;
+    
+    if (lastStudy === today) {
+        // Already studied today
+        return profile.streak || 1;
+    }
+    
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toDateString();
+    
+    if (lastStudy === yesterdayStr) {
+        // Consecutive day
+        profile.streak = (profile.streak || 0) + 1;
+    } else if (lastStudy !== today) {
+        // Streak broken or first time
+        profile.streak = 1;
+    }
+    
+    profile.lastStudyDate = today;
+    saveLearnerProfile(profile);
+    return profile.streak;
+}
+
+// Helper function to get study streak
+function getStudyStreak() {
+    const profile = getLearnerProfile();
+    return profile ? (profile.streak || 0) : 0;
+}
+
+// Helper function to get recommended next lesson
+function getRecommendedLesson(subject) {
+    const lessons = BiLingoData.lessons[subject] || BiLingoData.lessons['science'];
+    const profile = getLearnerProfile();
+    
+    if (!profile || !profile.completedLessons) {
+        return lessons[0]; // Return first lesson if no progress
+    }
+    
+    // Find first lesson with less than 100% progress
+    for (const lesson of lessons) {
+        const progress = profile.completedLessons[lesson.id] || 0;
+        if (progress < 100) {
+            return lesson;
+        }
+    }
+    
+    return lessons[0]; // Default to first lesson
+}
+
 // Helper function to clear learner profile
 function clearLearnerProfile() {
     localStorage.removeItem('biLingoLearner');
@@ -369,4 +407,24 @@ function getConfidenceLevel(confidence) {
     if (confidence >= 70) return { text: 'High', class: 'high', color: '#4ade80' };
     if (confidence >= 50) return { text: 'Medium', class: 'medium', color: '#fbbf24' };
     return { text: 'Low', class: 'low', color: '#ff6b6b' };
+}
+
+// Helper function to update lesson progress
+function updateLessonProgress(lessonId, progress) {
+    const profile = getLearnerProfile();
+    if (!profile) return;
+    
+    if (!profile.completedLessons) {
+        profile.completedLessons = {};
+    }
+    
+    profile.completedLessons[lessonId] = progress;
+    saveLearnerProfile(profile);
+}
+
+// Helper function to get lesson progress
+function getLessonProgress(lessonId) {
+    const profile = getLearnerProfile();
+    if (!profile || !profile.completedLessons) return 0;
+    return profile.completedLessons[lessonId] || 0;
 }

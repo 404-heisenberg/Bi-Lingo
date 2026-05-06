@@ -123,6 +123,14 @@ function populatePracticeQuestion(pq) {
         <div class="practice-feedback" id="practice-feedback"></div>
     `;
 
+    // Update lesson progress when viewing lesson
+    const urlParams = new URLSearchParams(window.location.search);
+    const lessonId = urlParams.get('id');
+    if (lessonId) {
+        updateLessonProgress(lessonId, 50); // Mark as 50% complete when viewed
+    }
+
+
     const options = document.querySelectorAll('.practice-option');
     const checkBtn = document.getElementById('check-answer');
     let selectedIndex = null;

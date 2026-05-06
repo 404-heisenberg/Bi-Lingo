@@ -22,7 +22,6 @@
             </a>
             <div class="page-title" id="welcome-title">Dashboard</div>
             <div class="nav-actions">
-                <a href="teacher.html" class="btn btn-ghost btn-sm">Teacher View →</a>
                 <button onclick="exitDemo()" class="btn btn-ghost btn-sm" style="color: var(--fg-mute);">Exit Demo</button>
             </div>
         </div>
@@ -30,7 +29,7 @@
 
     <!-- ========== DASHBOARD CONTENT ========== -->
     <section style="padding: 2rem 0;">
-        <div class="container">
+        <div class="container" style="max-width: 900px;">
             <!-- Welcome Section -->
             <div class="page-header">
                 <h1 id="welcome-heading">Welcome back!</h1>
@@ -50,6 +49,41 @@
                 <div class="stat-card">
                     <div class="stat-value" id="confidence-score">0%</div>
                     <div class="stat-label">Confidence</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="streak-count">0🔥</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+            </div>
+
+            <!-- Recommended Next Lesson -->
+            <div class="mb-2" id="recommended-section">
+                <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">Recommended Next Lesson</h2>
+                <div id="recommended-lesson">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Lesson Search -->
+            <div class="mb-2">
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            id="lesson-search" 
+                            placeholder="Search lessons..."
+                            style="width: 100%;"
+                        />
+                    </div>
+                    <div>
+                        <select class="form-select" id="difficulty-filter">
+                            <option value="">All Difficulties</option>
+                            <option value="Easy">Easy</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -81,13 +115,5 @@
 
     <script src="../data/mock-data.js"></script>
     <script src="../js/dashboard.js"></script>
-    <script>
-        function exitDemo() {
-            if (confirm('Exit the demo and return to the homepage?')) {
-                clearLearnerProfile();
-                window.location.href = '../index.html';
-            }
-        }
-    </script>
 </body>
 </html>

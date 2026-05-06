@@ -22,7 +22,6 @@
             </a>
             <div class="page-title" id="lesson-title">Lesson</div>
             <div class="nav-actions">
-                <a href="tutor.html" class="btn btn-ghost btn-sm">Ask Tutor</a>
                 <button onclick="exitDemo()" class="btn btn-ghost btn-sm" style="color: var(--fg-mute);">Exit Demo</button>
             </div>
         </div>
@@ -48,7 +47,7 @@
             <div class="tabs" id="language-tabs">
                 <button class="tab active" data-lang="english">English</button>
                 <button class="tab" data-lang="isizulu">isiZulu</button>
-                <button class="tab" data-lang="sesotho">Sepedi</button>
+                <button class="tab" data-lang="sesotho">Sesotho</button>
             </div>
 
             <!-- Lesson Content -->
@@ -76,6 +75,32 @@
                 </div>
             </div>
 
+            <!-- Tutor Notes (English lesson) -->
+            <div class="mt-3 mb-2" id="tutor-notes-section" style="display: none;">
+                <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">Tutor Notes</h2>
+                <div id="tutor-notes">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Math Tutor (Math lesson) -->
+            <div class="mt-3 mb-2" id="math-tutor-section" style="display: none;">
+                <h2 style="font-size: 1.2rem; margin-bottom: 0.75rem;">Try the Tutor</h2>
+                <div class="tutor-quick-questions" id="math-quick-questions"></div>
+                <div class="tutor-live-toggle" id="live-toggle">
+                    <label class="live-toggle">
+                        <input type="checkbox" id="live-mode-toggle" />
+                        <span>Live mode</span>
+                    </label>
+                    <span class="badge badge-info" id="live-mode-badge">Demo responses</span>
+                </div>
+                <div class="tutor-input">
+                    <input type="text" id="math-question-input" class="form-input" placeholder="Ask a math question (demo responses)" />
+                    <button class="btn btn-primary" id="math-ask-btn">Ask Tutor →</button>
+                </div>
+                <div class="tutor-response" id="math-response"></div>
+            </div>
+
             <!-- Practice Question -->
             <div class="practice-section mt-3" id="practice-section">
                 <h2 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Test Your Understanding</h2>
@@ -89,9 +114,6 @@
 
             <!-- Action Buttons -->
             <div style="margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="tutor.html" class="btn btn-primary">
-                    Ask Tutor About This →
-                </a>
                 <a href="dashboard.html" class="btn btn-secondary">
                     ← Back to Dashboard
                 </a>

@@ -18,25 +18,54 @@ const BiLingoData = {
 
     // Grade options grouped by phase
     grades: [
-        { value: '4', label: 'Grade 4', phase: 'Foundation' },
-        { value: '5', label: 'Grade 5', phase: 'Foundation' },
-        { value: '6', label: 'Grade 6', phase: 'Foundation' },
-        { value: '7', label: 'Grade 7', phase: 'Intermediate' },
-        { value: '8', label: 'Grade 8', phase: 'Intermediate' },
-        { value: '9', label: 'Grade 9', phase: 'Intermediate' },
-        { value: '10', label: 'Grade 10', phase: 'Senior' },
-        { value: '11', label: 'Grade 11', phase: 'Senior' },
-        { value: '12', label: 'Grade 12', phase: 'Senior' }
+        { value: '1-9', label: 'Grades 1–9', phase: 'General' },
+        { value: '10-12', label: 'Grades 10–12', phase: 'FET' }
+    ],
+
+    // Fixed subjects for Grades 1-9 (CAPS aligned demo)
+    fixedSubjects: [
+        { code: 'math', name: 'Mathematics', icon: '📐' },
+        { code: 'science', name: 'Natural Sciences', icon: '🔬' },
+        { code: 'social-sciences', name: 'Social Sciences', icon: '🌍' },
+        { code: 'technology', name: 'Technology', icon: '🛠️' },
+        { code: 'lo', name: 'Life Orientation', icon: '🧘' },
+        { code: 'ems', name: 'Economic Management Sciences', icon: '💼' },
+        { code: 'arts-culture', name: 'Arts and Culture', icon: '🎭' },
+        { code: 'computer-literacy', name: 'Computer Literacy', icon: '💻' },
+        { code: 'life-skills', name: 'Life Skills', icon: '🌱' },
+        { code: 'natural-sciences-tech', name: 'Natural Sciences and Technology', icon: '⚙️' }
+    ],
+
+    // Shortened elective list for Grades 10-12 demo
+    fetElectivesDemo: [
+        { code: 'math', name: 'Mathematics', icon: '📐', group: 'math-choice' },
+        { code: 'math-lit', name: 'Mathematical Literacy', icon: '🧮', group: 'math-choice' },
+        { code: 'physical-sciences', name: 'Physical Sciences', icon: '⚛️' },
+        { code: 'biology', name: 'Life Sciences', icon: '🧬' },
+        { code: 'geography', name: 'Geography', icon: '🗺️' },
+        { code: 'history', name: 'History', icon: '🏺' },
+        { code: 'accounting', name: 'Accounting', icon: '📒' },
+        { code: 'business-studies', name: 'Business Studies', icon: '📊' },
+        { code: 'economics', name: 'Economics', icon: '💹' },
+        { code: 'information-technology', name: 'Information Technology', icon: '💻' }
     ],
 
     // Subject options
     subjects: [
         { code: 'math', name: 'Mathematics', icon: '📐' },
+        { code: 'math-lit', name: 'Mathematical Literacy', icon: '🧮' },
         { code: 'science', name: 'Natural Sciences', icon: '🔬' },
         { code: 'biology', name: 'Life Sciences', icon: '🧬' },
         { code: 'english', name: 'English', icon: '📖' },
         { code: 'lo', name: 'Life Orientation', icon: '🧘' },
-        { code: 'ems', name: 'Economic Management Sciences', icon: '💼' }
+        { code: 'ems', name: 'Economic Management Sciences', icon: '💼' },
+        { code: 'physical-sciences', name: 'Physical Sciences', icon: '⚛️' },
+        { code: 'geography', name: 'Geography', icon: '🗺️' },
+        { code: 'history', name: 'History', icon: '🏺' },
+        { code: 'accounting', name: 'Accounting', icon: '📒' },
+        { code: 'business-studies', name: 'Business Studies', icon: '📊' },
+        { code: 'economics', name: 'Economics', icon: '💹' },
+        { code: 'information-technology', name: 'Information Technology', icon: '💻' }
     ],
 
     // Lesson data per subject
@@ -197,7 +226,7 @@ const BiLingoData = {
                 difficulty: 'Easy',
                 duration: '12 min',
                 progress: 0,
-                concepts: ['. (full stop)', ', (comma)', '? and !', '' and "" (quotes)']
+                concepts: ['. (full stop)', ', (comma)', '? and !', "'' and \"\" (quotes)"]
             },
             {
                 id: 'essay-writing',
@@ -225,15 +254,6 @@ const BiLingoData = {
             sesotho: {
                 question: 'Photosynthesis ke eng?',
                 answer: 'Photosynthesis ke tshebetso eo dimela di sebelisa khanya ya letsatsi, metsi le carbon dioxide ho etsa moya wa oxygen le matla ka mofuta wa tshdinamela (glucose). Nahana ka leqabunga la semela jwalo ka moapehi wa hae — o sebelisa matla a letsatsi, a kopanya metsi le moya ho etsa dijo tsa semela. Jwaloka mme wahao a etsang papa ka ho kopanya phuphu, metsi le mollo, ke mokgwa oo o tshwanang!'
-            }
-        },
-            isizulu: {
-                question: 'Yini i-photosynthesis?',
-                answer: 'I-photosynthesis yinqubo lapho izitshalo zisebenzisa khona ukukhanya kwelanga, amanzi, ne-carbon dioxide ukwenza umoya we-oxygen namandla ngohlobo lweshukela (i-glucose). Cabanga ngeqabunga njengompheki omncane osebenza ngelanga — uhlanganisa amanzi nomoya ukuze enze ukudla kwesihlahla!'
-            },
-            sesotho: {
-                question: 'Photosynthesis ke eng?',
-                answer: 'Photosynthesis ke tshebetso eo dimela di e beforelletseng di sebelisa khanya ya letsatsi, metsi le carbon dioxide ho etsa moya wa oxygen le matla ka mofuta wa tshdinamela (glucose). Nahana ka leqabunga jwalo ka moapehi e monyane ya sebedisang letsatsi — o kopanya metsi le moya ho etsa dijo tsa sefate!'
             }
         },
         'fractions': {
@@ -290,10 +310,92 @@ const BiLingoData = {
         { id: 'algebra', text: 'What is algebra?' }
     ],
 
-
-
     // Lesson detail content
     lessonDetails: {
+        'idioms': {
+            title: 'Understanding Idioms',
+            subject: 'English',
+            grade: 8,
+            summary: 'Idioms are phrases that mean something different from the literal words used.',
+            keyPoints: [
+                'Idioms cannot be translated word-for-word',
+                'Context helps you understand the real meaning',
+                'Idioms often reflect culture and everyday life'
+            ],
+            englishExplanation: 'An idiom is a phrase with a hidden meaning that is different from its literal words. For example, “break the ice” means to start a friendly conversation, not to crack real ice. Use the situation to understand the real meaning.',
+            isizuluExplanation: 'I-idiom yisisho esinencazelo efihlekile ehlukile kulokho okushiwo amagama ayo. Isibonelo, “break the ice” kusho ukuqala ingxoxo ngobungane, hhayi ukuqhekeza iqhwa. Sebenzisa isimo ukuze uqonde umqondo wangempela.',
+            sesothoExplanation: 'Idiom ke polelo e nang le moelelo o patiloeng o fapaneng le mantsoe a yona. Mohlala, “break the ice” e bolela ho qala puisano ka botsoalle, eseng ho roba leqhoa. Sebedisa maemo ho utloisisa moelelo oa nnete.',
+            practiceQuestion: {
+                question: 'Which phrase is an idiom?',
+                options: ['I drank water', 'Break the ice', 'The sun is bright', 'She wrote a letter'],
+                correctAnswer: 1,
+                explanation: '“Break the ice” has a meaning different from the literal words, which makes it an idiom.'
+            },
+            tutorNotes: {
+                english: [
+                    {
+                        question: 'Why does “break the ice” mean start a conversation?',
+                        answer: 'Because it compares an awkward silence to frozen ice. Starting a chat “breaks” that tension so people can talk freely.'
+                    },
+                    {
+                        question: 'Can I translate idioms word-for-word?',
+                        answer: 'Usually no. Idioms carry hidden meanings, so you need the idea, not the literal words.'
+                    },
+                    {
+                        question: 'What is the difference between an idiom and a proverb?',
+                        answer: 'Idioms are short phrases with hidden meanings. Proverbs are full sayings that give advice or wisdom.'
+                    }
+                ],
+                isizulu: [
+                    {
+                        question: 'Kungani “break the ice” kusho ukuqala ingxoxo?',
+                        answer: 'Kufanisa ukuthula okuxakayo neqhwa eliqinile. Ukuqala ukuxoxa “kuqhekeza” lowo mzwelo ukuze abantu bakhulume kahle.'
+                    },
+                    {
+                        question: 'Ngingawuhumusha ama-idiom ngamagama aqondile?',
+                        answer: 'Kuvamile ukuthi cha. Ama-idiom anencazelo efihlekile, ngakho udinga umqondo, hhayi amagama kuphela.'
+                    },
+                    {
+                        question: 'Uyini umehluko phakathi kwe-idiom nesaga?',
+                        answer: 'I-idiom yisisho esifushane esinencazelo efihlekile. Isaga siwumusho ophelele onezifundo noma iseluleko.'
+                    }
+                ],
+                sesotho: [
+                    {
+                        question: 'Hobaneng “break the ice” e bolela ho qala puisano?',
+                        answer: 'E bapisa khutso e makatsang le leqhoa. Ho qala ho bua “ho roba” kgatello eo.'
+                    },
+                    {
+                        question: 'Na nka fetolela idiom ka mantsoe ka ho toba?',
+                        answer: 'Hangata tjhe. Idiom e na le moelelo o patiloeng, kahoo o hloka mohopolo, eseng mantsoe feela.'
+                    },
+                    {
+                        question: 'Phapang ke efe pakeng tsa idiom le proverb?',
+                        answer: 'Idiom ke polelo e khutšoanyane e nang le moelelo o patiloeng. Proverb ke polelo e felletseng e fanang ka bohlale kapa keletso.'
+                    }
+                ]
+            }
+        },
+        'math-foundations': {
+            title: 'Math Foundations',
+            subject: 'Mathematics',
+            grade: 10,
+            summary: 'Explore high-level concepts like Pythagorean theorem, probability, and quadratic equations.',
+            keyPoints: [
+                'Pythagorean theorem connects sides of a right triangle',
+                'Probability measures how likely something is to happen',
+                'Quadratic equations are written in the form ax² + bx + c = 0'
+            ],
+            englishExplanation: 'This lesson introduces three big ideas you will keep using: the Pythagorean theorem, probability, and quadratic equations. Use the tutor to break down each one and see examples that connect to daily life.',
+            isizuluExplanation: 'Lesi sifundo sikulethela imibono emithathu ebalulekile: i-Pythagorean theorem, amathuba (probability), kanye nama-quadratic equations. Sebenzisa uthisha ukuze akuqondise ngezibonelo eziseduze nempilo yakho.',
+            sesothoExplanation: 'Thuto ena e hlahisa mehopolo e meraro e meholo: Pythagorean theorem, probability le quadratic equations. Sebedisa tutor ho hlalosa ka mehato le mehlala e tswang bophelong ba letsatsi le letsatsi.',
+            practiceQuestion: {
+                question: 'Which formula represents a quadratic equation?',
+                options: ['a + b = c', 'ax² + bx + c = 0', 'P = 2l + 2w', 'V = IR'],
+                correctAnswer: 1,
+                explanation: 'Quadratic equations are written in the form ax² + bx + c = 0.'
+            }
+        },
         'photosynthesis': {
             title: 'Photosynthesis',
             subject: 'Natural Sciences',
@@ -336,6 +438,40 @@ const BiLingoData = {
                 explanation: 'In 3/8, the denominator (8) represents the total number of equal parts the whole is divided into.'
             }
         }
+    }
+    ,mathTutorQuickQuestions: [
+        {
+            id: 'pythag',
+            text: 'What is the Pythagorean theorem?',
+            responses: {
+                english: 'The Pythagorean theorem says a² + b² = c² for a right triangle. If two sides are 3 and 4, the longest side is 5. Think of measuring the diagonal of a soccer field corner.',
+                isizulu: 'I-Pythagorean theorem ithi a² + b² = c² kwitriangle enesiqu esingu-90°. Uma izinhlangothi zingu-3 no-4, uhlangothi olude lungu-5. Cabanga ulinganisa idayagonali enkundleni yebhola.',
+                sesotho: 'Pythagorean theorem e re a² + b² = c² ho triangle ya 90°. Ha mahlakore e le 3 le 4, le lelelele ke 5. Nahana ka ho metha diagonal sekhutlong sa lebala la bolo.'
+            }
+        },
+        {
+            id: 'probability',
+            text: 'What is probability?',
+            responses: {
+                english: 'Probability measures how likely something is to happen, from 0 to 1. For example, the chance of rain today might be 0.3. It’s like guessing how likely taxis will be full at 7am.',
+                isizulu: 'I-probability ikala ukuthi into ingenzeka kangakanani, ukusuka ku-0 kuye ku-1. Isibonelo, amathuba emvula angaba ngu-0.3. Kufana nokubikezela ukuthi ama-taxi azogcwala kangakanani ngo-7am.',
+                sesotho: 'Probability e lekanya monyetla wa ho etsahala ha ntho, ho tloha ho 0 ho isa ho 1. Mohlala, monyetla wa pula e ka ba 0.3. Ho tshwana le ho hakanya hore taxi di tla tlala hakang ka 7am.'
+            }
+        },
+        {
+            id: 'quadratic',
+            text: 'What is a quadratic equation?',
+            responses: {
+                english: 'A quadratic equation has the form ax² + bx + c = 0. It creates a U-shaped graph called a parabola. You see it when modelling height, like a ball kicked into the air.',
+                isizulu: 'I-quadratic equation inefomu ethi ax² + bx + c = 0. Yakha igrafu efana no-U ebizwa nge-parabola. Uyabona lapho ulingisa ukuphakama, njengokukhahlela ibhola emoyeni.',
+                sesotho: 'Quadratic equation e na le sebopeho sa ax² + bx + c = 0. E etsa graph e bōpehileng joaloka U, e bitsoang parabola. E hlaha ha o bapisa bophahamo, jwalo ka bolo e fofa.'
+            }
+        }
+    ]
+    ,mathTutorGenericResponse: {
+        english: "That's an interesting question! In the full version of Bi-Lingo, I'll provide detailed explanations in your home language with culturally relevant examples. Try one of the quick questions to see the multilingual experience!",
+        isizulu: 'Leyo yimibuzo emnandi! Enguqulweni ephelele ye-Bi-Lingo, ngizokunikeza izincazelo ezinemininingwane ngolimi lwakho lwasekhaya ngezibonelo eziseduze nempilo yakho. Zama omunye wemibuzo esheshayo ukuze ubone i-demo yezilimi.',
+        sesotho: 'Ke potso e kgahlisang! Mofuteng o felletseng wa Bi-Lingo, ke tla fana ka tlhaloso e qaqileng ka puo ya hao ya lapeng le mehlala e haufi le bophelo. Leka e nngwe ya dipotso tse potlakileng ho bona demo ya dipuo.'
     }
 };
 

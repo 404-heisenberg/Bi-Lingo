@@ -49,43 +49,6 @@
     background: color-mix(in oklch, var(--accent) 8%, transparent);
 }
 
-.subject-option.selected::after {
-    content: "";
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: var(--bg);
-    display: grid;
-    place-items: center;
-    font-weight: 700;
-    font-size: 12px;
-}
-
-.subject-option.selected {
-    border-color: var(--accent);
-    background: color-mix(in oklch, var(--accent) 8%, transparent);
-}
-
-.subject-option.selected::after {
-    content: "✓";
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: var(--bg);
-    display: grid;
-    place-items: center;
-    font-weight: 700;
-    font-size: 12px;
-}
-
 .subject-option {
     position: relative;
 }

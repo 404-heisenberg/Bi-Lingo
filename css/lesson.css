@@ -151,6 +151,93 @@
     color: #ff6b6b;
 }
 
+.tutor-notes-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.tutor-note {
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    background: var(--card);
+    border: 1px solid var(--line);
+}
+
+.tutor-note .note-question {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.tutor-note .note-answer {
+    color: var(--fg-dim);
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.tutor-quick-questions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.tutor-quick-questions button {
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--fg);
+    border-radius: 999px;
+    padding: 0.4rem 0.85rem;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.tutor-quick-questions button:hover {
+    border-color: var(--accent);
+}
+
+.tutor-live-toggle {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.live-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 13px;
+    color: var(--fg-dim);
+}
+
+.live-toggle input {
+    accent-color: var(--accent);
+}
+
+.tutor-input {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.tutor-input input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.tutor-response {
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    color: var(--fg-dim);
+    line-height: 1.6;
+    font-size: 14px;
+}
+
 .btn-check {
     margin-top: 1rem;
 }

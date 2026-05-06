@@ -76,6 +76,9 @@ function populateLesson() {
     } else {
         document.getElementById('practice-section').style.display = 'none';
     }
+
+    renderTutorNotes();
+    renderMathTutor();
 }
 
 function formatExplanation(text) {
@@ -104,6 +107,9 @@ function setupLanguageTabs() {
                 content.classList.remove('active');
             });
             document.getElementById(`content-${lang}`).classList.add('active');
+
+            renderTutorNotes();
+            updateMathResponseLanguage();
         });
     });
 }
@@ -127,7 +133,9 @@ function populatePracticeQuestion(pq) {
     const urlParams = new URLSearchParams(window.location.search);
     const lessonId = urlParams.get('id');
     if (lessonId) {
-        updateLessonProgress(lessonId, 50); // Mark as 50% complete when viewed
+        if (lessonId === 'idioms') {
+            updateLessonProgress(lessonId, 60);
+        }
     }
 
 
@@ -178,4 +186,93 @@ function populatePracticeQuestion(pq) {
 
         checkBtn.style.display = 'none';
     });
+}
+
+function renderTutorNotes() {
+    const section = document.getElementById('tutor-notes-section');
+    const container = document.getElementById('tutor-notes');
+    if (!section || !container) return;
+
+    if (currentLesson.id !== 'idioms' || !currentLesson.tutorNotes) {
+        section.style.display = 'none';
+        return;
+    }
+
+    section.style.display = 'block';
+    const notes = currentLesson.tutorNotes[currentLanguage] || [];
+    container.innerHTML = `
+        <div class="tutor-notes-list">
+            ${notes.map(note => `
+                <div class="tutor-note">
+                    <div class="note-question">${note.question}</div>
+                    <div class="note-answer">${note.answer}</div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+function renderMathTutor() {
+    const section = document.getElementById('math-tutor-section');
+    const quickContainer = document.getElementById('math-quick-questions');
+    const response = document.getElementById('math-response');
+    const input = document.getElementById('math-question-input');
+    const askBtn = document.getElementById('math-ask-btn');
+    const toggle = document.getElementById('live-mode-toggle');
+    const badge = document.getElementById('live-mode-badge');
+    if (!section || !quickContainer || !response || !input || !askBtn) return;
+
+    if (currentLesson.id !== 'math-foundations') {
+        section.style.display = 'none';
+        return;
+    }
+
+    section.style.display = 'block';
+    quickContainer.innerHTML = BiLingoData.mathTutorQuickQuestions.map(item => `
+        <button type="button" data-id="${item.id}">${item.text}</button>
+    `).join('');
+
+    quickContainer.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
+            const match = BiLingoData.mathTutorQuickQuestions.find(q => q.id === id);
+            if (!match) return;
+            response.dataset.currentId = id;
+            response.textContent = match.responses[currentLanguage];
+        });
+    });
+
+    if (toggle && badge) {
+        toggle.addEventListener('change', () => {
+            if (toggle.checked) {
+                badge.textContent = 'Live mode enabled';
+                input.placeholder = 'Ask a math question (live AI response)';
+            } else {
+                badge.textContent = 'Demo responses';
+                input.placeholder = 'Ask a math question (demo responses)';
+            }
+        });
+    }
+
+    askBtn.onclick = () => {
+        const text = input.value.trim();
+        if (!text) return;
+        response.dataset.currentId = '';
+        response.textContent = BiLingoData.mathTutorGenericResponse[currentLanguage];
+        input.value = '';
+    };
+}
+
+function updateMathResponseLanguage() {
+    const response = document.getElementById('math-response');
+    if (!response || currentLesson.id !== 'math-foundations') return;
+    const id = response.dataset.currentId;
+    if (!id) {
+        response.textContent = BiLingoData.mathTutorGenericResponse[currentLanguage];
+        return;
+    }
+    const match = BiLingoData.mathTutorQuickQuestions.find(q => q.id === id);
+    if (match) {
+        response.textContent = match.responses[currentLanguage];
+    }
 }

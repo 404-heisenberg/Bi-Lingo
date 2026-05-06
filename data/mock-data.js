@@ -216,8 +216,17 @@ const BiLingoData = {
         'photosynthesis': {
             english: {
                 question: 'What is photosynthesis?',
-                answer: 'Photosynthesis is the process where plants use sunlight, water, and carbon dioxide to create oxygen and energy in the form of sugar (glucose). Think of a leaf like a tiny chef powered by sunlight — it mixes water and air to make the tree\'s food!'
+                answer: 'Photosynthesis is the process where plants use sunlight, water, and carbon dioxide to create oxygen and energy in the form of sugar (glucose). Think of a leaf like a tiny chef powered by sunlight — it mixes water and air to make the tree\'s food! Just like how your gogo mixes mealie meal, water, and fire to make pap for the family, the leaf mixes sunlight, water, and air to make food for the tree!'
             },
+            isizulu: {
+                question: 'Yini i-photosynthesis?',
+                answer: 'I-photosynthesis yinqubo lapho izitshalo zisebenzisa khanya kwelanga, amanzi, ne-carbon dioxide ukwenza umoya we-oxygen namandla ngohlobo lweshukela (i-glucose). Cabanga ngeqabunga lesihlahla njengompheki omncane wase-khaya — usebenzisa amandla elanga esikhundleni, uhlanganisa amanzi nomoya ukuze enze ukudla kwesihlahla. Njengoba ugogo wakho enza ipaphi yekhaya ngokuxova umphuphu, amanzi, nomlilo, yile nqubo nje!'
+            },
+            sesotho: {
+                question: 'Photosynthesis ke eng?',
+                answer: 'Photosynthesis ke tshebetso eo dimela di sebelisa khanya ya letsatsi, metsi le carbon dioxide ho etsa moya wa oxygen le matla ka mofuta wa tshdinamela (glucose). Nahana ka leqabunga la semela jwalo ka moapehi wa hae — o sebelisa matla a letsatsi, a kopanya metsi le moya ho etsa dijo tsa semela. Jwaloka mme wahao a etsang papa ka ho kopanya phuphu, metsi le mollo, ke mokgwa oo o tshwanang!'
+            }
+        },
             isizulu: {
                 question: 'Yini i-photosynthesis?',
                 answer: 'I-photosynthesis yinqubo lapho izitshalo zisebenzisa khona ukukhanya kwelanga, amanzi, ne-carbon dioxide ukwenza umoya we-oxygen namandla ngohlobo lweshukela (i-glucose). Cabanga ngeqabunga njengompheki omncane osebenza ngelanga — uhlanganisa amanzi nomoya ukuze enze ukudla kwesihlahla!'
@@ -230,29 +239,29 @@ const BiLingoData = {
         'fractions': {
             english: {
                 question: 'What is a fraction?',
-                answer: 'A fraction is a way to show parts of a whole. It has two numbers: the top number (numerator) tells how many parts you have, and the bottom number (denominator) tells how many equal parts make the whole. Imagine a pizza cut into 8 slices — if you eat 3 slices, you\'ve eaten 3/8 of the pizza!'
+                answer: 'A fraction is a way to show parts of a whole. It has two numbers: the top number (numerator) tells how many parts you have, and the bottom number (denominator) tells how many equal parts make the whole. Imagine a pizza cut into 8 slices — if you eat 3 slices, you\'ve eaten 3/8 of the pizza! Or think of a koeksister shared between 4 friends — each gets 1/4 of the sweet treat!'
             },
             isizulu: {
                 question: 'Yini ingxenyana?',
-                answer: 'Ingxenyana iyindlela yokukhombisa izingxenye zento ephelele. Inezinombolo ezimbili: inombolo ephezulu (i-numerator) itshela ukuthi zingaki izingxenye onazo, kanti inombolo engezansi (i-denominator) itshela ukuthi zingaki izingxenye ezilinganayo ezenza into ephelele. Cabanga ngepizza enqanyuliweyo izinxele ezi-8 — uma udle izinxele ezi-3, udle i-3/8 yepizza!'
+                answer: 'Ingxenyana iyindlela yokukhombisa izingxenye zento ephelele. Inezinombolo ezimbili: inombolo ephezulu (i-numerator) itshela ukuthi zingaki izingxenye onazo, kanti inombolo engezansi (i-denominator) itshela ukuthi zingaki izingxenye ezilinganayo ezenza into ephelele. Cabanga ngamakhekhe amancane (amakhekhe) ahlukanwe phakathi kwabantu aba-4 — umuntu ngamunye uthola i-1/4 yekhekhe!'
             },
             sesotho: {
                 question: 'Fraction ke eng?',
-                answer: 'Fraction ke tsela ya ho bontsha dikarolo tsa ntho e felletseng. E na le dinomoro tse pedi: nomoro e hodimo (numerator) e bontsha hore o na le dikarolo tse kae, mme nomoro e tlase (denominator) e bontsha hore ke dikarolo tse kae tse lekanang tse etsang ntho e felletseng. Nahana ka pizza e arohaneng dikoto tse 8 — ha o ja dikoto tse 3, o jele 3/8 ya pizza!'
+                answer: 'Fraction ke tsela ya ho bontsha dikarolo tsa ntho e felletseng. E na le dinomoro tse pedi: nomoro e hodimo (numerator) e bontsha hore o na le dikarolo tse kae, mme nomoro e tlase (denominator) e bontsha hore ke dikarolo tse kae tse lekanang tse etsang ntho e felletseng. Nahana ka dipone tsa koekister tse arolelwang metsoalle e mene — e mong le e mong o hwetsa 1/4 ya koekister!'
             }
         },
         'nouns': {
             english: {
                 question: 'What is a noun?',
-                answer: 'A noun is a word that names a person, place, thing, or idea. Examples: "teacher" (person), "school" (place), "book" (thing), "happiness" (idea). Nouns are like labels — they help us name everything around us so we can talk about them!'
+                answer: 'A noun is a word that names a person, place, thing, or idea. Examples: "teacher" (person like your miss or master), "school" (place like your classroom), "book" (thing like your textbook), "ubuntu" (idea unique to our culture!). Nouns are like labels — they help us name everything around us so we can talk about them!'
             },
             isizulu: {
                 question: 'Yini ibizo?',
-                answer: 'Ibizo yigama eliqamba umuntu, indawo, into, noma umbono. Izibonelo: "uthisha" (umuntu), "isikole" (indawo), "incwadi" (into), "injabulo" (umbono). Amabizo afana nezimpawu — asisiza ukuba siqambele yonke into esizungezungezile ukuze siyakwazi ukukhuluma ngayo!'
+                answer: 'Ibizo yigama eliqamba umuntu, indawo, into, noma umbono. Izibonelo: "uthisha" (umuntu ofana nomaster wakho), "isikole" (indawo efana neklasini yakho), "incwadi" (into efana nencwadi yesikole sakho), "ubuntu" (umbono ohlukile esikweni sakithi!). Amabizo afana nezimpawu — asisiza ukuba siqambele yonke into esizungezungezile ukuze siyakwazi ukukhuluma ngayo!'
             },
             sesotho: {
                 question: 'Lebizo ke eng?',
-                answer: 'Lebizo ke lentswe le re bitang motho, sebaka, ntho, kapa mohopolo. Mefuta: "mosuwe" (motho), "sekolo" (sebaka), "buka" (ntho), "thabo" (mohopolo). Mabizo a tshwana le madi a thepa — a re thusa ho bitsa ntho yohle e re potileng re kgone ho bua ka yona!'
+                answer: 'Lebizo ke lentswe le re bitang motho, sebaka, ntho, kapa mohopolo. Mefuta: "mosuwe" (motho jwalo ka mosuwe wahao), "sekolo" (sebaka se jwaloka phaposing ya hao), "buka" (ntho jwalo ka bubuku ba sekolo), "ubuntu" (mohopolo o ikemetseng setsofeng sa rona!). Mabizo a tshwana le madi a thepa — a re thusa ho bitsa ntho yohle e re potileng re kgone ho bua ka yona!'
             }
         },
         'water-cycle': {

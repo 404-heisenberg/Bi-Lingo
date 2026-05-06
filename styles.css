@@ -138,6 +138,18 @@ nav.top .inner {
     transform: translateY(-1px);
     box-shadow: 0 10px 30px -10px var(--accent-glow);
 }
+.demo-btn {
+    background: transparent !important;
+    border: 2px solid var(--accent);
+    color: var(--accent) !important;
+}
+.demo-btn:hover {
+    background: var(--accent) !important;
+    color: #0b0d10 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 30px -10px var(--accent-glow);
+}
+
 @media (max-width: 720px) {
     .nav-links {
         display: none;

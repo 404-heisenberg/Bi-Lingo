@@ -2,12 +2,67 @@
 
 .subject-option {
     cursor: pointer;
-    transition: border-color 0.2s, transform 0.2s, background 0.2s;
+    transition: border-color 0.2s, transform 0.25s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.subject-option::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
 }
 
 .subject-option:hover {
     border-color: var(--accent);
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+    background: var(--card);
+}
+
+.subject-option:hover::before {
+    opacity: 1;
+}
+
+.subject-option::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+}
+
+.subject-option:hover::after {
+    transform: scaleX(1);
+}
+
+.subject-option.selected {
+    border-color: var(--accent);
+    background: color-mix(in oklch, var(--accent) 8%, transparent);
+}
+
+.subject-option.selected::after {
+    content: "";
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--bg);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 12px;
 }
 
 .subject-option.selected {

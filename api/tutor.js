@@ -36,7 +36,6 @@ module.exports = async (req, res) => {
                     model: modelId,
                     temperature,
                     max_tokens: maxTokens,
-                    response_format: { type: 'json_object' },
                     messages: [
                         {
                             role: 'system',

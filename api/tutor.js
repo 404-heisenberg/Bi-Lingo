@@ -22,8 +22,9 @@ module.exports = async (req, res) => {
     }
 
     try {
-        const hfUrl = 'https://api-inference.huggingface.co/models/openai-community/gpt2';
-        console.log('[tutor] HF URL:', hfUrl);
+        const hfUrl = 'https://router.huggingface.co/v1/chat/completions';
+        const modelId = 'deepseek-ai/DeepSeek-V4-Pro:novita';
+        console.log('[tutor] HF Router URL:', hfUrl);
         const hfResponse = await fetch(hfUrl, {
             method: 'POST',
             headers: {
@@ -31,8 +32,19 @@ module.exports = async (req, res) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                inputs: `Answer this math question clearly and concisely: ${question}\nAnswer:`,
-                parameters: { max_new_tokens: 150, temperature: 0.7 }
+                model: modelId,
+                temperature: 0.6,
+                max_tokens: 260,
+                messages: [
+                    {
+                        role: 'system',
+                        content: 'You are a bilingual math tutor. Return JSON with keys: english, isizulu, sesotho. Keep answers short and clear.'
+                    },
+                    {
+                        role: 'user',
+                        content: `Answer this math question clearly and concisely: ${question}`
+                    }
+                ]
             })
         });
 
@@ -42,13 +54,21 @@ module.exports = async (req, res) => {
         }
 
         const data = await hfResponse.json();
-        const generated = data && data[0] && data[0].generated_text ? data[0].generated_text : '';
-        const englishAnswer = generated.split('Answer:')[1]?.trim() || 'Unable to generate answer. Please try again.';
+        const content = data?.choices?.[0]?.message?.content || '';
+        let parsed;
+        try {
+            parsed = JSON.parse(content);
+        } catch (parseError) {
+            parsed = null;
+        }
+        const englishAnswer = parsed?.english || 'Unable to generate answer. Please try again.';
+        const isizuluAnswer = parsed?.isizulu || `[isiZulu translation of: ${englishAnswer}]`;
+        const sesothoAnswer = parsed?.sesotho || `[Sesotho translation of: ${englishAnswer}]`;
 
         return res.status(200).json({
             english: englishAnswer,
-            isizulu: `[isiZulu translation of: ${englishAnswer}]`,
-            sesotho: `[Sesotho translation of: ${englishAnswer}]`
+            isizulu: isizuluAnswer,
+            sesotho: sesothoAnswer
         });
     } catch (error) {
         return res.status(500).json({ error: 'Failed to get response from AI service' });

@@ -1089,7 +1089,6 @@ h2.section-title {
     min-width: 0;
 }
 .signup-fields input:first-child {
-    max-width: 140px;
     border-right: 1px solid var(--line);
 }
 .signup input {
@@ -1140,7 +1139,7 @@ h2.section-title {
         width: 100%;
     }
     .signup-fields input:first-child {
-        max-width: 40%;
+        max-width: none;
     }
     .signup button {
         width: 100%;
@@ -1943,4 +1942,3 @@ body {
         break-inside: avoid;
     }
 }
-

@@ -51,40 +51,37 @@ document.addEventListener('DOMContentLoaded', function() {
     const customInput = document.getElementById('custom-question');
     const askBtn = document.getElementById('ask-btn');
 
-    if (!lessonId) {
-        const liveToggle = document.getElementById('live-mode-toggle');
-        const liveBadge = document.getElementById('live-mode-badge');
+    const liveBtn = document.getElementById('live-mode-btn');
+    if (liveBtn) {
+        liveBtn.addEventListener('click', () => {
+            liveMode = !liveMode;
+            liveBtn.classList.toggle('active', liveMode);
+            liveBtn.textContent = liveMode ? 'Live' : 'Demo';
+            if (customInput) {
+                customInput.placeholder = liveMode
+                    ? 'Ask a question (live AI response)'
+                    : 'Ask your own question...';
+            }
+        });
+    }
 
-        if (liveToggle && liveBadge) {
-            liveToggle.addEventListener('change', () => {
-                liveMode = liveToggle.checked;
-                liveBadge.textContent = liveMode ? 'Live' : 'Demo';
-                if (customInput) {
-                    customInput.placeholder = liveMode
-                        ? 'Ask a question (live AI response)'
-                        : 'Ask your own question...';
-                }
-            });
+    askBtn.addEventListener('click', function() {
+        const question = customInput.value.trim();
+        if (question) {
+            askCustomQuestion(question);
+            customInput.value = '';
         }
+    });
 
-        askBtn.addEventListener('click', function() {
+    customInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
             const question = customInput.value.trim();
             if (question) {
                 askCustomQuestion(question);
                 customInput.value = '';
             }
-        });
-
-        customInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const question = customInput.value.trim();
-                if (question) {
-                    askCustomQuestion(question);
-                    customInput.value = '';
-                }
-            }
-        });
-    }
+        }
+    });
 });
 
 function populateQuickQuestions() {
@@ -135,9 +132,7 @@ function setupLanguageTabs() {
 function hideGenericTutorElements() {
     const quickQuestions = document.getElementById('quick-questions');
     const quickWrapper = quickQuestions ? quickQuestions.parentElement : null;
-    const signup = document.querySelector('.signup');
     if (quickWrapper) quickWrapper.style.display = 'none';
-    if (signup) signup.style.display = 'none';
 }
 
 function updateTutorPageTitle(lessonId) {
@@ -187,7 +182,6 @@ function renderMathTutorQuickQuestions(chatContainer) {
 
     const section = document.createElement('div');
     section.className = 'lesson-quick-section';
-    section.style.marginTop = '1rem';
     section.innerHTML = `
         <p style="font-size: 12px; color: var(--fg-mute); margin-bottom: 0.75rem; font-family: var(--f-mono); letter-spacing: 0.05em; text-transform: uppercase;">Quick Questions:</p>
         <div class="quick-questions lesson-quick-questions"></div>
@@ -200,7 +194,12 @@ function renderMathTutorQuickQuestions(chatContainer) {
         </button>
     `).join('');
 
-    parent.appendChild(section);
+    const bottomSection = parent.querySelector('.tutor-bottom-section');
+    if (bottomSection) {
+        bottomSection.insertBefore(section, bottomSection.firstChild);
+    } else {
+        parent.appendChild(section);
+    }
 
     quickWrap.querySelectorAll('button').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -257,30 +256,32 @@ function askCustomQuestion(question) {
     // Show typing indicator
     showTypingIndicator();
 
+    if (liveMode) {
+        fetchTutorResponse(question)
+            .then(response => {
+                removeTypingIndicator();
+                const liveResponse = {
+                    english: { question: question, answer: response.english || response.answer || response },
+                    isizulu: { question: question, answer: response.isizulu || response.answer || response },
+                    sesotho: { question: question, answer: response.sesotho || response.answer || response }
+                };
+                addTutorResponse(liveResponse);
+            })
+            .catch(err => {
+                console.error('Live API error:', err);
+                removeTypingIndicator();
+                const fallbackResponse = {
+                    english: { question: question, answer: getMockResponse(question) },
+                    isizulu: { question: question, answer: '[isiZulu translation coming soon. This is a demo of how your question would be answered in isiZulu.]' },
+                    sesotho: { question: question, answer: '[Sesotho translation coming soon. This is a demo of how your question would be answered in Sesotho.]' }
+                };
+                addTutorResponse(fallbackResponse);
+            });
+        return;
+    }
+
     setTimeout(() => {
         removeTypingIndicator();
-
-        if (liveMode) {
-            fetchTutorResponse(question)
-                .then(response => {
-                    const liveResponse = {
-                        english: { question: question, answer: response.english || response.answer || response },
-                        isizulu: { question: question, answer: response.isizulu || response.answer || response },
-                        sesotho: { question: question, answer: response.sesotho || response.answer || response }
-                    };
-                    addTutorResponse(liveResponse);
-                })
-                .catch(err => {
-                    console.error('Live API error:', err);
-                    const fallbackResponse = {
-                        english: { question: question, answer: getMockResponse(question) },
-                        isizulu: { question: question, answer: '[isiZulu translation coming soon. This is a demo of how your question would be answered in isiZulu.]' },
-                        sesotho: { question: question, answer: '[Sesotho translation coming soon. This is a demo of how your question would be answered in Sesotho.]' }
-                    };
-                    addTutorResponse(fallbackResponse);
-                });
-            return;
-        }
 
         // Mock response for custom questions
         const mockResponse = {

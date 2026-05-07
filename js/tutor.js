@@ -6,6 +6,7 @@ let currentLessonId = null;
 let currentMathQuestionId = null;
 let clickedMathQuestionIds = new Set();
 let liveMode = false;
+let lastCustomResponse = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     // Check if user has completed onboarding
@@ -265,6 +266,7 @@ function askCustomQuestion(question) {
                     isizulu: { question: question, answer: response.isizulu || response.answer || response },
                     sesotho: { question: question, answer: response.sesotho || response.answer || response }
                 };
+                lastCustomResponse = liveResponse;
                 addTutorResponse(liveResponse);
             })
             .catch(err => {
@@ -298,6 +300,8 @@ function askCustomQuestion(question) {
                 answer: '[Sesotho translation coming soon. This is a demo of how your question would be answered in Sesotho.]'
             }
         };
+
+        lastCustomResponse = mockResponse;
 
         addTutorResponse(mockResponse);
     }, 2000);
@@ -464,8 +468,9 @@ function removeTypingIndicator() {
 }
 
 function rerenderCurrentQuestion() {
-    const qa = BiLingoData.tutorQA[currentQuestionId];
-    if (!qa) return;
+    const qa = currentQuestionId ? BiLingoData.tutorQA[currentQuestionId] : null;
+    const responseSet = qa || lastCustomResponse;
+    if (!responseSet) return;
 
     // Find and update the last tutor message
     const messages = document.querySelectorAll('.message.tutor');
@@ -475,7 +480,7 @@ function rerenderCurrentQuestion() {
     const contentDiv = lastMessage.querySelector('.language-content div:last-child');
     
     if (contentDiv) {
-        contentDiv.innerHTML = formatAnswer(qa[currentLanguage].answer);
+        contentDiv.innerHTML = formatAnswer(responseSet[currentLanguage].answer);
         const langLabel = lastMessage.querySelector('.lang-label');
         if (langLabel) {
             langLabel.textContent = currentLanguage;

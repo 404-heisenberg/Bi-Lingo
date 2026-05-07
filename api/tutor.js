@@ -59,8 +59,8 @@ module.exports = async (req, res) => {
             return { ok: true, choices };
         };
 
-        const primaryPrompt = 'You are a bilingual math tutor. Return ONLY a JSON object with keys english, isizulu, sesotho. No extra text. Do not include reasoning. Give a short tutoring explanation (1-2 sentences) before or alongside the answer. Keep digits and numerals exactly the same as in the English answer.';
-        const fallbackPrompt = 'Return ONLY a JSON object with keys english, isizulu, sesotho. Do not include reasoning or extra text. Output must be valid JSON. Give a short tutoring explanation (1-2 sentences) before or alongside the answer. Keep digits and numerals exactly the same as in the English answer.';
+        const primaryPrompt = 'Return ONLY a JSON object with keys english, isizulu, sesotho. No extra text. Do not include reasoning. Keep digits and numerals exactly the same as in the English answer.';
+        const fallbackPrompt = 'Return ONLY a JSON object with keys english, isizulu, sesotho. Do not include reasoning or extra text. Output must be valid JSON. Keep digits and numerals exactly the same as in the English answer.';
 
         let result = await requestCompletion(primaryPrompt, 0.4, 320);
         if (!result.ok) {

@@ -3,6 +3,8 @@
 let currentLanguage = 'english';
 let currentQuestionId = null;
 let currentLessonId = null;
+let currentMathQuestionId = null;
+let clickedMathQuestionIds = new Set();
 
 document.addEventListener('DOMContentLoaded', function() {
     // Check if user has completed onboarding
@@ -104,7 +106,11 @@ function setupLanguageTabs() {
                 rerenderCurrentQuestion();
             }
             if (currentLessonId) {
-                renderLessonTutor(currentLessonId);
+                if (currentLessonId === 'math-foundations') {
+                    updateMathTutorResponseLanguage();
+                } else {
+                    renderLessonTutor(currentLessonId);
+                }
             }
         });
     });
@@ -131,6 +137,10 @@ function renderLessonTutor(lessonId) {
     if (!chatContainer) return;
     chatContainer.innerHTML = '';
 
+    removeLessonQuickQuestions();
+    currentMathQuestionId = null;
+    clickedMathQuestionIds = new Set();
+
     if (lessonId === 'idioms') {
         renderIdiomTutorNotes(chatContainer);
         return;
@@ -156,45 +166,40 @@ function renderIdiomTutorNotes(chatContainer) {
 }
 
 function renderMathTutorQuickQuestions(chatContainer) {
-    const quickWrap = document.createElement('div');
-    quickWrap.className = 'quick-questions';
-    quickWrap.style.marginBottom = '1rem';
+    const parent = chatContainer.parentElement;
+    if (!parent) return;
+
+    const section = document.createElement('div');
+    section.className = 'lesson-quick-section';
+    section.style.marginTop = '1rem';
+    section.innerHTML = `
+        <p style="font-size: 12px; color: var(--fg-mute); margin-bottom: 0.75rem; font-family: var(--f-mono); letter-spacing: 0.05em; text-transform: uppercase;">Quick Questions:</p>
+        <div class="quick-questions lesson-quick-questions"></div>
+    `;
+
+    const quickWrap = section.querySelector('.lesson-quick-questions');
     quickWrap.innerHTML = BiLingoData.mathTutorQuickQuestions.map(q => `
-        <button class="quick-question-btn" data-id="${q.id}">
+        <button class="quick-question-btn" data-id="${q.id}"${clickedMathQuestionIds.has(q.id) ? ' disabled' : ''}>
             ${q.text}
         </button>
     `).join('');
 
-    const responseWrap = document.createElement('div');
-    responseWrap.className = 'message tutor';
-    responseWrap.style.display = 'none';
-    responseWrap.innerHTML = `
-        <div class="message-avatar">B</div>
-        <div>
-            <div class="message-bubble">
-                <div class="language-content">
-                    <div class="lang-label">${currentLanguage}</div>
-                    <div class="lesson-tutor-response"></div>
-                </div>
-            </div>
-            <div class="message-meta">TUTOR</div>
-        </div>
-    `;
-
-    chatContainer.appendChild(quickWrap);
-    chatContainer.appendChild(responseWrap);
+    parent.appendChild(section);
 
     quickWrap.querySelectorAll('button').forEach(btn => {
         btn.addEventListener('click', () => {
             const id = btn.dataset.id;
             const match = BiLingoData.mathTutorQuickQuestions.find(q => q.id === id);
             if (!match) return;
-            responseWrap.style.display = 'flex';
-            const responseText = responseWrap.querySelector('.lesson-tutor-response');
-            const label = responseWrap.querySelector('.lang-label');
-            if (label) label.textContent = currentLanguage;
-            if (responseText) responseText.innerHTML = formatAnswer(match.responses[currentLanguage]);
-            scrollToBottom();
+            clickedMathQuestionIds.add(id);
+            btn.disabled = true;
+            currentMathQuestionId = id;
+            addMessage('user', match.text, 'YOU');
+            showTypingIndicator();
+            setTimeout(() => {
+                removeTypingIndicator();
+                addTutorMessage(match.responses[currentLanguage]);
+            }, 1500);
         });
     });
 }
@@ -341,6 +346,28 @@ function addTutorMessage(answer) {
 
     chatContainer.appendChild(messageDiv);
     scrollToBottom();
+}
+
+function removeLessonQuickQuestions() {
+    document.querySelectorAll('.lesson-quick-section').forEach(section => section.remove());
+}
+
+function updateMathTutorResponseLanguage() {
+    if (!currentMathQuestionId) return;
+    const chatContainer = document.getElementById('chat-container');
+    if (!chatContainer) return;
+    const tutorMessages = chatContainer.querySelectorAll('.message.tutor');
+    if (tutorMessages.length === 0) return;
+
+    const lastMessage = tutorMessages[tutorMessages.length - 1];
+    const langLabel = lastMessage.querySelector('.lang-label');
+    const responseDiv = lastMessage.querySelector('.language-content div:last-child');
+    const match = BiLingoData.mathTutorQuickQuestions.find(q => q.id === currentMathQuestionId);
+
+    if (langLabel) langLabel.textContent = currentLanguage;
+    if (responseDiv && match) {
+        responseDiv.innerHTML = formatAnswer(match.responses[currentLanguage]);
+    }
 }
 
 function formatAnswer(answer) {

@@ -122,8 +122,13 @@
         padding-bottom: 0.5rem;
     }
     
-    .quick-question-btn {
-        white-space: nowrap;
-        flex-shrink: 0;
-    }
+.quick-question-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.quick-question-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
 }

@@ -630,27 +630,27 @@ const BiLingoData = {
             id: 'pythag',
             text: 'What is the Pythagorean theorem?',
             responses: {
-                english: 'The Pythagorean theorem says a² + b² = c² for a right triangle. If two sides are 3 and 4, the longest side is 5. Think of measuring the diagonal of a soccer field corner.',
-                isizulu: 'I-Pythagorean theorem ithi a² + b² = c² kwitriangle enesiqu esingu-90°. Uma izinhlangothi zingu-3 no-4, uhlangothi olude lungu-5. Cabanga ulinganisa idayagonali enkundleni yebhola.',
-                sesotho: 'Pythagorean theorem e re a² + b² = c² ho triangle ya 90°. Ha mahlakore e le 3 le 4, le lelelele ke 5. Nahana ka ho metha diagonal sekhutlong sa lebala la bolo.'
+                english: 'For a right triangle, a² + b² = c². Example: 3² + 4² = 9 + 16 = 25, so c = 5. Use it to find a diagonal, like a TV screen or soccer-field corner.',
+                isizulu: 'Kwitrayenguli enesiqu esingu-90°, a² + b² = c². Isibonelo: 3² + 4² = 9 + 16 = 25, ngakho c = 5. Usebenzisa lokhu ukuthola idayagonali, njenge-TV noma ekhoneni lenkundla.',
+                sesotho: 'Ho triangle ya 90°, a² + b² = c². Mohlala: 3² + 4² = 9 + 16 = 25, kahoo c = 5. E thusa ho fumana diagonal, jwalo ka TV kapa sekhutlong sa lebala.'
             }
         },
         {
             id: 'probability',
             text: 'What is probability?',
             responses: {
-                english: 'Probability measures how likely something is to happen, from 0 to 1. For example, the chance of rain today might be 0.3. It’s like guessing how likely taxis will be full at 7am.',
-                isizulu: 'I-probability ikala ukuthi into ingenzeka kangakanani, ukusuka ku-0 kuye ku-1. Isibonelo, amathuba emvula angaba ngu-0.3. Kufana nokubikezela ukuthi ama-taxi azogcwala kangakanani ngo-7am.',
-                sesotho: 'Probability e lekanya monyetla wa ho etsahala ha ntho, ho tloha ho 0 ho isa ho 1. Mohlala, monyetla wa pula e ka ba 0.3. Ho tshwana le ho hakanya hore taxi di tla tlala hakang ka 7am.'
+                english: 'Probability is how likely something is, from 0 (no chance) to 1 (certain). For example, the probability of a taxi rank being full at 7am might be around 0.8 (80%). Rain at 70% means it’s likely too.',
+                isizulu: 'I-probability ikala amathuba, ukusuka ku-0 (akunakwenzeka) kuya ku-1 (kuqinisekile). Isibonelo, amathuba e-taxi rank egcwele ngo-7am angaba ngu-0.8 (80%). Imvula engu-70% nayo ivamise ukwenzeka.',
+                sesotho: 'Probability ke monyetla, ho tloha ho 0 (ha e kgonehe) ho isa ho 1 (e tiile). Mohlala, monyetla wa taxi rank ho tlala ka 7am e ka ba 0.8 (80%). Pula ya 70% le yona e ka ba teng.'
             }
         },
         {
             id: 'quadratic',
             text: 'What is a quadratic equation?',
             responses: {
-                english: 'A quadratic equation has the form ax² + bx + c = 0. It creates a U-shaped graph called a parabola. You see it when modelling height, like a ball kicked into the air.',
-                isizulu: 'I-quadratic equation inefomu ethi ax² + bx + c = 0. Yakha igrafu efana no-U ebizwa nge-parabola. Uyabona lapho ulingisa ukuphakama, njengokukhahlela ibhola emoyeni.',
-                sesotho: 'Quadratic equation e na le sebopeho sa ax² + bx + c = 0. E etsa graph e bōpehileng joaloka U, e bitsoang parabola. E hlaha ha o bapisa bophahamo, jwalo ka bolo e fofa.'
+                english: 'A quadratic equation looks like ax² + bx + c = 0. Its graph is a U-shaped parabola. Example: x² - 5x + 6 = 0 factors to (x-2)(x-3) = 0.',
+                isizulu: 'I-quadratic equation ibhalwa kanje: ax² + bx + c = 0. Igrafu yayo ibizwa nge-parabola, ifana no-U. Isibonelo: x² - 5x + 6 = 0 iba (x-2)(x-3) = 0.',
+                sesotho: 'Quadratic equation e ngolwa jwalo: ax² + bx + c = 0. Grafu ya yona ke parabola, e bōpehile joaloka U. Mohlala: x² - 5x + 6 = 0 e fetoha (x-2)(x-3) = 0.'
             }
         }
     ]

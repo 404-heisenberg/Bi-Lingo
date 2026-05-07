@@ -2,6 +2,7 @@
 
 let currentLanguage = 'english';
 let currentQuestionId = null;
+let currentLessonId = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     // Check if user has completed onboarding
@@ -13,16 +14,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update language badge
     const languageBadge = document.getElementById('language-badge');
-    if (profile.languageName) {
+    if (languageBadge && profile.languageName) {
         languageBadge.textContent = profile.languageName;
     }
 
-    // Check for question parameter in URL
+    // Check for question or lesson parameter in URL
     const urlParams = new URLSearchParams(window.location.search);
     const questionId = urlParams.get('question');
+    const lessonId = urlParams.get('lessonId');
 
-    // Populate quick questions
-    populateQuickQuestions();
+    if (lessonId) {
+        currentLessonId = lessonId;
+        hideGenericTutorElements();
+        renderLessonTutor(lessonId);
+        updateTutorPageTitle(lessonId);
+    } else {
+        // Populate quick questions
+        populateQuickQuestions();
+    }
 
     // Set up language tabs
     setupLanguageTabs();
@@ -30,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // If question ID provided, load that question
     if (questionId && BiLingoData.tutorQA[questionId]) {
         askQuestion(questionId, false);
-    } else {
+    } else if (!lessonId) {
         // Show welcome message
         showWelcomeMessage();
     }
@@ -39,23 +48,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const customInput = document.getElementById('custom-question');
     const askBtn = document.getElementById('ask-btn');
 
-    askBtn.addEventListener('click', function() {
-        const question = customInput.value.trim();
-        if (question) {
-            askCustomQuestion(question);
-            customInput.value = '';
-        }
-    });
-
-    customInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
+    if (!lessonId) {
+        askBtn.addEventListener('click', function() {
             const question = customInput.value.trim();
             if (question) {
                 askCustomQuestion(question);
                 customInput.value = '';
             }
-        }
-    });
+        });
+
+        customInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const question = customInput.value.trim();
+                if (question) {
+                    askCustomQuestion(question);
+                    customInput.value = '';
+                }
+            }
+        });
+    }
 });
 
 function populateQuickQuestions() {
@@ -92,6 +103,98 @@ function setupLanguageTabs() {
             if (currentQuestionId) {
                 rerenderCurrentQuestion();
             }
+            if (currentLessonId) {
+                renderLessonTutor(currentLessonId);
+            }
+        });
+    });
+}
+
+function hideGenericTutorElements() {
+    const quickQuestions = document.getElementById('quick-questions');
+    const quickWrapper = quickQuestions ? quickQuestions.parentElement : null;
+    const signup = document.querySelector('.signup');
+    if (quickWrapper) quickWrapper.style.display = 'none';
+    if (signup) signup.style.display = 'none';
+}
+
+function updateTutorPageTitle(lessonId) {
+    const titleEl = document.querySelector('.page-title');
+    const lesson = BiLingoData.lessonDetails && BiLingoData.lessonDetails[lessonId];
+    if (titleEl && lesson) {
+        titleEl.textContent = `Tutor - ${lesson.title}`;
+    }
+}
+
+function renderLessonTutor(lessonId) {
+    const chatContainer = document.getElementById('chat-container');
+    if (!chatContainer) return;
+    chatContainer.innerHTML = '';
+
+    if (lessonId === 'idioms') {
+        renderIdiomTutorNotes(chatContainer);
+        return;
+    }
+
+    if (lessonId === 'math-foundations') {
+        renderMathTutorQuickQuestions(chatContainer);
+    }
+}
+
+function renderIdiomTutorNotes(chatContainer) {
+    const notes = (BiLingoData.lessonDetails && BiLingoData.lessonDetails.idioms && BiLingoData.lessonDetails.idioms.tutorNotes && BiLingoData.lessonDetails.idioms.tutorNotes[currentLanguage]) || [];
+
+    if (notes.length === 0) {
+        showWelcomeMessage();
+        return;
+    }
+
+    notes.forEach(note => {
+        addMessage('user', note.question, 'YOU');
+        addTutorMessage(note.answer);
+    });
+}
+
+function renderMathTutorQuickQuestions(chatContainer) {
+    const quickWrap = document.createElement('div');
+    quickWrap.className = 'quick-questions';
+    quickWrap.style.marginBottom = '1rem';
+    quickWrap.innerHTML = BiLingoData.mathTutorQuickQuestions.map(q => `
+        <button class="quick-question-btn" data-id="${q.id}">
+            ${q.text}
+        </button>
+    `).join('');
+
+    const responseWrap = document.createElement('div');
+    responseWrap.className = 'message tutor';
+    responseWrap.style.display = 'none';
+    responseWrap.innerHTML = `
+        <div class="message-avatar">B</div>
+        <div>
+            <div class="message-bubble">
+                <div class="language-content">
+                    <div class="lang-label">${currentLanguage}</div>
+                    <div class="lesson-tutor-response"></div>
+                </div>
+            </div>
+            <div class="message-meta">TUTOR</div>
+        </div>
+    `;
+
+    chatContainer.appendChild(quickWrap);
+    chatContainer.appendChild(responseWrap);
+
+    quickWrap.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
+            const match = BiLingoData.mathTutorQuickQuestions.find(q => q.id === id);
+            if (!match) return;
+            responseWrap.style.display = 'flex';
+            const responseText = responseWrap.querySelector('.lesson-tutor-response');
+            const label = responseWrap.querySelector('.lang-label');
+            if (label) label.textContent = currentLanguage;
+            if (responseText) responseText.innerHTML = formatAnswer(match.responses[currentLanguage]);
+            scrollToBottom();
         });
     });
 }
@@ -201,6 +304,35 @@ function addTutorResponse(qa) {
                 <div class="language-content">
                     <div class="lang-label">${currentLanguage}</div>
                     <div>${formatAnswer(qa[currentLanguage].answer)}</div>
+                </div>
+            </div>
+            <div class="message-meta">TUTOR · ${time}</div>
+        </div>
+    `;
+
+    chatContainer.appendChild(messageDiv);
+    scrollToBottom();
+}
+
+function addTutorMessage(answer) {
+    const chatContainer = document.getElementById('chat-container');
+
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message tutor';
+
+    const time = new Date().toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    });
+
+    messageDiv.innerHTML = `
+        <div class="message-avatar">B</div>
+        <div>
+            <div class="message-bubble">
+                <div class="language-content">
+                    <div class="lang-label">${currentLanguage}</div>
+                    <div>${formatAnswer(answer)}</div>
                 </div>
             </div>
             <div class="message-meta">TUTOR · ${time}</div>

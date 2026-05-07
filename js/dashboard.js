@@ -79,8 +79,9 @@ function populateLessons() {
                         <div class="progress-bar-fill" style="width: ${lesson.progress}%;"></div>
                     </div>
                 </div>
-                <div class="card-actions">
+                <div class="card-actions" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                     <a href="lesson.html?id=${lesson.id}" class="btn btn-primary btn-sm">${buttonLabel}</a>
+                    <a href="tutor.html?lessonId=${lesson.id}" class="btn btn-ghost btn-sm">Ask Tutor →</a>
                 </div>
             </div>
         `;

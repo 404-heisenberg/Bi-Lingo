@@ -353,8 +353,8 @@ const BiLingoData = {
                 ]
             },
             englishExplanation: 'An idiom is a phrase with a hidden meaning that is different from its literal words. For example, “break the ice” means to start a friendly conversation, not to crack real ice. Use the situation to understand the real meaning.',
-            isizuluExplanation: 'I-idiom yisisho esinencazelo efihlekile ehlukile kulokho okushiwo amagama ayo. Isibonelo, “break the ice” kusho ukuqala ingxoxo ngobungane, hhayi ukuqhekeza iqhwa. Sebenzisa isimo ukuze uqonde umqondo wangempela.',
-            sesothoExplanation: 'Idiom ke polelo e nang le moelelo o patiloeng o fapaneng le mantsoe a yona. Mohlala, “break the ice” e bolela ho qala puisano ka botsoalle, eseng ho roba leqhoa. Sebedisa maemo ho utloisisa moelelo oa nnete.',
+            isizuluExplanation: 'I-idiom yisisho esinencazelo efihlekile ehlukile kulokho okushiwo amagama ayo. Isibonelo, “Izandla ziyagezana” sisho ukubambisana nokusizana. Sebenzisa isimo ukuze uqonde umqondo wangempela.',
+            sesothoExplanation: 'Idiom ke polelo e nang le moelelo o patiloeng o fapaneng le mantsoe a yona. Mohlala, “Ditabana di tswala ditaba” e bolela hore dintho tse nyane di ka tswala tse kgolo. Sebedisa maemo ho utloisisa moelelo oa nnete.',
             practiceQuestion: {
                 english: {
                     question: 'Which phrase is an idiom?',
@@ -369,9 +369,9 @@ const BiLingoData = {
                 },
                 isizulu: {
                     question: 'Yisiphi isisho esiyi-idiom?',
-                    options: ['Ngiphuze amanzi', 'Break the ice', 'Ilanga liyakhanya', 'Wabhala incwadi'],
+                    options: ['Ngiphuze amanzi', 'Izandla ziyagezana', 'Ilanga liyakhanya', 'Wabhala incwadi'],
                     correctAnswer: 1,
-                    explanation: '“Break the ice” inencazelo ehlukile kunamagama ayo, yingakho iyisisho se-idiom.',
+                    explanation: '“Izandla ziyagezana” inencazelo ehlukile kunamagama ayo, yingakho iyisisho se-idiom.',
                     labels: {
                         check: 'Hlola Impendulo',
                         correct: '✓ Kulungile!',
@@ -380,9 +380,9 @@ const BiLingoData = {
                 },
                 sesotho: {
                     question: 'Ke polelo efe e leng idiom?',
-                    options: ['Ke ile ka nwa metsi', 'Break the ice', 'Letsatsi lea khanya', 'O ile a ngola lengolo'],
+                    options: ['Ke ile ka nwa metsi', 'Ditabana di tswala ditaba', 'Letsatsi lea khanya', 'O ile a ngola lengolo'],
                     correctAnswer: 1,
-                    explanation: '“Break the ice” e na le moelelo o fapaneng le mantsoe a yona, kahoo ke idiom.',
+                    explanation: '“Ditabana di tswala ditaba” e na le moelelo o fapaneng le mantsoe a yona, kahoo ke idiom.',
                     labels: {
                         check: 'Lekola Karabo',
                         correct: '✓ Ho nepahetse!',
@@ -407,8 +407,8 @@ const BiLingoData = {
                 ],
                 isizulu: [
                     {
-                        question: 'Kungani “break the ice” kusho ukuqala ingxoxo?',
-                        answer: 'Kufanisa ukuthula okuxakayo neqhwa eliqinile. Ukuqala ukuxoxa “kuqhekeza” lowo mzwelo ukuze abantu bakhulume kahle.'
+                        question: 'Kusho ukuthini “Izandla ziyagezana”?',
+                        answer: 'Lisho ukuthi abantu bayasizana futhi bayabambisana. Uma kusiza omunye, naye angakusiza.'
                     },
                     {
                         question: 'Ngingawuhumusha ama-idiom ngamagama aqondile?',
@@ -421,8 +421,8 @@ const BiLingoData = {
                 ],
                 sesotho: [
                     {
-                        question: 'Hobaneng “break the ice” e bolela ho qala puisano?',
-                        answer: 'E bapisa khutso e makatsang le leqhoa. Ho qala ho bua “ho roba” kgatello eo.'
+                        question: '“Ditabana di tswala ditaba” e bolela eng?',
+                        answer: 'E bolela hore dintho tse nyane di ka hlahisa tse kgolo. Ketso e nyane e ka qala phetoho e kholo.'
                     },
                     {
                         question: 'Na nka fetolela idiom ka mantsoe ka ho toba?',

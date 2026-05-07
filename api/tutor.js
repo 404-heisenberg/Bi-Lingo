@@ -55,6 +55,7 @@ module.exports = async (req, res) => {
 
         const data = await hfResponse.json();
         const content = data?.choices?.[0]?.message?.content || '';
+        console.log('[tutor] Raw model content:', content.slice(0, 500));
         let parsed;
         try {
             parsed = JSON.parse(content);

@@ -57,25 +57,7 @@ function populateLesson() {
     document.getElementById('explanation-isizulu').innerHTML = formatExplanation(currentLesson.isizuluExplanation);
     document.getElementById('explanation-sesotho').innerHTML = formatExplanation(currentLesson.sesothoExplanation);
 
-    // Populate key points
-    const keyPointsContainer = document.getElementById('key-points');
-    keyPointsContainer.innerHTML = `
-        <div class="key-points-list">
-            ${currentLesson.keyPoints.map((point, index) => `
-                <div class="key-point">
-                    <div class="point-number">${index + 1}</div>
-                    <div>${point}</div>
-                </div>
-            `).join('')}
-        </div>
-    `;
-
-    // Populate practice question
-    if (currentLesson.practiceQuestion) {
-        populatePracticeQuestion(currentLesson.practiceQuestion);
-    } else {
-        document.getElementById('practice-section').style.display = 'none';
-    }
+    renderLocalizedLessonContent();
 
     renderTutorNotes();
     renderMathTutor();
@@ -108,14 +90,66 @@ function setupLanguageTabs() {
             });
             document.getElementById(`content-${lang}`).classList.add('active');
 
+            renderLocalizedLessonContent();
             renderTutorNotes();
             updateMathResponseLanguage();
         });
     });
 }
 
+function renderLocalizedLessonContent() {
+    const headings = BiLingoData.lessonUiText[currentLanguage] || BiLingoData.lessonUiText.english;
+    const keyPointsHeading = document.getElementById('key-points-heading');
+    const practiceHeading = document.getElementById('practice-heading');
+    const practiceSubheading = document.getElementById('practice-subheading');
+    if (keyPointsHeading) keyPointsHeading.textContent = headings.keyPointsHeading;
+    if (practiceHeading) practiceHeading.textContent = headings.practiceHeading;
+    if (practiceSubheading) practiceSubheading.textContent = headings.practiceSubheading;
+
+    // Populate key points
+    const keyPointsContainer = document.getElementById('key-points');
+    const keyPoints = getLocalizedValue(currentLesson.keyPoints, currentLanguage) || [];
+    keyPointsContainer.innerHTML = `
+        <div class="key-points-list">
+            ${keyPoints.map((point, index) => `
+                <div class="key-point">
+                    <div class="point-number">${index + 1}</div>
+                    <div>${point}</div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+
+    // Populate practice question
+    const practiceQuestion = getLocalizedPracticeQuestion(currentLesson.practiceQuestion, currentLanguage);
+    if (practiceQuestion) {
+        populatePracticeQuestion(practiceQuestion);
+    } else {
+        document.getElementById('practice-section').style.display = 'none';
+    }
+}
+
+function getLocalizedValue(value, lang) {
+    if (!value) return null;
+    if (Array.isArray(value)) return value;
+    if (typeof value === 'object') {
+        return value[lang] || value.english || null;
+    }
+    return value;
+}
+
+function getLocalizedPracticeQuestion(pq, lang) {
+    if (!pq) return null;
+    if (pq.question) return pq;
+    return pq[lang] || pq.english || null;
+}
+
 function populatePracticeQuestion(pq) {
     const practiceCard = document.getElementById('practice-card');
+    const labels = pq.labels || {};
+    const checkLabel = labels.check || 'Check Answer';
+    const correctLabel = labels.correct || '✓ Correct!';
+    const incorrectLabel = labels.incorrect || '✗ Not quite right.';
     practiceCard.innerHTML = `
         <div class="practice-question">${pq.question}</div>
         <div class="practice-options" id="practice-options">
@@ -125,7 +159,7 @@ function populatePracticeQuestion(pq) {
                 </div>
             `).join('')}
         </div>
-        <button class="btn btn-primary btn-check" id="check-answer" style="display: none;">Check Answer</button>
+        <button class="btn btn-primary btn-check" id="check-answer" style="display: none;">${checkLabel}</button>
         <div class="practice-feedback" id="practice-feedback"></div>
     `;
 
@@ -173,13 +207,13 @@ function populatePracticeQuestion(pq) {
         if (correct) {
             feedback.className = 'practice-feedback correct show';
             feedback.innerHTML = `
-                <strong>✓ Correct!</strong><br>
+                <strong>${correctLabel}</strong><br>
                 ${pq.explanation}
             `;
         } else {
             feedback.className = 'practice-feedback incorrect show';
             feedback.innerHTML = `
-                <strong>✗ Not quite right.</strong><br>
+                <strong>${incorrectLabel}</strong><br>
                 ${pq.explanation}
             `;
         }

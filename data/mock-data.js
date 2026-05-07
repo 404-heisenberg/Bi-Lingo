@@ -310,6 +310,24 @@ const BiLingoData = {
         { id: 'algebra', text: 'What is algebra?' }
     ],
 
+    lessonUiText: {
+        english: {
+            keyPointsHeading: 'Key Points',
+            practiceHeading: 'Test Your Understanding',
+            practiceSubheading: 'Try this practice question to check your understanding.'
+        },
+        isizulu: {
+            keyPointsHeading: 'Amaphuzu Abalulekile',
+            practiceHeading: 'Hlola Ukuqonda Kwakho',
+            practiceSubheading: 'Zama lo mbuzo wokuzijwayeza ukuze uhlole ukuqonda kwakho.'
+        },
+        sesotho: {
+            keyPointsHeading: 'Lintlha tsa Bohlokwa',
+            practiceHeading: 'Lekola Kutlwisiso Ya Hao',
+            practiceSubheading: 'Leka potso ena ya boitlwaelo ho hlahloba kutlwisiso ya hao.'
+        }
+    },
+
     // Lesson detail content
     lessonDetails: {
         'idioms': {
@@ -317,19 +335,60 @@ const BiLingoData = {
             subject: 'English',
             grade: 8,
             summary: 'Idioms are phrases that mean something different from the literal words used.',
-            keyPoints: [
-                'Idioms cannot be translated word-for-word',
-                'Context helps you understand the real meaning',
-                'Idioms often reflect culture and everyday life'
-            ],
+            keyPoints: {
+                english: [
+                    'Idioms cannot be translated word-for-word',
+                    'Context helps you understand the real meaning',
+                    'Idioms often reflect culture and everyday life'
+                ],
+                isizulu: [
+                    'Ama-idiom awakwazi ukuhunyushwa ngamagama aqondile',
+                    'Ulimi oluzungezile luyasiza ukuqonda incazelo yangempela',
+                    'Ama-idiom avame ukuveza isiko nokuphila kwansuku zonke'
+                ],
+                sesotho: [
+                    'Idiom ha e fetolelwe ka mantsoe ka ho toba',
+                    'Maemo a thusa ho utloisisa moelelo wa nnete',
+                    'Idiom hangata e bontsha setso le bophelo ba letsatsi le letsatsi'
+                ]
+            },
             englishExplanation: 'An idiom is a phrase with a hidden meaning that is different from its literal words. For example, “break the ice” means to start a friendly conversation, not to crack real ice. Use the situation to understand the real meaning.',
             isizuluExplanation: 'I-idiom yisisho esinencazelo efihlekile ehlukile kulokho okushiwo amagama ayo. Isibonelo, “break the ice” kusho ukuqala ingxoxo ngobungane, hhayi ukuqhekeza iqhwa. Sebenzisa isimo ukuze uqonde umqondo wangempela.',
             sesothoExplanation: 'Idiom ke polelo e nang le moelelo o patiloeng o fapaneng le mantsoe a yona. Mohlala, “break the ice” e bolela ho qala puisano ka botsoalle, eseng ho roba leqhoa. Sebedisa maemo ho utloisisa moelelo oa nnete.',
             practiceQuestion: {
-                question: 'Which phrase is an idiom?',
-                options: ['I drank water', 'Break the ice', 'The sun is bright', 'She wrote a letter'],
-                correctAnswer: 1,
-                explanation: '“Break the ice” has a meaning different from the literal words, which makes it an idiom.'
+                english: {
+                    question: 'Which phrase is an idiom?',
+                    options: ['I drank water', 'Break the ice', 'The sun is bright', 'She wrote a letter'],
+                    correctAnswer: 1,
+                    explanation: '“Break the ice” has a meaning different from the literal words, which makes it an idiom.',
+                    labels: {
+                        check: 'Check Answer',
+                        correct: '✓ Correct!',
+                        incorrect: '✗ Not quite right.'
+                    }
+                },
+                isizulu: {
+                    question: 'Yisiphi isisho esiyi-idiom?',
+                    options: ['Ngiphuze amanzi', 'Break the ice', 'Ilanga liyakhanya', 'Wabhala incwadi'],
+                    correctAnswer: 1,
+                    explanation: '“Break the ice” inencazelo ehlukile kunamagama ayo, yingakho iyisisho se-idiom.',
+                    labels: {
+                        check: 'Hlola Impendulo',
+                        correct: '✓ Kulungile!',
+                        incorrect: '✗ Akukalungi.'
+                    }
+                },
+                sesotho: {
+                    question: 'Ke polelo efe e leng idiom?',
+                    options: ['Ke ile ka nwa metsi', 'Break the ice', 'Letsatsi lea khanya', 'O ile a ngola lengolo'],
+                    correctAnswer: 1,
+                    explanation: '“Break the ice” e na le moelelo o fapaneng le mantsoe a yona, kahoo ke idiom.',
+                    labels: {
+                        check: 'Lekola Karabo',
+                        correct: '✓ Ho nepahetse!',
+                        incorrect: '✗ Ha e a nepahala.'
+                    }
+                }
             },
             tutorNotes: {
                 english: [
@@ -381,19 +440,60 @@ const BiLingoData = {
             subject: 'Mathematics',
             grade: 10,
             summary: 'Explore high-level concepts like Pythagorean theorem, probability, and quadratic equations.',
-            keyPoints: [
-                'Pythagorean theorem connects sides of a right triangle',
-                'Probability measures how likely something is to happen',
-                'Quadratic equations are written in the form ax² + bx + c = 0'
-            ],
+            keyPoints: {
+                english: [
+                    'Pythagorean theorem connects sides of a right triangle',
+                    'Probability measures how likely something is to happen',
+                    'Quadratic equations are written in the form ax² + bx + c = 0'
+                ],
+                isizulu: [
+                    'I-Pythagorean theorem ixhumanisa izinhlangothi ze-triangle enesiqu esingu-90°',
+                    'I-probability ikala ukuthi into ingenzeka kangakanani',
+                    'Ama-quadratic equations abhalwa ngendlela ethi ax² + bx + c = 0'
+                ],
+                sesotho: [
+                    'Pythagorean theorem e hokahanya mahlakore a triangle ya 90°',
+                    'Probability e lekanya monyetla wa ho etsahala ha ntho',
+                    'Quadratic equations di ngolwa ka sebopeho sa ax² + bx + c = 0'
+                ]
+            },
             englishExplanation: 'This lesson introduces three big ideas you will keep using: the Pythagorean theorem, probability, and quadratic equations. Use the tutor to break down each one and see examples that connect to daily life.',
             isizuluExplanation: 'Lesi sifundo sikulethela imibono emithathu ebalulekile: i-Pythagorean theorem, amathuba (probability), kanye nama-quadratic equations. Sebenzisa uthisha ukuze akuqondise ngezibonelo eziseduze nempilo yakho.',
             sesothoExplanation: 'Thuto ena e hlahisa mehopolo e meraro e meholo: Pythagorean theorem, probability le quadratic equations. Sebedisa tutor ho hlalosa ka mehato le mehlala e tswang bophelong ba letsatsi le letsatsi.',
             practiceQuestion: {
-                question: 'Which formula represents a quadratic equation?',
-                options: ['a + b = c', 'ax² + bx + c = 0', 'P = 2l + 2w', 'V = IR'],
-                correctAnswer: 1,
-                explanation: 'Quadratic equations are written in the form ax² + bx + c = 0.'
+                english: {
+                    question: 'Which formula represents a quadratic equation?',
+                    options: ['a + b = c', 'ax² + bx + c = 0', 'P = 2l + 2w', 'V = IR'],
+                    correctAnswer: 1,
+                    explanation: 'Quadratic equations are written in the form ax² + bx + c = 0.',
+                    labels: {
+                        check: 'Check Answer',
+                        correct: '✓ Correct!',
+                        incorrect: '✗ Not quite right.'
+                    }
+                },
+                isizulu: {
+                    question: 'Yiliphi ifomula emele i-quadratic equation?',
+                    options: ['a + b = c', 'ax² + bx + c = 0', 'P = 2l + 2w', 'V = IR'],
+                    correctAnswer: 1,
+                    explanation: 'Ama-quadratic equations abhalwa ngendlela ethi ax² + bx + c = 0.',
+                    labels: {
+                        check: 'Hlola Impendulo',
+                        correct: '✓ Kulungile!',
+                        incorrect: '✗ Akukalungi.'
+                    }
+                },
+                sesotho: {
+                    question: 'Ke foromo efe e emelang quadratic equation?',
+                    options: ['a + b = c', 'ax² + bx + c = 0', 'P = 2l + 2w', 'V = IR'],
+                    correctAnswer: 1,
+                    explanation: 'Quadratic equations di ngolwa ka sebopeho sa ax² + bx + c = 0.',
+                    labels: {
+                        check: 'Lekola Karabo',
+                        correct: '✓ Ho nepahetse!',
+                        incorrect: '✗ Ha e a nepahala.'
+                    }
+                }
             }
         },
         'photosynthesis': {
@@ -401,20 +501,63 @@ const BiLingoData = {
             subject: 'Natural Sciences',
             grade: 7,
             summary: 'Photosynthesis is how plants make their own food using sunlight, water, and carbon dioxide.',
-            keyPoints: [
-                'Plants need sunlight, water, and CO₂ to perform photosynthesis',
-                'Chlorophyll in leaves captures light energy',
-                'Plants produce glucose (sugar) and oxygen as byproducts',
-                'This process happens mainly in the leaves'
-            ],
+            keyPoints: {
+                english: [
+                    'Plants need sunlight, water, and CO₂ to perform photosynthesis',
+                    'Chlorophyll in leaves captures light energy',
+                    'Plants produce glucose (sugar) and oxygen as byproducts',
+                    'This process happens mainly in the leaves'
+                ],
+                isizulu: [
+                    'Izitshalo zidinga ukukhanya kwelanga, amanzi, ne-CO₂ ukuze ziqhube i-photosynthesis',
+                    'I-chlorophyll emaqabungeni ibamba amandla okukhanya',
+                    'Izitshalo zikhiqiza i-glucose (ushukela) ne-oxygen njengomkhiqizo ohlangene',
+                    'Lena yenzeka kakhulu emaqabungeni'
+                ],
+                sesotho: [
+                    'Dimela di hloka khanya ya letsatsi, metsi le CO₂ ho etsa photosynthesis',
+                    'Chlorophyll makhasing e tshwara matla a khanya',
+                    'Dimela di hlahisa glucose (tswekere) le oxygen e le dihlahisoa',
+                    'Tshebetso ena e etsahala haholo makhasing'
+                ]
+            },
             englishExplanation: 'Photosynthesis is a chemical process where plants convert light energy from the sun into chemical energy stored in glucose. The word "photosynthesis" comes from Greek: "photo" meaning light, and "synthesis" meaning putting together. During this process, plants take in carbon dioxide through tiny holes in their leaves called stomata, absorb water through their roots, and use sunlight captured by chlorophyll to produce glucose and oxygen. The glucose feeds the plant, while oxygen is released into the atmosphere for us to breathe!',
             isizuluExplanation: 'I-photosynthesis yinqubo yamakhemikhali lapho izitshalo ziguqula khona amandla okukhanya kwelanga abe amandla amakhemikhali agcinwe ku-glucose. Igama elithi "photosynthesis" livela esiGreek: "photo" okusho ukukhanya, kanti "synthesis" okusho ukuhlanganisa. Ngesikhathi sale nqubo, izitshalo zithatha i-carbon dioxide ngezimbobo ezincane emaqabungeni azo ezibizwa ngokuthi ama-stomata, zimunce amanzi ngezimpande zazo, futhi zisebenzise ukukhanya kwelanga okubanjwe yi-chlorophyll ukuze zikhiqize i-glucose ne-oxygen. I-glucose idla leso sitshalo, kanti i-oxygen ikhishwa emkhathini ukuze sishe sishe!',
             sesothoExplanation: 'Photosynthesis ke tshebetso ya dikhemikhale moo dimela di fetolang matla a khanya ya letsatsi mme di a etsa matla a dikhemikhale a bolokilweng ho glucose. Lentswe "photosynthesis" le tswa Segerike: "photo" se bolela khanya, mme "synthesis" se bolela ho kopanya. Nakong ya tshebetso ena, dimela di nka carbon dioxide ka diheke tse nyane dikarolong tsa tsona tse bitwang stomata, di monya metsi ka dipeo tsa tsona, mme di sebelisa khanya ya letsatsi e tswawered by chlorophyll ho hlahisa glucose le oxygen. Glucose e fodisa semela seo, mme oxygen e lokollwa moya hore re e phefumele!',
             practiceQuestion: {
-                question: 'What do plants need to perform photosynthesis?',
-                options: ['Sunlight, water, and CO₂', 'Soil, fertilizer, and rain', 'Shade, wind, and dew', 'Nutrients, heat, and minerals'],
-                correctAnswer: 0,
-                explanation: 'Plants need sunlight (energy), water (from roots), and carbon dioxide (from air) to perform photosynthesis.'
+                english: {
+                    question: 'What do plants need to perform photosynthesis?',
+                    options: ['Sunlight, water, and CO₂', 'Soil, fertilizer, and rain', 'Shade, wind, and dew', 'Nutrients, heat, and minerals'],
+                    correctAnswer: 0,
+                    explanation: 'Plants need sunlight (energy), water (from roots), and carbon dioxide (from air) to perform photosynthesis.',
+                    labels: {
+                        check: 'Check Answer',
+                        correct: '✓ Correct!',
+                        incorrect: '✗ Not quite right.'
+                    }
+                },
+                isizulu: {
+                    question: 'Yini izitshalo ezidingayo ukuze ziqhube i-photosynthesis?',
+                    options: ['Ukukhanya kwelanga, amanzi, ne-CO₂', 'Umhlabathi, umanyolo, nemvula', 'Umthunzi, umoya, nomhwamuko', 'Izithako zokudla, ukushisa, namaminerali'],
+                    correctAnswer: 0,
+                    explanation: 'Izitshalo zidinga ukukhanya kwelanga (amandla), amanzi (ezimpandeni), ne-carbon dioxide (emoyeni) ukuze ziqhube i-photosynthesis.',
+                    labels: {
+                        check: 'Hlola Impendulo',
+                        correct: '✓ Kulungile!',
+                        incorrect: '✗ Akukalungi.'
+                    }
+                },
+                sesotho: {
+                    question: 'Dimela di hloka eng ho etsa photosynthesis?',
+                    options: ['Khanya ya letsatsi, metsi le CO₂', 'Mobu, manyolo le pula', 'Moriti, moya le phoka', 'Diminerale, mocheso le phepo'],
+                    correctAnswer: 0,
+                    explanation: 'Dimela di hloka khanya ya letsatsi (matla), metsi (metso), le carbon dioxide (moya) ho etsa photosynthesis.',
+                    labels: {
+                        check: 'Lekola Karabo',
+                        correct: '✓ Ho nepahetse!',
+                        incorrect: '✗ Ha e a nepahala.'
+                    }
+                }
             }
         },
         'fractions': {
@@ -422,20 +565,63 @@ const BiLingoData = {
             subject: 'Mathematics',
             grade: 7,
             summary: 'Fractions represent parts of a whole number, with a numerator (top) and denominator (bottom).',
-            keyPoints: [
-                'A fraction shows equal parts of a whole',
-                'The numerator (top) shows how many parts you have',
-                'The denominator (bottom) shows total equal parts',
-                'Fractions can be compared, added, and subtracted'
-            ],
+            keyPoints: {
+                english: [
+                    'A fraction shows equal parts of a whole',
+                    'The numerator (top) shows how many parts you have',
+                    'The denominator (bottom) shows total equal parts',
+                    'Fractions can be compared, added, and subtracted'
+                ],
+                isizulu: [
+                    'Ingxenyana ikhombisa izingxenye ezilinganayo zento ephelele',
+                    'I-numerator (phezulu) ikhombisa ukuthi zingaki izingxenye onazo',
+                    'I-denominator (phansi) ikhombisa inani eliphelele lezingxenye ezilinganayo',
+                    'Amaxenyana angaqhathaniswa, anezwe, noma asuswe'
+                ],
+                sesotho: [
+                    'Fraction e bontsha dikarolo tse lekanang tsa ntho e felletseng',
+                    'Numerator (hodimo) e bontsha hore o na le dikarolo tse kae',
+                    'Denominator (tlase) e bontsha palo yohle ya dikarolo tse lekanang',
+                    'Dikarolo di ka bapiswa, tsa eketswa, kapa tsa tloswa'
+                ]
+            },
             englishExplanation: 'A fraction is a way to represent parts of a whole. Think of a pizza cut into 8 equal slices. If you take 3 slices, you have 3/8 of the pizza. The top number (3) is called the numerator — it tells us how many parts we have. The bottom number (8) is the denominator — it tells us the total number of equal parts. Fractions are everywhere: sharing a chocolate bar (3/4), telling time (quarter past = 1/4), or measuring ingredients for pap (1/2 cup of mealie meal)!',
             isizuluExplanation: 'Ingxenyana iyindlela yokumelela izingxenye zento ephelele. Cabanga ngepizza enqanyuliweyo izinxele ezi-8 ezilinganayo. Uma uthatha izinxele ezi-3, unazo i-3/8 yepizza. Inombolo ephezulu (3) ibizwa ngokuthi i-numerator — itshela ukuthi sinezingxenye ezingaki. Inombolo engezansi (8) iyi-denominator — itshela ukuthi yizingxenye ezingaki eziphelele ezilinganayo. Amaxenyana asendaweni yonke: ukwaba ibha yoshokoledi (3/4), ukutshela isikhathi (iquarter edlule = 1/4), noma ukalinga izithako zepap (1/2 indebe yomphuphu)!',
             sesothoExplanation: 'Fraction ke tsela ya ho emela dikarolo tsa ntho e felletseng. Nahana ka pizza e arohaneng dikoto tse 8 tse lekanang. Ha o nka dikoto tse 3, o na le 3/8 ya pizza. Nomoro e hodimo (3) e bitwa numerator — e re bolella hore re na le dikarolo tse kae. Nomoro e tlase (8) ke denominator — e re bolella hore ke dikarolo tse kae tse felletseng tse lekanang. Dikarolo di na le hohle: ho arolelana bara ya tsokolate (3/4), ho bolella nako (kotara e fetileng = 1/4), kapa ho lekanya diopea tsa papa (1/2 ya kopi ya phuphu)!',
             practiceQuestion: {
-                question: 'In the fraction 3/8, what does the number 8 represent?',
-                options: ['The number of parts you have', 'The total number of equal parts', 'The size of each part', 'The type of fraction'],
-                correctAnswer: 1,
-                explanation: 'In 3/8, the denominator (8) represents the total number of equal parts the whole is divided into.'
+                english: {
+                    question: 'In the fraction 3/8, what does the number 8 represent?',
+                    options: ['The number of parts you have', 'The total number of equal parts', 'The size of each part', 'The type of fraction'],
+                    correctAnswer: 1,
+                    explanation: 'In 3/8, the denominator (8) represents the total number of equal parts the whole is divided into.',
+                    labels: {
+                        check: 'Check Answer',
+                        correct: '✓ Correct!',
+                        incorrect: '✗ Not quite right.'
+                    }
+                },
+                isizulu: {
+                    question: 'Kufraction 3/8, inombolo 8 imele ini?',
+                    options: ['Inani lezingxenye onazo', 'Inani eliphelele lezingxenye ezilinganayo', 'Usayizi wengxenye ngayinye', 'Uhlobo lwengxenyana'],
+                    correctAnswer: 1,
+                    explanation: 'Kufraction 3/8, i-denominator (8) imele inani eliphelele lezingxenye ezilinganayo into ephelele ehlukaniswe ngazo.',
+                    labels: {
+                        check: 'Hlola Impendulo',
+                        correct: '✓ Kulungile!',
+                        incorrect: '✗ Akukalungi.'
+                    }
+                },
+                sesotho: {
+                    question: 'Fraction 3/8, nomoro 8 e emela eng?',
+                    options: ['Palo ya dikarolo tseo o nang le tsona', 'Palo yohle ya dikarolo tse lekanang', 'Boholo ba karolo ka nngwe', 'Mofuta wa fraction'],
+                    correctAnswer: 1,
+                    explanation: 'Ho 3/8, denominator (8) e emela palo yohle ya dikarolo tse lekanang tseo ntho e felletseng e arolwang ka tsona.',
+                    labels: {
+                        check: 'Lekola Karabo',
+                        correct: '✓ Ho nepahetse!',
+                        incorrect: '✗ Ha e a nepahala.'
+                    }
+                }
             }
         }
     }

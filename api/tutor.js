@@ -25,38 +25,64 @@ module.exports = async (req, res) => {
         const hfUrl = 'https://router.huggingface.co/v1/chat/completions';
         const modelId = 'openai/gpt-oss-20b:groq';
         console.log('[tutor] HF Router URL:', hfUrl);
-        const hfResponse = await fetch(hfUrl, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${hfToken}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                model: modelId,
-                temperature: 0.6,
-                max_tokens: 260,
-                messages: [
-                    {
-                        role: 'system',
-                        content: 'You are a bilingual math tutor. Return ONLY a JSON object with keys english, isizulu, sesotho. No extra text.'
-                    },
-                    {
-                        role: 'user',
-                        content: `Answer this math question clearly and concisely: ${question}`
-                    }
-                ]
-            })
-        });
+        const requestCompletion = async (systemPrompt, temperature, maxTokens) => {
+            const hfResponse = await fetch(hfUrl, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${hfToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    model: modelId,
+                    temperature,
+                    max_tokens: maxTokens,
+                    response_format: { type: 'json_object' },
+                    messages: [
+                        {
+                            role: 'system',
+                            content: systemPrompt
+                        },
+                        {
+                            role: 'user',
+                            content: `Answer this math question clearly and concisely: ${question}`
+                        }
+                    ]
+                })
+            });
 
-        if (!hfResponse.ok) {
-            const errorText = await hfResponse.text();
-            return res.status(502).json({ error: 'Upstream API error', details: errorText });
+            if (!hfResponse.ok) {
+                const errorText = await hfResponse.text();
+                return { ok: false, errorText };
+            }
+
+            const data = await hfResponse.json();
+            const choices = data?.choices || [];
+            return { ok: true, choices };
+        };
+
+        const primaryPrompt = 'You are a bilingual math tutor. Return ONLY a JSON object with keys english, isizulu, sesotho. No extra text. Do not include reasoning.';
+        const fallbackPrompt = 'Return ONLY a JSON object with keys english, isizulu, sesotho. Do not include reasoning or extra text. Output must be valid JSON.';
+
+        let result = await requestCompletion(primaryPrompt, 0.4, 320);
+        if (!result.ok) {
+            return res.status(502).json({ error: 'Upstream API error', details: result.errorText });
         }
 
-        const data = await hfResponse.json();
-        const choices = data?.choices || [];
+        let choices = result.choices;
+        let content = choices[0]?.message?.content || '';
+        let finishReason = choices[0]?.finish_reason || '';
+
+        if (!content || finishReason === 'length') {
+            const retry = await requestCompletion(fallbackPrompt, 0.2, 420);
+            if (!retry.ok) {
+                return res.status(502).json({ error: 'Upstream API error', details: retry.errorText });
+            }
+            choices = retry.choices;
+            content = choices[0]?.message?.content || '';
+            finishReason = choices[0]?.finish_reason || finishReason;
+        }
+
         console.log('[tutor] HF Router choices:', JSON.stringify(choices).slice(0, 2000));
-        const content = choices[0]?.message?.content || '';
         console.log('[tutor] Raw model content:', content.slice(0, 500));
         let parsed;
         try {

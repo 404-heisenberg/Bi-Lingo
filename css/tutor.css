@@ -58,6 +58,22 @@
     animation-delay: 0.4s;
 }
 
+/* Live mode toggle */
+.tutor-live-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.tutor-live-toggle .live-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    font-size: 13px;
+}
+
 @keyframes typingBounce {
     0%, 60%, 100% {
         transform: translateY(0);

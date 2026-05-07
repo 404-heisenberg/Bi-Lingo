@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
 
     try {
         const hfUrl = 'https://router.huggingface.co/v1/chat/completions';
-        const modelId = 'deepseek-ai/DeepSeek-V4-Pro:novita';
+        const modelId = 'meta-llama/Meta-Llama-3.1-8B-Instruct:groq';
         console.log('[tutor] HF Router URL:', hfUrl);
         const hfResponse = await fetch(hfUrl, {
             method: 'POST',
@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
                 messages: [
                     {
                         role: 'system',
-                        content: 'You are a bilingual math tutor. Return JSON with keys: english, isizulu, sesotho. Keep answers short and clear.'
+                        content: 'You are a bilingual math tutor. Return ONLY a JSON object with keys english, isizulu, sesotho. No extra text.'
                     },
                     {
                         role: 'user',
@@ -58,7 +58,8 @@ module.exports = async (req, res) => {
         console.log('[tutor] Raw model content:', content.slice(0, 500));
         let parsed;
         try {
-            parsed = JSON.parse(content);
+            const jsonMatch = content.match(/\{[\s\S]*\}/);
+            parsed = jsonMatch ? JSON.parse(jsonMatch[0]) : null;
         } catch (parseError) {
             parsed = null;
         }

@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
     }
 
     try {
-        const hfUrl = 'https://api-inference.huggingface.co/models/distilgpt2';
+        const hfUrl = 'https://api-inference.huggingface.co/models/openai-community/gpt2';
         console.log('[tutor] HF URL:', hfUrl);
         const hfResponse = await fetch(hfUrl, {
             method: 'POST',

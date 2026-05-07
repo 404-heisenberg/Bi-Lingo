@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
 
     try {
         const hfUrl = 'https://router.huggingface.co/v1/chat/completions';
-        const modelId = 'meta-llama/Meta-Llama-3.1-8B-Instruct:groq';
+        const modelId = 'openai/gpt-oss-20b:groq';
         console.log('[tutor] HF Router URL:', hfUrl);
         const hfResponse = await fetch(hfUrl, {
             method: 'POST',

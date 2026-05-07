@@ -22,7 +22,9 @@ module.exports = async (req, res) => {
     }
 
     try {
-        const hfResponse = await fetch('https://api-inference.huggingface.co/models/gpt2', {
+        const hfUrl = 'https://api-inference.huggingface.co/models/gpt2';
+        console.log('[tutor] HF URL:', hfUrl);
+        const hfResponse = await fetch(hfUrl, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${hfToken}`,

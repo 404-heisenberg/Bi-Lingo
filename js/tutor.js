@@ -116,7 +116,7 @@ function setupLanguageTabs() {
             // Update current language
             currentLanguage = this.dataset.lang;
             // Re-render current question in new language
-            if (currentQuestionId) {
+            if (currentQuestionId || lastCustomResponse) {
                 rerenderCurrentQuestion();
             }
             if (currentLessonId) {

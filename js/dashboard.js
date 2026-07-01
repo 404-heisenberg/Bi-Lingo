@@ -49,7 +49,7 @@ function populateLessons() {
     ];
 
     lessonGrid.innerHTML = lessons.map(lesson => {
-        const buttonLabel = lesson.progress > 0 ? 'Continue Lesson →' : 'Start Lesson →';
+        const buttonLabel = lesson.progress > 0 ? 'Continue Lesson' : 'Start Lesson';
         return `
             <div class="card lesson-card">
                 <div class="lesson-header">
@@ -81,7 +81,7 @@ function populateLessons() {
                 </div>
                 <div class="card-actions" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                     <a href="lesson.html?id=${lesson.id}" class="btn btn-primary btn-sm">${buttonLabel}</a>
-                    <a href="tutor.html?lessonId=${lesson.id}" class="btn btn-outline">Ask Tutor →</a>
+                    <a href="tutor.html?lessonId=${lesson.id}" class="btn btn-outline">Ask Tutor</a>
                 </div>
             </div>
         `;

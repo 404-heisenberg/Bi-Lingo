@@ -1722,13 +1722,13 @@ footer .inner {
 }
 
 .learner-card .learner-meta {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--fg-dim);
     font-family: var(--f-mono);
 }
 
 .learner-card .learner-struggle {
-    font-size: 12px;
+    font-size: 13px;
     color: #ff6b6b;
     margin-top: 0.25rem;
     line-height: 1.5;

@@ -130,7 +130,7 @@
 .detail-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .detail-table th {
@@ -158,8 +158,8 @@
 .score-high { color: #4ade80; font-weight: 600; }
 
 .focus-text {
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 15px;
+    line-height: 1.7;
     color: var(--fg);
     margin: 0;
     padding: 1rem 1.25rem;

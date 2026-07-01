@@ -163,3 +163,12 @@
         align-items: flex-start;
     }
 }
+
+@media (max-width: 520px) {
+    .app-nav .page-title {
+        display: none;
+    }
+    .app-nav .btn-ghost {
+        font-size: clamp(11px, 3vw, 14px);
+    }
+}

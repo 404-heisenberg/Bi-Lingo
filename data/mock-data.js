@@ -705,14 +705,14 @@ const BiLingoData = {
                 }
             },
             {
-                name: 'Zanele K.', grade: '11', subject: 'Life Sciences', lastActive: '3h ago', confidence: 'medium', struggleTopic: 'Photosynthesis', suggestion: 'She understands the process but struggles with English terms. Try the isiZulu tutor.',
+                name: 'Zanele K.', grade: '11', subject: 'Life Sciences', lastActive: '3h ago', confidence: 'medium', struggleTopic: 'Plant Reproductive System', suggestion: 'Struggles with English terminology for flower structures. Try the isiZulu tutor with plant diagrams.',
                 details: {
                     lessons: [
                         { name: 'Cell Biology', progress: 100, scoreEnglish: 72, scoreHome: 90, homeLang: 'isiZulu' },
-                        { name: 'Photosynthesis', progress: 50, scoreEnglish: 40, scoreHome: 82, homeLang: 'isiZulu' },
+                        { name: 'Plant Reproductive System', progress: 50, scoreEnglish: 40, scoreHome: 82, homeLang: 'isiZulu' },
                         { name: 'Ecology', progress: 20, scoreEnglish: 65, scoreHome: 85, homeLang: 'isiZulu' }
                     ],
-                    focus: 'Photosynthesis is the key gap. Zanele scores 82% in isiZulu but only 40% in English — the process is clear to her, but English exam terms cause errors. Use isiZulu tutor for revision before tests.'
+                    focus: 'Plant Reproductive System needs revision. Zanele scores 82% in isiZulu but only 40% in English — she understands the biology, but English terms for flower structures (stamen, carpel, pollination) cause confusion. Use isiZulu tutor with labelled diagrams before the English test.'
                 }
             },
             {

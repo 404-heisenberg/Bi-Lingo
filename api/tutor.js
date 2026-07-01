@@ -16,20 +16,20 @@ module.exports = async (req, res) => {
         return res.status(400).json({ error: 'Question is required' });
     }
 
-    const hfToken = process.env.HF_TOKEN;
-    if (!hfToken) {
-        return res.status(500).json({ error: 'HF_TOKEN not configured' });
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+        return res.status(500).json({ error: 'OPENAI_API_KEY not configured' });
     }
 
     try {
-        const hfUrl = 'https://router.huggingface.co/v1/chat/completions';
-        const modelId = 'openai/gpt-oss-20b:groq';
-        console.log('[tutor] HF Router URL:', hfUrl);
+        const apiUrl = 'https://api.openai.com/v1/chat/completions';
+        const modelId = 'gpt-4o';
+        console.log('[tutor] OpenAI URL:', apiUrl);
         const requestCompletion = async (systemPrompt, temperature, maxTokens) => {
-            const hfResponse = await fetch(hfUrl, {
+            const aiResponse = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${hfToken}`,
+                    'Authorization': `Bearer ${apiKey}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
@@ -43,18 +43,18 @@ module.exports = async (req, res) => {
                         },
                         {
                             role: 'user',
-                            content: `Answer this math question clearly and concisely: ${question}`
+                            content: `Answer this question clearly and concisely: ${question}`
                         }
                     ]
                 })
             });
 
-            if (!hfResponse.ok) {
-                const errorText = await hfResponse.text();
+            if (!aiResponse.ok) {
+                const errorText = await aiResponse.text();
                 return { ok: false, errorText };
             }
 
-            const data = await hfResponse.json();
+            const data = await aiResponse.json();
             const choices = data?.choices || [];
             return { ok: true, choices };
         };
@@ -81,7 +81,7 @@ module.exports = async (req, res) => {
             finishReason = choices[0]?.finish_reason || finishReason;
         }
 
-        console.log('[tutor] HF Router choices:', JSON.stringify(choices).slice(0, 2000));
+        console.log('[tutor] OpenAI choices:', JSON.stringify(choices).slice(0, 2000));
         console.log('[tutor] Raw model content:', content.slice(0, 500));
         let parsed;
         try {

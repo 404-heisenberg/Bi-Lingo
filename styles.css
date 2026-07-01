@@ -824,8 +824,9 @@ h2.section-title {
 /* ---------- features ---------- */
 .feature-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
+    margin-top: 3rem;
 }
 @media (max-width: 900px) {
     .feature-grid {
@@ -1472,6 +1473,7 @@ footer .inner {
     flex-wrap: wrap;
     gap: 1rem;
 }
+
 
 /* ---------- motion-safety ---------- */
 @media (prefers-reduced-motion: reduce) {

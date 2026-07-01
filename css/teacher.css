@@ -58,6 +58,11 @@
 
 .learner-card:hover {
     border-color: var(--accent);
+    transform: none;
+}
+
+.learner-card.expanded:hover {
+    border-color: var(--line);
 }
 
 .learner-card .expand-icon {

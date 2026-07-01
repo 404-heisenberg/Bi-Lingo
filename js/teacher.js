@@ -77,8 +77,8 @@ function renderDetail(learner) {
                         <tr>
                             <th>Lesson</th>
                             <th>Progress</th>
-                            <th>Score (English)</th>
-                            <th>Score (${d.lessons[0].homeLang})</th>
+                            <th title="Quiz/test score in English">Score (English)</th>
+                            <th title="Quiz/test score in home language">Score (${d.lessons[0].homeLang})</th>
                         </tr>
                     </thead>
                     <tbody>

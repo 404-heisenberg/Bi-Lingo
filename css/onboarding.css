@@ -110,3 +110,12 @@
         padding: 0.95rem 0.75rem;
     }
 }
+
+@media (max-width: 520px) {
+    .app-nav .page-title {
+        display: none;
+    }
+    .app-nav .nav-actions .badge {
+        display: none;
+    }
+}

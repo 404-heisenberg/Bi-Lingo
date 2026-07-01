@@ -77,6 +77,12 @@
     <script src="../data/mock-data.js"></script>
     <script src="../js/dashboard.js"></script>
     <script>
+        function exitDemo() {
+            if (confirm('Exit the demo and return to the homepage?')) {
+                clearLearnerProfile();
+                window.location.href = '../index.html';
+            }
+        }
         (function(){var t=document.getElementById('theme-toggle');if(!t)return;t.addEventListener('click',function(){var h=document.documentElement;var l=h.getAttribute('data-theme')==='light';if(l){h.removeAttribute('data-theme');localStorage.setItem('biLingoTheme','dark');}else{h.setAttribute('data-theme','light');localStorage.setItem('biLingoTheme','light');}});})();
     </script>
 </body>

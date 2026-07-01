@@ -659,6 +659,32 @@ const BiLingoData = {
         isizulu: 'Leyo yimibuzo emnandi! Enguqulweni ephelele ye-Bi-Lingo, ngizokunikeza izincazelo ezinemininingwane ngolimi lwakho lwasekhaya ngezibonelo eziseduze nempilo yakho. Zama omunye wemibuzo esheshayo ukuze ubone i-demo yezilimi.',
         sesotho: 'Ke potso e kgahlisang! Mofuteng o felletseng wa Bi-Lingo, ke tla fana ka tlhaloso e qaqileng ka puo ya hao ya lapeng le mehlala e haufi le bophelo. Leka e nngwe ya dipotso tse potlakileng ho bona demo ya dipuo.'
     }
+    ,teacher: {
+        stats: {
+            totalLearners: 24,
+            needLanguageSupport: 8,
+            topicsNeedingAttention: 3,
+            onTrack: 13
+        },
+        languageAlert: {
+            flagged: 8,
+            headline: '8 learners may struggle with English terminology.',
+            message: 'These learners understand concepts but lose marks when instructions are in English. Bi-Lingo lets them review lessons in isiZulu, Sesotho, or their home language — so they come to class prepared.'
+        },
+        learners: [
+            { name: 'Thando M.', grade: '10', subject: 'Mathematics', lastActive: '2h ago', confidence: 'medium', struggleTopic: 'Quadratic equations', suggestion: 'Review in isiZulu — the parabola concept translates clearly.' },
+            { name: 'Lindiwe N.', grade: '11', subject: 'Physical Sciences', lastActive: '1d ago', confidence: 'low', struggleTopic: 'Chemical bonding', suggestion: 'Assign the bonding lesson in Sesotho first, then English.' },
+            { name: 'Kagiso R.', grade: '10', subject: 'Mathematics', lastActive: '30m ago', confidence: 'high', struggleTopic: '', suggestion: '' },
+            { name: 'Zanele K.', grade: '11', subject: 'Life Sciences', lastActive: '3h ago', confidence: 'medium', struggleTopic: 'Photosynthesis', suggestion: 'She understands the process but struggles with English terms. Try the isiZulu tutor.' },
+            { name: 'Sipho D.', grade: '10', subject: 'English HL', lastActive: 'Just now', confidence: 'high', struggleTopic: '', suggestion: '' },
+            { name: 'Amahle M.', grade: '11', subject: 'Mathematics', lastActive: 'Yesterday', confidence: 'low', struggleTopic: 'Probability', suggestion: 'Loops through the same steps — may need the foundation lesson in Sesotho first.' }
+        ],
+        supportCards: [
+            { icon: '🌍', title: 'Language Bridge', message: 'Learners prep in their home language, then apply confidently in English class.' },
+            { icon: '📊', title: 'Early Warning', message: 'Spot who is falling behind before report cards — intervene early and precisely.' },
+            { icon: '🧑‍🏫', title: 'Teacher-First', message: 'You stay in control. Bi-Lingo is a tool in your toolkit, not a replacement.' }
+        ]
+    }
 };
 
 // Helper function to get learner profile from localStorage

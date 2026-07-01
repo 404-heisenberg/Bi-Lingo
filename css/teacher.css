@@ -46,7 +46,13 @@
 }
 
 @media (max-width: 480px) {
-    .support-grid {
+#learner-roster {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.support-grid {
         grid-template-columns: 1fr;
     }
 }

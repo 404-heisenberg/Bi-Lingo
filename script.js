@@ -261,3 +261,21 @@
         }, FADE_MS);
     }, HOLD_MS);
 })();
+
+// ---------- theme toggle ----------
+(function wireThemeToggle() {
+    var toggle = document.getElementById("theme-toggle");
+    if (!toggle) return;
+
+    toggle.addEventListener("click", function () {
+        var html = document.documentElement;
+        var isLight = html.getAttribute("data-theme") === "light";
+        if (isLight) {
+            html.removeAttribute("data-theme");
+            localStorage.setItem("biLingoTheme", "dark");
+        } else {
+            html.setAttribute("data-theme", "light");
+            localStorage.setItem("biLingoTheme", "light");
+        }
+    });
+})();

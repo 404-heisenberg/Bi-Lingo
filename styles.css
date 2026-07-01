@@ -5,19 +5,20 @@
     --accent-deep: oklch(0.62 0.17 220);
     --accent-glow: color-mix(
         in oklch,
-        var(--accent) 40%,
+        var(--accent) 25%,
         transparent
     );
+    --on-accent: #0b0d10;
 
-    /* surfaces (ink-black default) */
-    --bg: #07090c;
-    --bg-2: #0c1016;
-    --bg-3: #141a23;
+    /* surfaces (warm dark) */
+    --bg: #0a0806;
+    --bg-2: #0f0d0a;
+    --bg-3: #1a1510;
     --fg: #f4f1ea;
     --fg-dim: #b8b0a3;
     --fg-mute: #6b6558;
-    --line: rgba(255, 255, 255, 0.08);
-    --line-strong: rgba(255, 255, 255, 0.16);
+    --line: rgba(255, 255, 255, 0.06);
+    --line-strong: rgba(255, 255, 255, 0.14);
     --card: rgba(255, 255, 255, 0.03);
 
     --space: 1.5rem;
@@ -26,6 +27,24 @@
     --f-display: "Space Grotesk", sans-serif;
     --f-body: "Inter", sans-serif;
     --f-mono: "JetBrains Mono", monospace;
+}
+
+/* ---------- light theme ---------- */
+[data-theme="light"] {
+    --accent: #d97706;
+    --accent-deep: #b45309;
+    --accent-glow: none;
+    --on-accent: #ffffff;
+
+    --bg: #f8f5f0;
+    --bg-2: #f0ece4;
+    --bg-3: #e8e2d8;
+    --fg: #1a1614;
+    --fg-dim: #5a5550;
+    --fg-mute: #8a8580;
+    --line: rgba(0, 0, 0, 0.06);
+    --line-strong: rgba(0, 0, 0, 0.12);
+    --card: rgba(0, 0, 0, 0.02);
 }
 
 /* ---------- base ---------- */
@@ -45,6 +64,7 @@ body {
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 h1,
 h2,
@@ -127,7 +147,7 @@ nav.top .inner {
     padding: 0.55rem 1.1rem;
     border-radius: 999px;
     background: var(--accent);
-    color: #0b0d10;
+    color: var(--on-accent);
     font-weight: 600;
     font-size: 14px;
     transition:
@@ -150,7 +170,7 @@ nav.top .inner {
 }
 .demo-btn:hover {
     background: var(--accent) !important;
-    color: #0b0d10 !important;
+    color: var(--on-accent) !important;
     transform: translateY(-1px);
     box-shadow: 0 10px 30px -10px var(--accent-glow);
 }
@@ -262,7 +282,7 @@ h1.hero-title .accent {
     display: inline-block;
     padding: 0.95rem 1.6rem;
     background: var(--accent);
-    color: #0b0d10;
+    color: var(--on-accent);
     border-radius: 12px;
     font-weight: 600;
     font-size: 15px;
@@ -1106,7 +1126,7 @@ h2.section-title {
     border: 0;
     border-radius: 10px;
     background: var(--accent);
-    color: #0b0d10;
+    color: var(--on-accent);
     font-family: var(--f-body);
     font-weight: 600;
     font-size: 14px;
@@ -1232,6 +1252,41 @@ footer .inner {
 }
 
 /* ========== PROTOTYPE SHARED COMPONENTS ========== */
+
+/* ---------- Theme Toggle ---------- */
+.theme-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    background: var(--card);
+    color: var(--fg-dim);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    flex-shrink: 0;
+}
+.theme-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+.theme-btn svg {
+    width: 18px;
+    height: 18px;
+}
+.theme-btn .sun-icon {
+    display: none;
+}
+.theme-btn .moon-icon {
+    display: block;
+}
+[data-theme="light"] .theme-btn .moon-icon {
+    display: none;
+}
+[data-theme="light"] .theme-btn .sun-icon {
+    display: block;
+}
 
 /* ---------- App Navigation ---------- */
 .app-nav {
@@ -1457,7 +1512,7 @@ footer .inner {
 
 .btn-primary {
     background: var(--accent);
-    color: #0b0d10;
+    color: var(--on-accent);
 }
 
 .btn-primary:hover {

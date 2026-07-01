@@ -45,14 +45,14 @@
     padding: 1.5rem 1rem;
 }
 
-@media (max-width: 480px) {
 #learner-roster {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
 
-.support-grid {
+@media (max-width: 480px) {
+    .support-grid {
         grid-template-columns: 1fr;
     }
 }

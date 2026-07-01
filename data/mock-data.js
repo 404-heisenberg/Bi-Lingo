@@ -672,12 +672,70 @@ const BiLingoData = {
             message: 'These learners understand concepts but lose marks when instructions are in English. Bi-Lingo lets them review lessons in isiZulu, Sesotho, or their home language — so they come to class prepared.'
         },
         learners: [
-            { name: 'Thando M.', grade: '10', subject: 'Mathematics', lastActive: '2h ago', confidence: 'medium', struggleTopic: 'Quadratic equations', suggestion: 'Review in isiZulu — the parabola concept translates clearly.' },
-            { name: 'Lindiwe N.', grade: '11', subject: 'Physical Sciences', lastActive: '1d ago', confidence: 'low', struggleTopic: 'Chemical bonding', suggestion: 'Assign the bonding lesson in Sesotho first, then English.' },
-            { name: 'Kagiso R.', grade: '10', subject: 'Mathematics', lastActive: '30m ago', confidence: 'high', struggleTopic: '', suggestion: '' },
-            { name: 'Zanele K.', grade: '11', subject: 'Life Sciences', lastActive: '3h ago', confidence: 'medium', struggleTopic: 'Photosynthesis', suggestion: 'She understands the process but struggles with English terms. Try the isiZulu tutor.' },
-            { name: 'Sipho D.', grade: '10', subject: 'English HL', lastActive: 'Just now', confidence: 'high', struggleTopic: '', suggestion: '' },
-            { name: 'Amahle M.', grade: '11', subject: 'Mathematics', lastActive: 'Yesterday', confidence: 'low', struggleTopic: 'Probability', suggestion: 'Loops through the same steps — may need the foundation lesson in Sesotho first.' }
+            {
+                name: 'Thando M.', grade: '10', subject: 'Mathematics', lastActive: '2h ago', confidence: 'medium', struggleTopic: 'Quadratic equations', suggestion: 'Review in isiZulu — the parabola concept translates clearly.',
+                details: {
+                    lessons: [
+                        { name: 'Algebra Basics', progress: 80, scoreEnglish: 45, scoreHome: 85, homeLang: 'isiZulu' },
+                        { name: 'Quadratic Equations', progress: 40, scoreEnglish: 30, scoreHome: 75, homeLang: 'isiZulu' },
+                        { name: 'Geometry', progress: 100, scoreEnglish: 70, scoreHome: 90, homeLang: 'isiZulu' }
+                    ],
+                    focus: 'Quadratic equations need attention. Thando scores 75% in isiZulu but only 30% in English — the concept is understood, the terminology is the barrier.'
+                }
+            },
+            {
+                name: 'Lindiwe N.', grade: '11', subject: 'Physical Sciences', lastActive: '1d ago', confidence: 'low', struggleTopic: 'Chemical bonding', suggestion: 'Assign the bonding lesson in Sesotho first, then English.',
+                details: {
+                    lessons: [
+                        { name: 'Atomic Structure', progress: 100, scoreEnglish: 60, scoreHome: 88, homeLang: 'Sesotho' },
+                        { name: 'Chemical Bonding', progress: 30, scoreEnglish: 25, scoreHome: 70, homeLang: 'Sesotho' },
+                        { name: 'States of Matter', progress: 70, scoreEnglish: 55, scoreHome: 80, homeLang: 'Sesotho' }
+                    ],
+                    focus: 'Chemical bonding is the main gap. Lindiwe grasps it in Sesotho (70%) but struggles with English lab terminology. Preview the bonding lesson in Sesotho before the English class.'
+                }
+            },
+            {
+                name: 'Kagiso R.', grade: '10', subject: 'Mathematics', lastActive: '30m ago', confidence: 'high', struggleTopic: '', suggestion: '',
+                details: {
+                    lessons: [
+                        { name: 'Algebra Basics', progress: 100, scoreEnglish: 92, scoreHome: 95, homeLang: 'Sesotho' },
+                        { name: 'Quadratic Equations', progress: 60, scoreEnglish: 85, scoreHome: 88, homeLang: 'Sesotho' }
+                    ],
+                    focus: 'Kagiso is on track across both languages. No intervention needed — keep challenging with advanced content.'
+                }
+            },
+            {
+                name: 'Zanele K.', grade: '11', subject: 'Life Sciences', lastActive: '3h ago', confidence: 'medium', struggleTopic: 'Photosynthesis', suggestion: 'She understands the process but struggles with English terms. Try the isiZulu tutor.',
+                details: {
+                    lessons: [
+                        { name: 'Cell Biology', progress: 100, scoreEnglish: 72, scoreHome: 90, homeLang: 'isiZulu' },
+                        { name: 'Photosynthesis', progress: 50, scoreEnglish: 40, scoreHome: 82, homeLang: 'isiZulu' },
+                        { name: 'Ecology', progress: 20, scoreEnglish: 65, scoreHome: 85, homeLang: 'isiZulu' }
+                    ],
+                    focus: 'Photosynthesis is the key gap. Zanele scores 82% in isiZulu but only 40% in English — the process is clear to her, but English exam terms cause errors. Use isiZulu tutor for revision before tests.'
+                }
+            },
+            {
+                name: 'Sipho D.', grade: '10', subject: 'English HL', lastActive: 'Just now', confidence: 'high', struggleTopic: '', suggestion: '',
+                details: {
+                    lessons: [
+                        { name: 'Essay Writing', progress: 90, scoreEnglish: 88, scoreHome: 91, homeLang: 'isiZulu' },
+                        { name: 'Comprehension', progress: 70, scoreEnglish: 85, scoreHome: 87, homeLang: 'isiZulu' }
+                    ],
+                    focus: 'Sipho is performing well in English Home Language. Scores are consistent across both languages. Continue with current pace.'
+                }
+            },
+            {
+                name: 'Amahle M.', grade: '11', subject: 'Mathematics', lastActive: 'Yesterday', confidence: 'low', struggleTopic: 'Probability', suggestion: 'Loops through the same steps — may need the foundation lesson in Sesotho first.',
+                details: {
+                    lessons: [
+                        { name: 'Probability', progress: 60, scoreEnglish: 35, scoreHome: 65, homeLang: 'Sesotho' },
+                        { name: 'Data Handling', progress: 40, scoreEnglish: 50, scoreHome: 78, homeLang: 'Sesotho' },
+                        { name: 'Algebra Basics', progress: 100, scoreEnglish: 75, scoreHome: 90, homeLang: 'Sesotho' }
+                    ],
+                    focus: 'Probability is confusing in English (35%) but clearer in Sesotho (65%). Amahle may need the probability foundation lesson in Sesotho first, then retry the English quiz.'
+                }
+            }
         ],
         supportCards: [
             { icon: '🌍', title: 'Language Bridge', message: 'Learners prep in their home language, then apply confidently in English class.' },

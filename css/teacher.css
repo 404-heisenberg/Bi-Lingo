@@ -46,6 +46,96 @@
     gap: 0.75rem;
 }
 
+.learner-card-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.learner-card {
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.learner-card:hover {
+    border-color: var(--accent);
+}
+
+.learner-card .expand-icon {
+    font-size: 14px;
+    color: var(--fg-mute);
+    transition: transform 0.2s;
+}
+
+.learner-detail {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-top: 0;
+    border-radius: 0 0 12px 12px;
+    padding: 1rem 1.5rem 1.5rem;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.detail-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.detail-section h4 {
+    font-size: 13px;
+    font-family: var(--f-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--fg-mute);
+    margin: 0 0 0.75rem;
+}
+
+.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.detail-table th {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    font-size: 11px;
+    font-family: var(--f-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--fg-mute);
+    border-bottom: 1px solid var(--line);
+}
+
+.detail-table td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--line);
+}
+
+.detail-table tr:last-child td {
+    border-bottom: 0;
+}
+
+.score-low { color: #ff6b6b; font-weight: 600; }
+.score-mid { color: #fbbf24; font-weight: 600; }
+.score-high { color: #4ade80; font-weight: 600; }
+
+.focus-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--fg-dim);
+    margin: 0;
+    padding: 0.75rem 1rem;
+    background: rgba(251, 191, 36, 0.06);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+}
+
 @media (max-width: 480px) {
     .support-grid {
         grid-template-columns: 1fr;

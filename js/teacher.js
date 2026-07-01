@@ -36,20 +36,69 @@ function renderAlert(alert) {
     `;
 }
 
+let expandedIndex = null;
+
 function renderRoster(learners) {
     const container = document.getElementById('learner-roster');
-    container.innerHTML = learners.map(l => `
-        <div class="card learner-card">
-            <div class="confidence-indicator">
-                <span class="confidence-dot ${l.confidence}"></span>
+    container.innerHTML = learners.map((l, i) => `
+        <div class="learner-card-wrapper">
+            <div class="card learner-card${l.struggleTopic ? ' has-struggle' : ''}" data-index="${i}" onclick="toggleLearner(${i})">
+                <div class="confidence-indicator">
+                    <span class="confidence-dot ${l.confidence}"></span>
+                </div>
+                <div class="learner-info">
+                    <div class="learner-name">${l.name}</div>
+                    <div class="learner-meta">Grade ${l.grade} · ${l.subject} · Active ${l.lastActive}</div>
+                    ${l.struggleTopic ? `<div class="learner-struggle">⚠ ${l.struggleTopic} — ${l.suggestion}</div>` : ''}
+                </div>
+                <div class="expand-icon">${expandedIndex === i ? '▾' : '▸'}</div>
             </div>
-            <div class="learner-info">
-                <div class="learner-name">${l.name}</div>
-                <div class="learner-meta">Grade ${l.grade} · ${l.subject} · Active ${l.lastActive}</div>
-                ${l.struggleTopic ? `<div class="learner-struggle">⚠ ${l.struggleTopic} — ${l.suggestion}</div>` : ''}
+            <div class="learner-detail" id="detail-${i}" style="display: ${expandedIndex === i ? 'block' : 'none'};">
+                ${renderDetail(l)}
             </div>
         </div>
     `).join('');
+}
+
+function toggleLearner(index) {
+    expandedIndex = expandedIndex === index ? null : index;
+    renderRoster(BiLingoData.teacher.learners);
+}
+
+function renderDetail(learner) {
+    const d = learner.details;
+    if (!d) return '';
+    return `
+        <div class="detail-body">
+            <div class="detail-section">
+                <h4>Lesson Progress</h4>
+                <table class="detail-table">
+                    <thead>
+                        <tr>
+                            <th>Lesson</th>
+                            <th>Progress</th>
+                            <th>Score (English)</th>
+                            <th>Score (${d.lessons[0].homeLang})</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${d.lessons.map(l => `
+                            <tr>
+                                <td>${l.name}</td>
+                                <td>${l.progress}%</td>
+                                <td class="${l.scoreEnglish < 50 ? 'score-low' : l.scoreEnglish < 75 ? 'score-mid' : 'score-high'}">${l.scoreEnglish}%</td>
+                                <td class="${l.scoreHome < 50 ? 'score-low' : l.scoreHome < 75 ? 'score-mid' : 'score-high'}">${l.scoreHome}%</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+            <div class="detail-section">
+                <h4>Focus Recommendation</h4>
+                <p class="focus-text">${d.focus}</p>
+            </div>
+        </div>
+    `;
 }
 
 function renderSupportCards(cards) {

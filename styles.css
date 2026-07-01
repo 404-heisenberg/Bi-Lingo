@@ -321,6 +321,16 @@ h1.hero-title .accent {
     }
 }
 
+@media (max-width: 560px) {
+    .hero-cta-btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 14px;
+    }
+    .hero .hero-grid div[style*="display: flex"] {
+        gap: 0.6rem;
+    }
+}
+
 [data-theme="light"] .phone {
     background: #e8e2d8;
     border-color: #d4cdc4;

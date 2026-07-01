@@ -1389,6 +1389,16 @@ h2.section-title {
     }
 }
 
+@media (max-width: 420px) {
+    .signup-fields {
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+    .signup-fields input:first-child {
+        border-right: 0;
+    }
+}
+
 .signup-success {
     display: flex;
     align-items: center;

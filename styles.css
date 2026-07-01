@@ -1546,19 +1546,6 @@ footer .inner {
     height: 64px;
 }
 
-.app-nav .back-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--fg-dim);
-    font-size: 14px;
-    transition: color 0.2s;
-}
-
-.app-nav .back-btn:hover {
-    color: var(--fg);
-}
-
 .app-nav .page-title {
     font-family: var(--f-display);
     font-weight: 600;

@@ -186,9 +186,6 @@ nav.top .inner {
     .nav-links {
         display: none;
     }
-    .hamburger-btn {
-        display: grid;
-    }
 }
 
 /* ---------- hamburger menu ---------- */
@@ -221,6 +218,12 @@ nav.top .inner {
 }
 .hamburger-btn.open .close-icon {
     display: block;
+}
+
+@media (max-width: 900px) {
+    .hamburger-btn {
+        display: grid;
+    }
 }
 
 .mobile-menu {

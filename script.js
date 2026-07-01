@@ -279,3 +279,41 @@
         }
     });
 })();
+
+// ---------- hamburger menu ----------
+(function wireHamburger() {
+    var btn = document.getElementById("hamburger-btn");
+    var menu = document.getElementById("mobile-menu");
+    if (!btn || !menu) return;
+
+    btn.addEventListener("click", function () {
+        var isOpen = menu.classList.contains("open");
+        if (isOpen) {
+            menu.classList.remove("open");
+            btn.classList.remove("open");
+            btn.setAttribute("aria-label", "Open menu");
+        } else {
+            menu.classList.add("open");
+            btn.classList.add("open");
+            btn.setAttribute("aria-label", "Close menu");
+        }
+    });
+
+    menu.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function () {
+            menu.classList.remove("open");
+            btn.classList.remove("open");
+            btn.setAttribute("aria-label", "Open menu");
+        });
+    });
+
+    document.addEventListener("click", function (e) {
+        if (menu.classList.contains("open")) {
+            if (!menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove("open");
+                btn.classList.remove("open");
+                btn.setAttribute("aria-label", "Open menu");
+            }
+        }
+    });
+})();

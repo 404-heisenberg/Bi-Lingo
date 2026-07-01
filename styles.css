@@ -186,6 +186,85 @@ nav.top .inner {
     .nav-links {
         display: none;
     }
+    .hamburger-btn {
+        display: grid;
+    }
+}
+
+/* ---------- hamburger menu ---------- */
+.hamburger-btn {
+    display: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    background: var(--card);
+    color: var(--fg-dim);
+    cursor: pointer;
+    place-items: center;
+    flex-shrink: 0;
+    transition: border-color 0.2s, color 0.2s;
+}
+.hamburger-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+.hamburger-btn svg {
+    width: 20px;
+    height: 20px;
+}
+.hamburger-btn .close-icon {
+    display: none;
+}
+.hamburger-btn.open .hamburger-icon {
+    display: none;
+}
+.hamburger-btn.open .close-icon {
+    display: block;
+}
+
+.mobile-menu {
+    display: none;
+    position: absolute;
+    inset: 64px 0 auto 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 0.75rem 1.5rem;
+    z-index: 49;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    background: color-mix(in oklch, var(--bg) 98%, transparent);
+}
+.mobile-menu.open {
+    display: block;
+    animation: menuSlide 0.2s ease;
+}
+.mobile-menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+.mobile-menu-links a {
+    display: block;
+    padding: 0.75rem 0.75rem;
+    color: var(--fg-dim);
+    font-size: 15px;
+    border-radius: 8px;
+    transition: color 0.2s, background 0.2s;
+}
+.mobile-menu-links a:hover {
+    color: var(--fg);
+    background: var(--card);
+}
+@keyframes menuSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 /* ---------- hero ---------- */

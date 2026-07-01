@@ -77,8 +77,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         if (!language) {
-            var langOpt = document.querySelector('.language-option.selected');
-            if (langOpt) shakeElement(langOpt);
+            var langGrid = document.getElementById('language-grid');
+            if (langGrid) shakeElement(langGrid);
             return;
         }
 

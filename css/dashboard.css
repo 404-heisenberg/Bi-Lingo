@@ -168,7 +168,8 @@
     .app-nav .page-title {
         display: none;
     }
-    .app-nav .btn-ghost {
-        font-size: clamp(11px, 3vw, 14px);
-    }
+}
+
+.app-nav .nav-actions {
+    gap: 0.25rem;
 }

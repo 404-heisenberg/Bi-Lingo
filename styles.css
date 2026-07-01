@@ -182,7 +182,7 @@ nav.top .inner {
     box-shadow: 0 10px 30px -10px var(--accent-glow);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 990px) {
     .nav-links {
         display: none;
     }
@@ -220,7 +220,7 @@ nav.top .inner {
     display: block;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 990px) {
     .hamburger-btn {
         display: grid;
     }

@@ -125,14 +125,21 @@ nav.top .inner {
     border-radius: 8px;
     background: linear-gradient(
         135deg,
-        var(--accent),
-        var(--accent-deep)
+        oklch(0.82 0.14 215),
+        oklch(0.62 0.17 220)
     );
     display: grid;
     place-items: center;
-    color: var(--bg);
+    color: #0b0d10;
     font-weight: 800;
     font-size: 14px;
+}
+[data-theme="light"] .brand-mark {
+    background: linear-gradient(
+        135deg,
+        oklch(0.82 0.14 215),
+        oklch(0.62 0.17 220)
+    );
 }
 .nav-links {
     display: flex;
@@ -175,7 +182,7 @@ nav.top .inner {
     box-shadow: 0 10px 30px -10px var(--accent-glow);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 900px) {
     .nav-links {
         display: none;
     }
@@ -319,6 +326,13 @@ h1.hero-title .accent {
     .hero-grid {
         grid-template-columns: 1fr;
     }
+    .hero-cta-btn {
+        padding: 0.8rem 1.3rem;
+        font-size: 14px;
+    }
+    .hero .hero-grid div[style*="display: flex"] {
+        gap: 0.7rem;
+    }
 }
 
 @media (max-width: 560px) {
@@ -328,6 +342,24 @@ h1.hero-title .accent {
     }
     .hero .hero-grid div[style*="display: flex"] {
         gap: 0.6rem;
+    }
+}
+
+@media (max-width: 470px) {
+    .hero-cta-btn {
+        padding: 0.55rem 0.9rem;
+        font-size: 13px;
+    }
+    .hero .hero-grid div[style*="display: flex"] {
+        gap: 0.4rem;
+        flex-direction: column;
+    }
+    .hero-cta-btn:last-child {
+        width: 100%;
+    }
+    .nav-cta {
+        padding: 0.4rem 0.7rem;
+        font-size: 12px;
     }
 }
 

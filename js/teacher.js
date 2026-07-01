@@ -51,7 +51,9 @@ function renderRoster(learners) {
                     <div class="learner-meta">Grade ${l.grade} · ${l.subject} · Active ${l.lastActive}</div>
                     ${l.struggleTopic ? `<div class="learner-struggle">⚠ ${l.struggleTopic} — ${l.suggestion}</div>` : ''}
                 </div>
-                <div class="expand-icon">${expandedIndex === i ? '▾' : '▸'}</div>
+                <div class="expand-icon ${expandedIndex === i ? 'open' : ''}">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
             </div>
             <div class="learner-detail" id="detail-${i}" style="display: ${expandedIndex === i ? 'block' : 'none'};">
                 ${renderDetail(l)}
@@ -77,8 +79,8 @@ function renderDetail(learner) {
                         <tr>
                             <th>Lesson</th>
                             <th>Progress</th>
-                            <th title="Quiz/test score in English">Score (English)</th>
-                            <th title="Quiz/test score in home language">Score (${d.lessons[0].homeLang})</th>
+                            <th>Score (English)</th>
+                            <th>Score (${d.lessons[0].homeLang})</th>
                         </tr>
                     </thead>
                     <tbody>

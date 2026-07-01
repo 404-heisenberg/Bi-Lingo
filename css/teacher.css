@@ -66,10 +66,27 @@
 }
 
 .learner-card .expand-icon {
-    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
     color: var(--fg-mute);
-    line-height: 1;
-    transition: transform 0.2s;
+    transition: transform 0.25s ease, background 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+}
+
+.learner-card .expand-icon.open {
+    transform: rotate(180deg);
+}
+
+.learner-card .expand-icon:hover {
+    background: var(--bg);
+    border-color: var(--accent);
+    color: var(--accent);
 }
 
 .learner-card.expanded {

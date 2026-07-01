@@ -28,7 +28,6 @@ function renderAlert(alert) {
     const container = document.getElementById('teacher-alert');
     container.innerHTML = `
         <div class="alert-card">
-            <div class="alert-icon">💬</div>
             <div>
                 <strong>${alert.headline}</strong>
                 <p style="margin: 0.5rem 0 0; font-size: 14px; color: var(--fg-dim);">${alert.message}</p>

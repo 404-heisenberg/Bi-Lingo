@@ -105,4 +105,8 @@
     .language-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .language-option {
+        padding: 0.95rem 0.75rem;
+    }
 }

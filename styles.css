@@ -379,6 +379,18 @@ h1.hero-title .accent {
     justify-content: center;
     min-height: 640px;
 }
+@media (max-width: 600px) {
+    .hero-visual {
+        min-height: auto;
+    }
+    .phone {
+        width: min(320px, 90vw);
+        height: auto;
+        aspect-ratio: 1 / 2;
+        border-width: 6px;
+        border-radius: 32px;
+    }
+}
 .phone {
     width: 320px;
     height: 640px;
@@ -1981,6 +1993,21 @@ footer .inner {
     
     .language-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ---------- Mobile touch target sizing ---------- */
+@media (max-width: 768px) {
+    .quick-question-btn {
+        padding: 0.75rem 1.1rem;
+        font-size: 14px;
+    }
+    .btn-sm {
+        padding: 0.65rem 1rem;
+        font-size: 14px;
+    }
+    .btn-ghost {
+        padding: 0.65rem 0.9rem;
     }
 }
 

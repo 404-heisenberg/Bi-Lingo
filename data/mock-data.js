@@ -733,7 +733,7 @@ const BiLingoData = {
                         { name: 'Data Handling', progress: 40, scoreEnglish: 50, scoreHome: 78, homeLang: 'Sesotho' },
                         { name: 'Algebra Basics', progress: 100, scoreEnglish: 75, scoreHome: 90, homeLang: 'Sesotho' }
                     ],
-                    focus: 'Probability is the main gap — specifically distinguishing independent vs dependent events. Amahle scores 65% in Sesotho but only 35% in English. She can calculate P(A) correctly in both languages, but when a word problem asks "with or without replacement" in English, she freezes. In Sesotho she talks through the logic ("if we don't put the marble back, the second chance changes") and gets the right answer. Teach the "replacement vs no replacement" distinction in Sesotho using physical examples (e.g. taking sweets from a packet), then have her translate the reasoning into English.'
+                    focus: 'Probability is the main gap — specifically distinguishing independent vs dependent events. Amahle scores 65% in Sesotho but only 35% in English. She can calculate P(A) correctly in both languages, but when a word problem asks "with or without replacement" in English, she freezes. In Sesotho she talks through the logic ("if we do not put the marble back, the second chance changes") and gets the right answer. Teach the "replacement vs no replacement" distinction in Sesotho using physical examples (e.g. taking sweets from a packet), then have her translate the reasoning into English.'
                 }
             }
         ],

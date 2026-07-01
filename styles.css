@@ -321,6 +321,57 @@ h1.hero-title .accent {
     }
 }
 
+[data-theme="light"] .phone {
+    background: #e8e2d8;
+    border-color: #d4cdc4;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+[data-theme="light"] .phone::before {
+    background: #c4bdb2;
+}
+[data-theme="light"] .phone-screen {
+    background:
+        radial-gradient(
+            circle at 30% 0%,
+            color-mix(in oklch, var(--accent) 10%, #f5f0e8) 0%,
+            #f5f0e8 55%
+        ),
+        #f5f0e8;
+    color: #1a1614;
+}
+[data-theme="light"] .phone-status {
+    color: rgba(0, 0, 0, 0.5);
+}
+[data-theme="light"] .phone-header {
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .phone-avatar {
+    color: #ffffff;
+}
+[data-theme="light"] .phone-avatar::after {
+    border-color: #f5f0e8;
+}
+[data-theme="light"] .phone-header .sub {
+    color: rgba(0, 0, 0, 0.4);
+}
+[data-theme="light"] .bubble.them {
+    background: rgba(0, 0, 0, 0.04);
+}
+[data-theme="light"] .bubble.me {
+    color: #ffffff;
+}
+[data-theme="light"] .bubble .translated {
+    color: rgba(0, 0, 0, 0.55);
+    border-top-color: rgba(0, 0, 0, 0.1);
+}
+[data-theme="light"] .phone-input {
+    background: rgba(0, 0, 0, 0.04);
+    color: rgba(0, 0, 0, 0.5);
+}
+[data-theme="light"] .phone-input .mic {
+    color: #ffffff;
+}
+
 /* ---------- phone mockup ---------- */
 .hero-visual {
     position: relative;

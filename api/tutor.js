@@ -59,8 +59,8 @@ module.exports = async (req, res) => {
             return { ok: true, choices };
         };
 
-        const primaryPrompt = 'Return ONLY a JSON object with keys english, isizulu, sesotho. No extra text. Do not include reasoning. Keep digits and numerals exactly the same as in the English answer.';
-        const fallbackPrompt = 'Return ONLY a JSON object with keys english, isizulu, sesotho. Do not include reasoning or extra text. Output must be valid JSON. Keep digits and numerals exactly the same as in the English answer.';
+        const primaryPrompt = 'Return ONLY a JSON object with keys english, isizulu, sesotho. No extra text. Do not include reasoning. Keep digits and numerals exactly the same as in the English answer. Use South African examples and context (e.g. ZAR currency, SA geography, history, culture, everyday life) when relevant.';
+        const fallbackPrompt = 'Return ONLY a JSON object with keys english, isizulu, sesotho. Do not include reasoning or extra text. Output must be valid JSON. Keep digits and numerals exactly the same as in the English answer. Use South African examples and context when relevant.';
 
         let result = await requestCompletion(primaryPrompt, 0.4, 320);
         if (!result.ok) {

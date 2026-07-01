@@ -42,7 +42,7 @@ function renderRoster(learners) {
     const container = document.getElementById('learner-roster');
     container.innerHTML = learners.map((l, i) => `
         <div class="learner-card-wrapper">
-            <div class="card learner-card${l.struggleTopic ? ' has-struggle' : ''}" data-index="${i}" onclick="toggleLearner(${i})">
+            <div class="card learner-card${l.struggleTopic ? ' has-struggle' : ''}${expandedIndex === i ? ' expanded' : ''}" data-index="${i}" onclick="toggleLearner(${i})">
                 <div class="confidence-indicator">
                     <span class="confidence-dot ${l.confidence}"></span>
                 </div>

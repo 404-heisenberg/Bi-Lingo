@@ -61,23 +61,29 @@
 }
 
 .learner-card .expand-icon {
-    font-size: 14px;
+    font-size: 20px;
     color: var(--fg-mute);
+    line-height: 1;
     transition: transform 0.2s;
 }
 
-.learner-detail {
-    background: var(--bg-2);
-    border: 1px solid var(--line);
-    border-top: 0;
-    border-radius: 0 0 12px 12px;
-    padding: 1rem 1.5rem 1.5rem;
-    animation: slideDown 0.2s ease-out;
+.learner-card.expanded {
+    border-bottom: 0;
+    border-radius: 16px 16px 0 0;
 }
 
-@keyframes slideDown {
-    from { opacity: 0; transform: translateY(-4px); }
-    to { opacity: 1; transform: translateY(0); }
+.learner-detail {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: 0;
+    border-radius: 0 0 16px 16px;
+    padding: 0 1.5rem 1.5rem;
+    animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .detail-body {
@@ -93,6 +99,10 @@
     letter-spacing: 0.05em;
     color: var(--fg-mute);
     margin: 0 0 0.75rem;
+}
+
+.detail-section:last-child h4 {
+    color: var(--accent);
 }
 
 .detail-table {
@@ -128,12 +138,14 @@
 .focus-text {
     font-size: 14px;
     line-height: 1.6;
-    color: var(--fg-dim);
+    color: var(--fg);
     margin: 0;
-    padding: 0.75rem 1rem;
-    background: rgba(251, 191, 36, 0.06);
-    border-left: 3px solid var(--accent);
-    border-radius: 4px;
+    padding: 1rem 1.25rem;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+    font-weight: 500;
 }
 
 @media (max-width: 480px) {

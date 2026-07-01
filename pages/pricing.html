@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bi-Lingo — Pricing</title>
+    <meta name="description" content="Simple, affordable pricing for learners, teachers, schools, and districts. Free tier available." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="../css/pricing.css" />
+    <script>
+        (function(){var t=localStorage.getItem('biLingoTheme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+    </script>
+</head>
+<body>
+    <!-- ============ NAV ============ -->
+    <nav class="top">
+        <div class="container inner">
+            <a href="../index.html" class="brand">
+                <div class="brand-mark" aria-hidden="true">B</div>
+                <span>Bi-Lingo</span>
+            </a>
+            <div class="nav-links">
+                <a href="../index.html#why">Why it matters</a>
+                <a href="../index.html#features">Features</a>
+                <a href="../index.html#how">How it works</a>
+                <a href="../index.html#languages">Languages</a>
+                <a href="pricing.html" style="color: var(--accent);">Pricing</a>
+            </div>
+            <div class="nav-actions">
+                <a href="onboarding.html?fresh=true" class="nav-cta demo-btn">Try Demo</a>
+                <a href="../index.html#signup" class="nav-cta">Get early access</a>
+                <button class="hamburger-btn" id="hamburger-btn" aria-label="Open menu">
+                    <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg>
+                    <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+                </button>
+                <button class="theme-btn" id="theme-toggle" aria-label="Switch theme">
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <div class="mobile-menu-links">
+                <a href="../index.html#why">Why it matters</a>
+                <a href="../index.html#features">Features</a>
+                <a href="../index.html#how">How it works</a>
+                <a href="../index.html#languages">Languages</a>
+                <a href="pricing.html">Pricing</a>
+            </div>
+            <div class="mobile-menu-ctas">
+                <a href="onboarding.html?fresh=true" class="mobile-cta demo-cta">Try Demo</a>
+                <a href="../index.html#signup" class="mobile-cta">Get early access</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ============ PRICING TIERS ============ -->
+    <section class="pricing-section" id="plans" style="padding-top: calc(6rem + 64px);">
+        <div class="container">
+            <div class="section-label">Plans &amp; Pricing</div>
+            <h2 class="section-title">Choose the plan that fits your journey.</h2>
+            <p class="section-sub">
+                From free daily learning to full-school deployment — every option
+                includes multilingual AI tutoring.
+            </p>
+
+            <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div class="tier-toggle" id="premium-toggle">
+                    <span class="active" data-period="monthly">Monthly</span>
+                    <span data-period="yearly">Annual</span>
+                </div>
+            </div>
+
+            <!-- Row 1: Individual Plans (3 cols) -->
+            <div class="tier-grid">
+                <!-- Freemium -->
+                <div class="tier-card">
+                    <span class="tier-badge" style="visibility: hidden;">-</span>
+                    <div class="tier-name">Freemium</div>
+                    <div class="tier-audience">Individual learners</div>
+                    <div class="tier-price">
+                        <span class="amount">R0</span>
+                        <span class="period">forever</span>
+                    </div>
+                    <ul class="tier-features">
+                        <li><span class="check">✓</span> 1 topic per day</li>
+                        <li><span class="check">✓</span> Max 6 prompts per day</li>
+                        <li><span class="check">✓</span> Max 2 assessments per day</li>
+                        <li><span class="cross">✕</span> <span class="muted">Learner / Teacher dashboard</span></li>
+                        <li><span class="cross">✕</span> <span class="muted">AI tutor full language access</span></li>
+                        <li><span class="muted" style="padding-left: 1.6rem;">Ads for partner NGOs</span></li>
+                    </ul>
+                    <a href="../index.html#signup" class="tier-cta" style="background: #d97706; color: #fff;">Get early access</a>
+                </div>
+
+                <!-- Premium (with monthly/yearly toggle) -->
+                <div class="tier-card featured" id="premium-card">
+                    <span class="tier-badge popular" id="premium-badge">Most Popular</span>
+                    <div class="tier-name">Premium</div>
+                    <div class="tier-audience">Learners, teachers &amp; families</div>
+                    <div class="tier-price tier-pricing-monthly" id="premium-monthly">
+                        <span class="amount">R79.99</span>
+                        <span class="period">/ month</span>
+                    </div>
+                    <div class="tier-price tier-pricing-yearly" id="premium-yearly">
+                        <span class="amount">R659.99</span>
+                        <span class="period">/ year</span>
+                        <span class="savings">Save 31%</span>
+                        <span class="note">R54.99/mo equivalent</span>
+                    </div>
+                    <ul class="tier-features">
+                        <li><span class="check">✓</span> Full CAPS subjects per grade</li>
+                        <li><span class="check">✓</span> Unlimited prompts &amp; assessments</li>
+                        <li><span class="check">✓</span> Teacher + Learner dashboards</li>
+                        <li><span class="check">✓</span> AI tutor full language access</li>
+                        <li id="premium-parent-reports" style="display: none;"><span class="check">✓</span> Monthly parent progress reports</li>
+                    </ul>
+                    <a href="../index.html#signup" class="tier-cta" style="background: #d97706; color: #fff;">Get early access</a>
+                </div>
+
+                <!-- School Partnerships -->
+                <div class="tier-card">
+                    <span class="tier-badge" style="visibility: hidden;">-</span>
+                    <div class="tier-name">School</div>
+                    <div class="tier-audience">Whole school</div>
+                    <div class="tier-price">
+                        <span class="amount">R249.99</span>
+                        <span class="period">/ learner / year</span>
+                        <span class="note">Min. 200 learners</span>
+                    </div>
+                    <ul class="tier-features">
+                        <li><span class="check">✓</span> Teacher dashboards for all staff</li>
+                        <li><span class="check">✓</span> Admin control panel</li>
+                        <li><span class="check">✓</span> Bulk learner upload</li>
+                        <li><span class="check">✓</span> PDF export (monthly / yearly reports)</li>
+                        <li><span class="check">✓</span> Everything in Premium</li>
+                    </ul>
+                    <a href="mailto:schools@bi-lingo.com" class="tier-cta ghost">Contact us</a>
+                </div>
+            </div>
+
+            <!-- Row 2: Organization Plans (2 cols) -->
+            <div class="tier-grid-2">
+                <!-- Government -->
+                <div class="tier-card">
+                    <span class="tier-badge soon">Custom</span>
+                    <div class="tier-name">Government (DBE)</div>
+                    <div class="tier-audience">Province or national</div>
+                    <div class="tier-price">
+                        <span class="amount">Custom</span>
+                        <span class="period">per district</span>
+                    </div>
+                    <ul class="tier-features">
+                        <li><span class="check">✓</span> Full analytics dashboard</li>
+                        <li><span class="check">✓</span> Curriculum compliance auditing</li>
+                        <li><span class="check">✓</span> Offline mode for rural areas</li>
+                        <li><span class="check">✓</span> Everything in School</li>
+                    </ul>
+                    <a href="mailto:government@bi-lingo.com" class="tier-cta ghost">Contact us</a>
+                </div>
+
+                <!-- NGOs -->
+                <div class="tier-card">
+                    <span class="tier-badge soon">Subsidised</span>
+                    <div class="tier-name">NGOs</div>
+                    <div class="tier-audience">Non-profits</div>
+                    <div class="tier-price">
+                        <span class="amount">Subsidised</span>
+                        <span class="period">or sponsored</span>
+                    </div>
+                    <ul class="tier-features">
+                        <li><span class="check">✓</span> Free access for identified beneficiaries</li>
+                        <li><span class="check">✓</span> Impact reporting</li>
+                        <li><span class="check">✓</span> White-label option for donor reporting</li>
+                        <li><span class="check">✓</span> Everything in School</li>
+                    </ul>
+                    <a href="mailto:partnerships@bi-lingo.com" class="tier-cta ghost">Contact us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+        <div class="container inner">
+            <div>Bi-Lingo · Johannesburg, SA · © 2026</div>
+            <div>For every child. In every language.</div>
+        </div>
+    </footer>
+
+    <script src="../data/mock-data.js"></script>
+    <script src="../script.js"></script>
+    <script>
+        // ---------- Premium toggle (Monthly / Annual) ----------
+        (function() {
+            var card = document.getElementById('premium-card');
+            var toggle = document.getElementById('premium-toggle');
+            var badge = document.getElementById('premium-badge');
+            var parentReports = document.getElementById('premium-parent-reports');
+            var spans = toggle.querySelectorAll('span');
+
+            spans.forEach(function(span) {
+                span.addEventListener('click', function() {
+                    spans.forEach(function(s) { s.classList.remove('active'); });
+                    this.classList.add('active');
+
+                    var period = this.getAttribute('data-period');
+                    if (period === 'yearly') {
+                        card.classList.add('show-yearly');
+                        badge.textContent = 'Best Value';
+                        badge.className = 'tier-badge value';
+                        parentReports.style.display = 'flex';
+                    } else {
+                        card.classList.remove('show-yearly');
+                        badge.textContent = 'Most Popular';
+                        badge.className = 'tier-badge popular';
+                        parentReports.style.display = 'none';
+                    }
+                });
+            });
+        })();
+
+        // ---------- FAQ accordion ----------
+        (function() {
+            var items = document.querySelectorAll('.faq-item');
+            items.forEach(function(item) {
+                var btn = item.querySelector('.faq-question');
+                btn.addEventListener('click', function() {
+                    item.classList.toggle('open');
+                });
+            });
+        })();
+
+        // ---------- Hamburger menu ----------
+        (function() {
+            var btn = document.getElementById('hamburger-btn');
+            var menu = document.getElementById('mobile-menu');
+            if (btn && menu) {
+                btn.addEventListener('click', function() {
+                    btn.classList.toggle('open');
+                    menu.classList.toggle('open');
+                });
+            }
+        })();
+
+    </script>
+</body>
+</html>

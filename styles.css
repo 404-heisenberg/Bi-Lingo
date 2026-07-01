@@ -1559,6 +1559,39 @@ footer .inner {
     align-items: center;
 }
 
+.app-nav .nav-back {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fg-dim);
+    padding: 0.4rem 0.7rem;
+    border-radius: 8px;
+    transition: color 0.2s, background 0.2s;
+    white-space: nowrap;
+}
+.app-nav .nav-back:hover {
+    color: var(--fg);
+    background: var(--card);
+}
+.nav-spacer {
+    width: 72px;
+}
+@media (max-width: 720px) {
+    .app-nav .page-title {
+        margin-left: auto;
+    }
+}
+@media (max-width: 520px) {
+    .app-nav .nav-back,
+    .nav-spacer {
+        display: none;
+    }
+    .app-nav .page-title {
+        margin-left: 0;
+        flex: 1;
+        text-align: center;
+    }
+}
+
 /* ---------- Page Header ---------- */
 .page-header {
     padding: 2.5rem 0 1.5rem;

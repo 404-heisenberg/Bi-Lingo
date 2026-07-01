@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bi-Lingo — Learning Style Quiz</title>
+    <meta name="description" content="Discover how you learn best with Bi-Lingo's free learning style assessment." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="../css/pricing.css" />
+    <script>
+        (function(){var t=localStorage.getItem('biLingoTheme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+    </script>
+</head>
+<body class="quiz-page">
+    <!-- ========== APP NAV ========== -->
+    <nav class="app-nav">
+        <div class="inner">
+            <a href="../index.html" class="brand">
+                <div class="brand-mark" aria-hidden="true">B</div>
+                <span>Bi-Lingo</span>
+            </a>
+            <div class="page-title">Learning Style Quiz</div>
+            <div class="nav-actions">
+                <a href="pricing.html" class="btn btn-ghost btn-sm" style="color: var(--fg-mute);">← Back to Pricing</a>
+                <button class="theme-btn" id="theme-toggle" aria-label="Switch theme">
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== QUIZ CONTENT ========== -->
+    <section class="quiz-content">
+        <div class="quiz-card">
+            <div class="tier-badge">Coming soon</div>
+            <h1>How do you learn best?</h1>
+            <p class="sub">
+                This is a preview of our upcoming learning style assessment.
+                The full quiz will adapt Bi-Lingo's tutoring to the way
+                <em>you</em> learn — visual, auditory, reading/writing, or
+                kinesthetic.
+            </p>
+
+            <div class="mock-questions">
+                <div class="mock-q">
+                    <div class="q-label">Question 1 of 7</div>
+                    <div class="q-text">When you study a new concept, what helps you understand it most?</div>
+                    <div class="q-options">
+                        <div class="q-option">Seeing a diagram or picture</div>
+                        <div class="q-option">Hearing someone explain it out loud</div>
+                        <div class="q-option">Reading a written explanation</div>
+                        <div class="q-option">Trying it out with a hands-on activity</div>
+                    </div>
+                </div>
+                <div class="mock-q">
+                    <div class="q-label">Question 2 of 7</div>
+                    <div class="q-text">How do you prefer to remember information?</div>
+                    <div class="q-options">
+                        <div class="q-option">By drawing or visualizing it</div>
+                        <div class="q-option">By repeating it out loud or in a song</div>
+                        <div class="q-option">By writing it down in my own words</div>
+                        <div class="q-option">By doing or building something with it</div>
+                    </div>
+                </div>
+                <div class="mock-q">
+                    <div class="q-label">Question 3 of 7</div>
+                    <div class="q-text">In class, you learn best when the teacher...</div>
+                    <div class="q-options">
+                        <div class="q-option">Uses the chalkboard or slides</div>
+                        <div class="q-option">Tells stories and explains out loud</div>
+                        <div class="q-option">Gives you a handout to read</div>
+                        <div class="q-option">Has you do a group activity or experiment</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="placeholder-note">
+                ⏳ This is a placeholder preview. The full interactive assessment
+                with personalised results will launch with the complete Bi-Lingo
+                product. Stay tuned!
+            </div>
+
+            <a href="pricing.html" class="btn-back">← Back to pricing</a>
+        </div>
+    </section>
+
+    <script src="../data/mock-data.js"></script>
+    <script>
+        (function() {
+            var t = document.getElementById('theme-toggle');
+            if (t) {
+                t.addEventListener('click', function() {
+                    var h = document.documentElement;
+                    var l = h.getAttribute('data-theme') === 'light';
+                    if (l) { h.removeAttribute('data-theme'); localStorage.setItem('biLingoTheme', 'dark'); }
+                    else { h.setAttribute('data-theme', 'light'); localStorage.setItem('biLingoTheme', 'light'); }
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

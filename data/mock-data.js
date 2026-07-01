@@ -673,25 +673,25 @@ const BiLingoData = {
         },
         learners: [
             {
-                name: 'Thando M.', grade: '10', subject: 'Mathematics', lastActive: '2h ago', confidence: 'medium', struggleTopic: 'Quadratic equations', suggestion: 'Review in isiZulu — the parabola concept translates clearly.',
+                name: 'Thando M.', grade: '10', subject: 'Mathematics', lastActive: '2h ago', confidence: 'medium', struggleTopic: 'Quadratic equations — factoring trinomials', suggestion: 'Thando can use the quadratic formula correctly but keeps getting the wrong signs when factoring trinomials in English. Walk through the factoring steps in isiZulu — the logic clicks when explained in his home language.',
                 details: {
                     lessons: [
                         { name: 'Algebra Basics', progress: 80, scoreEnglish: 45, scoreHome: 85, homeLang: 'isiZulu' },
                         { name: 'Quadratic Equations', progress: 40, scoreEnglish: 30, scoreHome: 75, homeLang: 'isiZulu' },
                         { name: 'Geometry', progress: 100, scoreEnglish: 70, scoreHome: 90, homeLang: 'isiZulu' }
                     ],
-                    focus: 'Quadratic equations need attention. Thando scores 75% in isiZulu but only 30% in English — the concept is understood, the terminology is the barrier.'
+                    focus: 'Quadratic equations need attention — specifically factoring trinomials. Thando scores 75% in isiZulu but only 30% in English because he confuses the sign rules when the instructions are in English. The factoring logic is clear to him in isiZulu; the English terminology ("product of -6 and sum of -1") is the barrier. Review factoring step-by-step in isiZulu, then have him retry the English quiz.'
                 }
             },
             {
-                name: 'Lindiwe N.', grade: '11', subject: 'Physical Sciences', lastActive: '1d ago', confidence: 'low', struggleTopic: 'Chemical bonding', suggestion: 'Assign the bonding lesson in Sesotho first, then English.',
+                name: 'Lindiwe N.', grade: '11', subject: 'Physical Sciences', lastActive: '1d ago', confidence: 'low', struggleTopic: 'Chemical bonding — ionic vs covalent', suggestion: 'Lindiwe memorises the definitions in English but cannot correctly classify bonds as ionic or covalent when given examples. In Sesotho she explains the electron transfer/sharing concept clearly. Use the Sesotho lesson for classification practice first.',
                 details: {
                     lessons: [
                         { name: 'Atomic Structure', progress: 100, scoreEnglish: 60, scoreHome: 88, homeLang: 'Sesotho' },
                         { name: 'Chemical Bonding', progress: 30, scoreEnglish: 25, scoreHome: 70, homeLang: 'Sesotho' },
                         { name: 'States of Matter', progress: 70, scoreEnglish: 55, scoreHome: 80, homeLang: 'Sesotho' }
                     ],
-                    focus: 'Chemical bonding is the main gap. Lindiwe grasps it in Sesotho (70%) but struggles with English lab terminology. Preview the bonding lesson in Sesotho before the English class.'
+                    focus: 'Chemical bonding is the main gap — specifically telling ionic and covalent bonds apart. Lindiwe scores 70% in Sesotho but only 25% in English. She can explain electron transfer (ionic) vs sharing (covalent) in Sesotho fluently, but in English she mixes up the properties. Have her classify bond examples in Sesotho first to build confidence, then introduce the English terms.'
                 }
             },
             {
@@ -705,14 +705,14 @@ const BiLingoData = {
                 }
             },
             {
-                name: 'Zanele K.', grade: '11', subject: 'Life Sciences', lastActive: '3h ago', confidence: 'medium', struggleTopic: 'Plant Reproductive System', suggestion: 'Struggles with English terminology for flower structures. Try the isiZulu tutor with plant diagrams.',
+                name: 'Zanele K.', grade: '11', subject: 'Life Sciences', lastActive: '3h ago', confidence: 'medium', struggleTopic: 'Plant Reproductive System — flower structure and life cycle', suggestion: 'Zanele can explain pollination in isiZulu but mixes up the male and female flower parts (stamen vs carpel) in English and skips steps in the alternation of generations cycle. Use labelled isiZulu diagrams to lock in the structures, then practise the cycle order in English.',
                 details: {
                     lessons: [
                         { name: 'Cell Biology', progress: 100, scoreEnglish: 72, scoreHome: 90, homeLang: 'isiZulu' },
                         { name: 'Plant Reproductive System', progress: 50, scoreEnglish: 40, scoreHome: 82, homeLang: 'isiZulu' },
                         { name: 'Ecology', progress: 20, scoreEnglish: 65, scoreHome: 85, homeLang: 'isiZulu' }
                     ],
-                    focus: 'Plant Reproductive System needs revision. Zanele scores 82% in isiZulu but only 40% in English — she understands the biology, but English terms for flower structures (stamen, carpel, pollination) cause confusion. Use isiZulu tutor with labelled diagrams before the English test.'
+                    focus: 'Plant Reproductive System needs revision — specifically flower structure (stamen, carpel, petals, sepals) and the alternation of generations life cycle. Zanele scores 82% in isiZulu but only 40% in English. She can describe the full reproductive cycle in isiZulu but in English she confuses the sporophyte and gametophyte stages and swaps the male/female parts. Use isiZulu labelled diagrams first, then reinforce the English terms with a matching activity before the cycle order test.'
                 }
             },
             {
@@ -726,14 +726,14 @@ const BiLingoData = {
                 }
             },
             {
-                name: 'Amahle M.', grade: '11', subject: 'Mathematics', lastActive: 'Yesterday', confidence: 'low', struggleTopic: 'Probability', suggestion: 'Loops through the same steps — may need the foundation lesson in Sesotho first.',
+                name: 'Amahle M.', grade: '11', subject: 'Mathematics', lastActive: 'Yesterday', confidence: 'low', struggleTopic: 'Probability — independent vs dependent events', suggestion: 'Amahle calculates simple probabilities correctly but cannot tell whether two events are independent or dependent in English word problems. In Sesotho she reasons through the logic clearly. Try the probability foundation lesson in Sesotho, focusing on the "replacement vs no replacement" distinction.',
                 details: {
                     lessons: [
                         { name: 'Probability', progress: 60, scoreEnglish: 35, scoreHome: 65, homeLang: 'Sesotho' },
                         { name: 'Data Handling', progress: 40, scoreEnglish: 50, scoreHome: 78, homeLang: 'Sesotho' },
                         { name: 'Algebra Basics', progress: 100, scoreEnglish: 75, scoreHome: 90, homeLang: 'Sesotho' }
                     ],
-                    focus: 'Probability is confusing in English (35%) but clearer in Sesotho (65%). Amahle may need the probability foundation lesson in Sesotho first, then retry the English quiz.'
+                    focus: 'Probability is the main gap — specifically distinguishing independent vs dependent events. Amahle scores 65% in Sesotho but only 35% in English. She can calculate P(A) correctly in both languages, but when a word problem asks "with or without replacement" in English, she freezes. In Sesotho she talks through the logic ("if we don't put the marble back, the second chance changes") and gets the right answer. Teach the "replacement vs no replacement" distinction in Sesotho using physical examples (e.g. taking sweets from a packet), then have her translate the reasoning into English.'
                 }
             }
         ],

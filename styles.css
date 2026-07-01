@@ -1389,7 +1389,7 @@ h2.section-title {
     }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 520px) {
     .signup-fields {
         flex-direction: column;
         gap: 0;

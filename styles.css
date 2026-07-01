@@ -1,8 +1,8 @@
 /* ---------- tokens ---------- */
 :root {
-    /* accent (cyan) */
-    --accent: oklch(0.82 0.14 215);
-    --accent-deep: oklch(0.62 0.17 220);
+    /* accent (warm blue) */
+    --accent: oklch(0.80 0.12 230);
+    --accent-deep: oklch(0.60 0.14 235);
     --accent-glow: color-mix(
         in oklch,
         var(--accent) 25%,
@@ -31,8 +31,8 @@
 
 /* ---------- light theme ---------- */
 [data-theme="light"] {
-    --accent: #d97706;
-    --accent-deep: #b45309;
+    --accent: oklch(0.55 0.14 235);
+    --accent-deep: oklch(0.45 0.12 245);
     --accent-glow: none;
     --on-accent: #ffffff;
 
@@ -125,8 +125,8 @@ nav.top .inner {
     border-radius: 8px;
     background: linear-gradient(
         135deg,
-        oklch(0.82 0.14 215),
-        oklch(0.62 0.17 220)
+        oklch(0.80 0.12 230),
+        oklch(0.60 0.14 235)
     );
     display: grid;
     place-items: center;
@@ -137,8 +137,8 @@ nav.top .inner {
 [data-theme="light"] .brand-mark {
     background: linear-gradient(
         135deg,
-        oklch(0.82 0.14 215),
-        oklch(0.62 0.17 220)
+        oklch(0.80 0.12 230),
+        oklch(0.60 0.14 235)
     );
 }
 .nav-links {

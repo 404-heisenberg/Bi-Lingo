@@ -741,50 +741,15 @@ function getQuizLocalized(q, lang) {
     return q.english || q;
 }
 
-function renderQuizLanguageTabs(container) {
-    var tabHtml = '<div class="tabs" id="quiz-lang-tabs" style="margin-bottom:0.75rem;">';
-    var tabs = [
-        { id: 'english', label: 'English' },
-        { id: 'isizulu', label: 'isiZulu' },
-        { id: 'sesotho', label: 'Sesotho' }
-    ];
-    tabs.forEach(function(t) {
-        tabHtml += '<button class="tab' + (t.id === quizLanguage ? ' active' : '') + '" data-lang="' + t.id + '">' + t.label + '</button>';
-    });
-    tabHtml += '</div>';
-    container.insertAdjacentHTML('afterbegin', tabHtml);
+function displayGeneratedQuiz(topic, questions, container, isSaved) {
+    lastGeneratedQuiz = { id: 'quiz-' + Date.now(), topic: topic, questions: questions, createdAt: new Date().toISOString() };
+    quizLanguage = 'english';
 
-    container.querySelectorAll('#quiz-lang-tabs .tab').forEach(function(tab) {
-        tab.addEventListener('click', function() {
-            quizLanguage = this.dataset.lang;
-            container.querySelectorAll('#quiz-lang-tabs .tab').forEach(function(t) { t.classList.remove('active'); });
-            this.classList.add('active');
-            // Re-render question previews
-            renderQuizPreview(container.querySelector('.quiz-gen-questions'), lastGeneratedQuiz.questions);
-            // Also update inline quiz if active
-            var inline = container.querySelector('.quiz-inline');
-            if (inline) {
-                var qidx = parseInt(inline.dataset.qidx);
-                if (!isNaN(qidx) && lastGeneratedQuiz && lastGeneratedQuiz.questions[qidx]) {
-                    var localized = getQuizLocalized(lastGeneratedQuiz.questions[qidx]);
-                    var qText = inline.querySelector('.quiz-inline-question');
-                    if (qText) qText.textContent = escapeHtml(localized.question);
-                    var opts = inline.querySelectorAll('.practice-option');
-                    var letters = ['A', 'B', 'C', 'D'];
-                    opts.forEach(function(opt, idx) {
-                        if (localized.options[idx]) opt.innerHTML = letters[idx] + '. ' + escapeHtml(localized.options[idx]);
-                    });
-                }
-            }
-        });
-    });
-}
-
-function renderQuizPreview(listEl, questions) {
-    if (!listEl) return;
-    var html = '';
+    // Build the quiz overview in English
+    var html = '<p style="font-size:13px;color:var(--fg-dim);margin-bottom:0.75rem;">Topic: <strong>' + escapeHtml(topic) + '</strong></p>';
+    html += '<div class="quiz-gen-questions">';
     questions.forEach(function(q, idx) {
-        var localized = getQuizLocalized(q);
+        var localized = getQuizLocalized(q, 'english');
         var letters = ['A', 'B', 'C', 'D'];
         html += '<div class="quiz-gen-question-card">';
         html += '<div class="qg-question">' + (idx + 1) + '. ' + escapeHtml(localized.question) + '</div>';
@@ -793,18 +758,7 @@ function renderQuizPreview(listEl, questions) {
         });
         html += '</div>';
     });
-    listEl.innerHTML = html;
-}
-
-function displayGeneratedQuiz(topic, questions, container, isSaved) {
-    lastGeneratedQuiz = { id: 'quiz-' + Date.now(), topic: topic, questions: questions, createdAt: new Date().toISOString() };
-    quizLanguage = 'english';
-
-    container.innerHTML = '';
-    renderQuizLanguageTabs(container);
-
-    var html = '<p style="font-size:13px;color:var(--fg-dim);margin-bottom:0.75rem;">Topic: <strong>' + escapeHtml(topic) + '</strong></p>';
-    html += '<div class="quiz-gen-questions"></div>';
+    html += '</div>';
     html += '<div class="quiz-gen-actions">';
     html += '<button class="btn btn-primary" id="take-quiz-now-btn">Take Quiz Now</button>';
     if (isSaved) {
@@ -814,8 +768,7 @@ function displayGeneratedQuiz(topic, questions, container, isSaved) {
     }
     html += '</div>';
 
-    container.insertAdjacentHTML('beforeend', html);
-    renderQuizPreview(container.querySelector('.quiz-gen-questions'), questions);
+    container.innerHTML = html;
 
     document.getElementById('take-quiz-now-btn').addEventListener('click', function() {
         container.innerHTML = '';

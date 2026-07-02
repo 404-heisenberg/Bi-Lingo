@@ -179,8 +179,10 @@ document.addEventListener('DOMContentLoaded', function() {
             var profile = getLearnerProfile();
             var contextEl = document.getElementById('quiz-gen-context');
 
+            var dailyCount = getDailyQuizCount();
+            contextEl.innerHTML = 'Today: <strong>' + dailyCount + '/10</strong> questions used';
             if (profile && profile.languageName) {
-                contextEl.innerHTML = 'Home language: <strong>' + profile.languageName + '</strong>';
+                contextEl.innerHTML += ' · Home language: <strong>' + profile.languageName + '</strong>';
             }
 
             if (conv.length > 0) {
@@ -188,12 +190,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (firstQ && firstQ.length < 80) {
                     quizTopicInput.placeholder = 'e.g. ' + firstQ;
                 }
-                // Show recent questions as context
                 var recentQuestions = conv.slice(-3).map(function(c) { return '"' + c.question + '"'; }).join(', ');
                 contextEl.innerHTML += (contextEl.innerHTML ? ' · ' : '') + 'Recent questions: ' + recentQuestions;
                 contextEl.style.display = 'block';
             } else {
-                contextEl.style.display = 'none';
+                contextEl.style.display = 'block';
             }
 
             setTimeout(function() { quizTopicInput.focus(); }, 300);
@@ -664,14 +665,6 @@ function generateQuiz() {
     statusEl.style.color = 'var(--fg-mute)';
     resultEl.innerHTML = '';
     submitBtn.disabled = true;
-
-    var dailyCount = getDailyQuizCount();
-    if (dailyCount >= 10) {
-        statusEl.textContent = '⚠️ You\'ve used all 10 questions today. Come back tomorrow!';
-        statusEl.style.color = '#ff6b6b';
-        submitBtn.disabled = false;
-        return;
-    }
 
     // Get conversation context + home language
     var conv = getTutorConversation();

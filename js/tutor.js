@@ -429,9 +429,11 @@ function askQuestion(questionId, animate = true) {
         setTimeout(() => {
             removeTypingIndicator();
             addTutorResponse(qa);
+            scrollPageToBottom();
         }, 1500);
     } else {
         addTutorResponse(qa);
+        scrollPageToBottom();
     }
 }
 
@@ -460,12 +462,14 @@ function askCustomQuestion(question) {
             };
             lastCustomResponse = liveResponse;
             addTutorResponse(liveResponse);
+            scrollPageToBottom();
         })
         .catch(err => {
             console.error('Live API error:', err);
             removeTypingIndicator();
             var errorMsg = 'Sorry, I couldn\'t reach the tutor. Please make sure the API is deployed and try again.';
             addTutorMessage(errorMsg);
+            scrollPageToBottom();
         });
 }
 
@@ -1069,13 +1073,8 @@ function escapeHtml(s) {
 function scrollToBottom() {
     const chatContainer = document.getElementById('chat-container');
     chatContainer.scrollTop = chatContainer.scrollHeight;
-    setTimeout(function() {
-        var btn = document.getElementById('quiz-gen-btn');
-        if (btn) {
-            btn.scrollIntoView({ block: 'end' });
-            window.scrollBy(0, 80);
-        } else {
-            window.scrollTo(0, 99999);
-        }
-    }, 100);
+}
+
+function scrollPageToBottom() {
+    window.scrollTo({ top: 99999, behavior: 'smooth' });
 }

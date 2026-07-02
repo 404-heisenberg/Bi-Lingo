@@ -413,9 +413,9 @@
 }
 
 /* Quiz gen result bottom spacing */
-#quiz-gen-result {
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
+#quiz-gen-section {
+    padding-bottom: 3rem;
+    margin-bottom: 1rem;
 }
 
 /* Responsive adjustments */

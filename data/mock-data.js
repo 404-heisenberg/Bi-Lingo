@@ -990,7 +990,17 @@ function getSavedQuizzes() {
 
 function saveQuiz(quiz) {
     var quizzes = getSavedQuizzes();
-    quizzes.push(quiz);
+    var found = false;
+    for (var i = 0; i < quizzes.length; i++) {
+        if (quizzes[i].id === quiz.id) {
+            quizzes[i] = quiz;
+            found = true;
+            break;
+        }
+    }
+    if (!found) {
+        quizzes.push(quiz);
+    }
     localStorage.setItem('biLingoQuizzes', JSON.stringify(quizzes));
     return quiz;
 }

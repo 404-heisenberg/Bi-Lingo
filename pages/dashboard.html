@@ -27,8 +27,7 @@
             <div class="nav-actions">
                 <a href="teacher.html" class="btn btn-ghost btn-sm">Teacher View</a>
                 <span id="user-display" style="font-size:13px;color:var(--fg-dim);font-family:var(--f-mono);display:none;"></span>
-                <button id="logout-btn" class="btn btn-ghost btn-sm" style="color: var(--fg-mute);display:none;">Sign Out</button>
-                <button onclick="exitDemo()" class="btn btn-ghost btn-sm" style="color: var(--fg-mute);">Exit Demo</button>
+                <button id="logout-btn" class="btn btn-ghost btn-sm" style="color: var(--fg-mute);">Sign Out</button>
                 <button class="theme-btn" id="theme-toggle" aria-label="Switch theme">
                     <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                     <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
@@ -97,37 +96,36 @@
     <script src="../data/mock-data.js"></script>
     <script src="../js/dashboard.js"></script>
     <script>
-        function exitDemo() {
-            if (confirm('Exit the demo and return to the homepage?')) {
-                clearLearnerProfile();
-                window.location.href = '../index.html';
-            }
-        }
-
         // Auth guard + nav update
         (async function() {
             const user = await window.SupabaseAuth.getUser();
+            const logoutBtn = document.getElementById('logout-btn');
             if (!user) {
                 const profile = getLearnerProfile();
                 if (!profile || !profile.completed) {
                     window.location.href = 'login.html';
                     return;
                 }
+                // Demo user — sign out clears profile
+                logoutBtn.textContent = 'Exit Demo';
+                logoutBtn.addEventListener('click', function() {
+                    if (confirm('Exit the demo and return to the homepage?')) {
+                        clearLearnerProfile();
+                        window.location.href = '../index.html';
+                    }
+                });
             } else {
                 const userDisplay = document.getElementById('user-display');
-                const logoutBtn = document.getElementById('logout-btn');
+                logoutBtn.textContent = 'Sign Out';
                 if (userDisplay && user.user_metadata?.name) {
                     userDisplay.textContent = user.user_metadata.name.split(' ')[0];
                     userDisplay.style.display = 'inline';
                 }
-                if (logoutBtn) {
-                    logoutBtn.style.display = 'inline-flex';
-                    logoutBtn.addEventListener('click', async function() {
-                        await window.SupabaseAuth.signOut();
-                        clearLearnerProfile();
-                        window.location.href = '../index.html';
-                    });
-                }
+                logoutBtn.addEventListener('click', async function() {
+                    await window.SupabaseAuth.signOut();
+                    clearLearnerProfile();
+                    window.location.href = '../index.html';
+                });
             }
         })();
 

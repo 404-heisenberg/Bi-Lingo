@@ -116,6 +116,15 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('quiz-gen-toggle').style.display = 'none';
             var signupEl = document.querySelector('.tutor-bottom-section .signup');
             if (signupEl) signupEl.style.display = 'none';
+            // Hide quiz generation header and input row
+            var quizGenHeader = section.querySelector('.quiz-gen-header');
+            var quizGenInputRow = section.querySelector('.quiz-gen-input-row');
+            var quizGenContext = document.getElementById('quiz-gen-context');
+            var quizGenStatus = document.getElementById('quiz-gen-status');
+            if (quizGenHeader) quizGenHeader.style.display = 'none';
+            if (quizGenInputRow) quizGenInputRow.style.display = 'none';
+            if (quizGenContext) quizGenContext.style.display = 'none';
+            if (quizGenStatus) quizGenStatus.style.display = 'none';
             document.querySelector('.page-title').textContent = 'Quiz: ' + savedQuiz.topic;
             var resultEl = document.getElementById('quiz-gen-result');
             var section = document.getElementById('quiz-gen-section');

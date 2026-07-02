@@ -26,6 +26,8 @@
             <div class="page-title" id="welcome-title">Dashboard</div>
             <div class="nav-actions">
                 <a href="teacher.html" class="btn btn-ghost btn-sm">Teacher View</a>
+                <span id="user-display" style="font-size:13px;color:var(--fg-dim);font-family:var(--f-mono);display:none;"></span>
+                <button id="logout-btn" class="btn btn-ghost btn-sm" style="color: var(--fg-mute);display:none;">Sign Out</button>
                 <button onclick="exitDemo()" class="btn btn-ghost btn-sm" style="color: var(--fg-mute);">Exit Demo</button>
                 <button class="theme-btn" id="theme-toggle" aria-label="Switch theme">
                     <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -48,16 +50,16 @@
             <!-- Quick Stats -->
             <div class="dashboard-stats mb-2">
                 <div class="stat-card">
-                    <div class="stat-value" id="total-lessons">2</div>
-                    <div class="stat-label">Total Lessons</div>
+                    <div class="stat-value" id="total-lessons">0</div>
+                    <div class="stat-label">Quizzes</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="completed-lessons">0</div>
-                    <div class="stat-label">Completed</div>
+                    <div class="stat-label">Attempts</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" id="confidence-score">30%</div>
-                    <div class="stat-label">Confidence</div>
+                    <div class="stat-value" id="daily-count">0/10</div>
+                    <div class="stat-label">Today's Questions</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="streak-count">0🔥</div>
@@ -65,16 +67,33 @@
                 </div>
             </div>
 
-            <!-- Lesson Cards Grid -->
+            <!-- My Quizzes Section -->
             <div class="mb-2">
-                <h2 style="font-size: 1.3rem; margin-bottom: 1rem;">Your Lessons</h2>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:1rem;">
+                    <h2 style="font-size: 1.3rem;">My Quizzes</h2>
+                    <a href="tutor.html" class="btn btn-primary btn-sm" style="padding:0.6rem 1.2rem;">Study a Topic</a>
+                </div>
+                <div class="lesson-grid" id="quiz-grid">
+                    <!-- Quizzes populated by JS -->
+                </div>
+                <div id="quiz-empty" style="text-align:center;padding:2.5rem 1rem;border:1px dashed var(--line-strong);border-radius:16px;color:var(--fg-mute);font-size:14px;display:none;">
+                    You haven't generated any quizzes yet.<br>
+                    Ask the tutor about a topic, then generate a quiz to test yourself.<br>
+                    <a href="tutor.html" style="color:var(--accent);font-weight:600;margin-top:0.5rem;display:inline-block;">Start studying</a>
+                </div>
+            </div>
+
+            <!-- CAPS Lessons (Built-in) -->
+            <div class="mb-2">
+                <h2 style="font-size: 1.3rem; margin-bottom: 1rem;">CAPS Lessons</h2>
                 <div class="lesson-grid" id="lesson-grid">
-                    <!-- Lesson cards will be populated by JS -->
+                    <!-- Built-in lesson cards populated by JS -->
                 </div>
             </div>
         </div>
     </section>
 
+    <script type="module" src="../js/supabase-client.js"></script>
     <script src="../data/mock-data.js"></script>
     <script src="../js/dashboard.js"></script>
     <script>
@@ -84,6 +103,34 @@
                 window.location.href = '../index.html';
             }
         }
+
+        // Auth guard + nav update
+        (async function() {
+            const user = await window.SupabaseAuth.getUser();
+            if (!user) {
+                const profile = getLearnerProfile();
+                if (!profile || !profile.completed) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+            } else {
+                const userDisplay = document.getElementById('user-display');
+                const logoutBtn = document.getElementById('logout-btn');
+                if (userDisplay && user.user_metadata?.name) {
+                    userDisplay.textContent = user.user_metadata.name.split(' ')[0];
+                    userDisplay.style.display = 'inline';
+                }
+                if (logoutBtn) {
+                    logoutBtn.style.display = 'inline-flex';
+                    logoutBtn.addEventListener('click', async function() {
+                        await window.SupabaseAuth.signOut();
+                        clearLearnerProfile();
+                        window.location.href = '../index.html';
+                    });
+                }
+            }
+        })();
+
         (function(){var t=document.getElementById('theme-toggle');if(!t)return;t.addEventListener('click',function(){var h=document.documentElement;var l=h.getAttribute('data-theme')==='light';if(l){h.removeAttribute('data-theme');localStorage.setItem('biLingoTheme','dark');}else{h.setAttribute('data-theme','light');localStorage.setItem('biLingoTheme','light');}});})();
     </script>
 </body>

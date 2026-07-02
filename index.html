@@ -41,9 +41,10 @@
                     <a href="#languages">Languages</a>
                     <a href="pages/pricing.html">Pricing</a>
                 </div>
-                <div class="nav-actions">
+                <div class="nav-actions" id="nav-actions">
+                    <a href="pages/register.html" class="nav-cta">Get Started</a>
                     <a href="pages/onboarding.html?fresh=true" class="nav-cta demo-btn">Try Demo</a>
-                    <a href="#signup" class="nav-cta">Get early access</a>
+                    <a href="pages/login.html" class="nav-cta" style="background:transparent;border:1px solid var(--line-strong);color:var(--fg-dim);">Log in</a>
                     <button class="hamburger-btn" id="hamburger-btn" aria-label="Open menu">
                         <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg>
                         <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
@@ -63,8 +64,9 @@
                     <a href="pages/pricing.html">Pricing</a>
                 </div>
                 <div class="mobile-menu-ctas">
+                    <a href="pages/register.html" class="mobile-cta">Get Started</a>
                     <a href="pages/onboarding.html?fresh=true" class="mobile-cta demo-cta">Try Demo</a>
-                    <a href="#signup" class="mobile-cta">Get early access</a>
+                    <a href="pages/login.html" class="mobile-cta" style="background:transparent;border:1px solid var(--line-strong);color:var(--fg-dim);">Log in</a>
                 </div>
             </div>
         </nav>
@@ -92,8 +94,8 @@
                         </p>
 
                         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                            <a href="#signup" class="hero-cta-btn"
-                                >Get early access →</a
+                            <a href="pages/register.html" class="hero-cta-btn"
+                                >Get Started</a
                             >
                             <a href="pages/onboarding.html?fresh=true" class="hero-cta-btn" style="background: transparent; border: 2px solid var(--accent); color: var(--accent);"
                                 >Try Demo</a
@@ -223,11 +225,10 @@
             <div class="container">
                 <div class="section-label">Core features</div>
                 <h2 class="section-title">
-                    A patient tutor that actually speaks your language.
+                    A tutor that knows you, a quiz that tests you, and lessons you create.
                 </h2>
                 <p class="section-sub">
-                    Built from the ground up for multilingual learning — not a
-                    translation layer on English content.
+                    Personalized tutors, AI-generated quizzes, and student-created content — all in your home language.
                 </p>
 
                 <div class="feature-grid">
@@ -248,17 +249,14 @@
                                 />
                             </svg>
                         </div>
-                        <h3>Bilingual AI Tutor</h3>
+                        <h3>Personalized AI Tutor</h3>
                         <p>
-                            Speak or type in any of South Africa's 11 official
-                            languages. Bi-Lingo doesn't just translate — it
-                            re-explains CAPS concepts with culturally relevant
-                            examples a learner will instinctively understand.
+                            Meet Mrs. Ndlovu (isiZulu) and Auntie Mpho (Sesotho) — tutors who learn your strengths and struggles. The more you use Bi-Lingo, the more they adapt to how <em>you</em> learn, with examples from your world.
                         </p>
                     </div>
 
                     <div class="feature">
-                        <span class="feature-tag">Coming soon</span>
+                        <span class="feature-tag">Live</span>
                         <div class="icon-box">
                             <svg
                                 width="22"
@@ -269,24 +267,17 @@
                                 stroke-width="2"
                                 aria-hidden="true"
                             >
-                                <path d="M12 2a10 10 0 1 0 10 10" />
-                                <path d="M12 6v6l4 2" />
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" />
                             </svg>
                         </div>
-                        <h3>Learning Style Personalisation</h3>
+                        <h3>AI Quiz Generator</h3>
                         <p>
-                            Take a free assessment that identifies how <em>you</em> learn best —
-                            visual, auditory, reading, or hands-on. Bi-Lingo then adapts every
-                            lesson to your personal style for faster, deeper understanding.
-                        </p>
-                        <p style="margin-top: 0.75rem;">
-                            <a href="https://quiz.icanstudy.com/learning-diagnostic" target="_blank" rel="noopener" style="color: var(--accent); font-weight: 600; font-size: 13px;">
-                                Take the free test →
-                            </a>
+                            Study any topic with the tutor, then click "Generate Quiz" to get 5 multiple-choice questions created by AI. Test your understanding and track your score — up to 10 questions per day to keep you coming back.
                         </p>
                     </div>
 
                     <div class="feature">
+                        <span class="feature-tag">Live</span>
                         <div class="icon-box">
                             <svg
                                 width="22"
@@ -333,6 +324,7 @@
                     </div>
 
                     <div class="feature">
+                        <span class="feature-tag">Live</span>
                         <div class="icon-box">
                             <svg
                                 width="22"
@@ -343,18 +335,17 @@
                                 stroke-width="2"
                                 aria-hidden="true"
                             >
-                                <path d="M12 2a10 10 0 1 0 10 10" />
-                                <path d="M12 6v6l4 2" />
+                                <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
                             </svg>
                         </div>
-                        <h3>Works offline-first</h3>
+                        <h3>Study with AI Tutor</h3>
                         <p>
-                            Lessons cache on-device. Designed for unreliable
-                            networks and shared family devices.
+                            Ask questions in any South African language and get answers with culturally relevant examples. The tutor adapts to your strengths and struggles the more you use it.
                         </p>
                     </div>
 
                     <div class="feature">
+                        <span class="feature-tag">Demo Preview</span>
                         <div class="icon-box">
                             <svg
                                 width="22"
@@ -547,34 +538,16 @@
         <!-- ============ FINAL CTA ============ -->
         <section class="final" id="signup">
             <div class="container">
-                <div class="section-label">Early access · Coming soon</div>
+                <div class="section-label">Free during pilot</div>
                 <h2>Give every child the right to understand.</h2>
                 <p>
-                    Be first in line when Bi-Lingo opens to learners, teachers,
-                    and schools across South Africa.
+                    Create your free account and start learning with a tutor that actually speaks your language.
                 </p>
 
-                <form class="signup" id="signup-form" novalidate>
-                    <div class="signup-fields">
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="Name"
-                            autocomplete="name"
-                            aria-label="Your name"
-                            required
-                        />
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="you@example.com"
-                            autocomplete="email"
-                            aria-label="Your email"
-                            required
-                        />
-                    </div>
-                    <button type="submit">Get early access →</button>
-                </form>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="pages/register.html" class="hero-cta-btn">Create free account</a>
+                    <a href="pages/onboarding.html?fresh=true" class="hero-cta-btn" style="background: transparent; border: 2px solid var(--accent); color: var(--accent);">Try Demo</a>
+                </div>
                 <p
                     style="
                         max-width: 560px;
@@ -586,8 +559,7 @@
                         text-align: center;
                     "
                 >
-                    We'll only use your email to notify you when the pilot
-                    opens. No marketing, no third parties.
+                    No credit card required. Free for learners during pilot.
                 </p>
             </div>
         </section>

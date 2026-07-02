@@ -7,6 +7,19 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
+    // Pre-fill name if coming from registration
+    var pendingName = localStorage.getItem('biLingoPendingName');
+    if (pendingName) {
+        try {
+            var nameData = JSON.parse(pendingName);
+            var firstNameInput = document.getElementById('first-name');
+            var lastNameInput = document.getElementById('last-name');
+            if (firstNameInput && nameData.firstName) firstNameInput.value = nameData.firstName;
+            if (lastNameInput && nameData.lastName) lastNameInput.value = nameData.lastName;
+            localStorage.removeItem('biLingoPendingName');
+        } catch(e) {}
+    }
+
     var gradeSelect = document.getElementById('grade-select');
     var subjectGrid = document.getElementById('subject-grid');
     var subjectInput = document.getElementById('subject-input');

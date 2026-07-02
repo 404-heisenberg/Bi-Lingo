@@ -843,3 +843,193 @@ function getLessonProgress(lessonId) {
     if (!profile || !profile.completedLessons) return 0;
     return profile.completedLessons[lessonId] || 0;
 }
+
+// ========== Tutor Memory Helpers ==========
+function getTutorMemory() {
+    try {
+        var raw = localStorage.getItem('biLingoTutorMemory');
+        return raw ? JSON.parse(raw) : null;
+    } catch(e) { return null; }
+}
+
+function saveTutorMemory(memory) {
+    localStorage.setItem('biLingoTutorMemory', JSON.stringify(memory));
+}
+
+function updateTutorMemory(topic, score) {
+    var memory = getTutorMemory() || {
+        weakTopics: [],
+        strongTopics: [],
+        quizHistory: [],
+        lastSessionDate: null,
+        sessionsActive: 0
+    };
+    if (score < 60) {
+        if (memory.weakTopics.indexOf(topic) === -1) {
+            memory.weakTopics.push(topic);
+        }
+        memory.strongTopics = memory.strongTopics.filter(function(t) { return t !== topic; });
+    } else if (score > 80) {
+        if (memory.strongTopics.indexOf(topic) === -1) {
+            memory.strongTopics.push(topic);
+        }
+        memory.weakTopics = memory.weakTopics.filter(function(t) { return t !== topic; });
+    }
+    memory.lastSessionDate = new Date().toISOString();
+    saveTutorMemory(memory);
+    return memory;
+}
+
+// ========== Custom Lesson Helpers ==========
+function getCustomLessons() {
+    try {
+        var raw = localStorage.getItem('biLingoCustomLessons');
+        return raw ? JSON.parse(raw) : [];
+    } catch(e) { return []; }
+}
+
+function saveCustomLesson(lesson) {
+    var lessons = getCustomLessons();
+    var existing = false;
+    for (var i = 0; i < lessons.length; i++) {
+        if (lessons[i].id === lesson.id) {
+            lessons[i] = lesson;
+            existing = true;
+            break;
+        }
+    }
+    if (!existing) {
+        lessons.push(lesson);
+    }
+    localStorage.setItem('biLingoCustomLessons', JSON.stringify(lessons));
+    return lesson;
+}
+
+function deleteCustomLesson(lessonId) {
+    var lessons = getCustomLessons();
+    lessons = lessons.filter(function(l) { return l.id !== lessonId; });
+    localStorage.setItem('biLingoCustomLessons', JSON.stringify(lessons));
+}
+
+function getCustomLessonById(lessonId) {
+    var lessons = getCustomLessons();
+    for (var i = 0; i < lessons.length; i++) {
+        if (lessons[i].id === lessonId) return lessons[i];
+    }
+    return null;
+}
+
+// ========== Quiz Data Helpers ==========
+function getQuizData() {
+    try {
+        var raw = localStorage.getItem('biLingoQuizData');
+        return raw ? JSON.parse(raw) : { dailyCount: { date: null, count: 0 }, attempts: [] };
+    } catch(e) { return { dailyCount: { date: null, count: 0 }, attempts: [] }; }
+}
+
+function saveQuizData(data) {
+    localStorage.setItem('biLingoQuizData', JSON.stringify(data));
+}
+
+function getDailyQuizCount() {
+    var data = getQuizData();
+    var today = new Date().toDateString();
+    if (data.dailyCount.date === today) {
+        return data.dailyCount.count;
+    }
+    return 0;
+}
+
+function incrementQuizCounter() {
+    var data = getQuizData();
+    var today = new Date().toDateString();
+    if (data.dailyCount.date === today) {
+        data.dailyCount.count += 1;
+    } else {
+        data.dailyCount = { date: today, count: 1 };
+    }
+    saveQuizData(data);
+    return data.dailyCount.count;
+}
+
+function saveQuizAttempt(lessonId, score, total) {
+    var data = getQuizData();
+    data.attempts.push({
+        lessonId: lessonId,
+        score: score,
+        total: total,
+        date: new Date().toISOString()
+    });
+    saveQuizData(data);
+    return data;
+}
+
+function getQuizAttempts(lessonId) {
+    var data = getQuizData();
+    if (!lessonId) return data.attempts;
+    return data.attempts.filter(function(a) { return a.lessonId === lessonId; });
+}
+
+function getBestQuizScore(lessonId) {
+    var attempts = getQuizAttempts(lessonId);
+    var best = 0;
+    for (var i = 0; i < attempts.length; i++) {
+        var pct = attempts[i].score / attempts[i].total * 100;
+        if (pct > best) best = pct;
+    }
+    return best;
+}
+
+// ========== AI-Generated Quiz Helpers (tutor-driven) ==========
+function getSavedQuizzes() {
+    try {
+        var raw = localStorage.getItem('biLingoQuizzes');
+        return raw ? JSON.parse(raw) : [];
+    } catch(e) { return []; }
+}
+
+function saveQuiz(quiz) {
+    var quizzes = getSavedQuizzes();
+    quizzes.push(quiz);
+    localStorage.setItem('biLingoQuizzes', JSON.stringify(quizzes));
+    return quiz;
+}
+
+function getQuizById(quizId) {
+    var quizzes = getSavedQuizzes();
+    for (var i = 0; i < quizzes.length; i++) {
+        if (quizzes[i].id === quizId) return quizzes[i];
+    }
+    return null;
+}
+
+function deleteQuiz(quizId) {
+    var quizzes = getSavedQuizzes();
+    quizzes = quizzes.filter(function(q) { return q.id !== quizId; });
+    localStorage.setItem('biLingoQuizzes', JSON.stringify(quizzes));
+}
+
+function getQuizScore(quizId) {
+    var attempts = getQuizAttempts(quizId);
+    if (attempts.length === 0) return null;
+    var last = attempts[attempts.length - 1];
+    return { score: last.score, total: last.total, pct: Math.round(last.score / last.total * 100) };
+}
+
+function getTutorConversation() {
+    try {
+        return JSON.parse(localStorage.getItem('biLingoTutorConversation') || '[]');
+    } catch(e) { return []; }
+}
+
+function saveTutorConversation(msg) {
+    var conv = getTutorConversation();
+    conv.push(msg);
+    if (conv.length > 20) conv = conv.slice(-20);
+    localStorage.setItem('biLingoTutorConversation', JSON.stringify(conv));
+    return conv;
+}
+
+function clearTutorConversation() {
+    localStorage.removeItem('biLingoTutorConversation');
+}

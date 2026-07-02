@@ -28,6 +28,15 @@
     <!-- =========== TUTOR CONTENT =========== -->
     <section style="padding: 1.5rem 0; height: calc(100vh - 64px); display: flex; flex-direction: column;">
         <div class="container" style="flex: 1; display: flex; flex-direction: column; max-width: 900px;">
+            <!-- Tutor Profile Bar -->
+            <div class="tutor-profile-bar" id="tutor-profile-bar">
+                <div class="tutor-profile-avatar" id="tutor-avatar">B</div>
+                <div class="tutor-profile-info">
+                    <div class="tutor-profile-name" id="tutor-name">Bi-Lingo Tutor</div>
+                    <div class="tutor-profile-desc" id="tutor-desc">Clear, encouraging explanations in any language</div>
+                </div>
+            </div>
+
             <!-- Language Tabs -->
             <div class="tabs" id="language-tabs">
                 <button class="tab active" data-lang="english">English</button>
@@ -41,37 +50,56 @@
             </div>
 
             <div class="tutor-bottom-section">
-                <!-- Quick Questions -->
-                <div class="quick-questions-block">
-                    <p style="font-size: 12px; color: var(--fg-mute); margin-bottom: 0.75rem; font-family: var(--f-mono); letter-spacing: 0.05em; text-transform: uppercase;">Quick Questions:</p>
-                    <div class="quick-questions" id="quick-questions">
-                        <!-- Quick question buttons will be populated by JS -->
-                    </div>
-                </div>
-
-                <!-- Custom Question Input -->
-                <div class="tutor-live-toggle">
-                    <button class="badge badge-info live-mode-btn" id="live-mode-btn" type="button">Demo</button>
-                </div>
+                <!-- Custom Question Input (live) -->
                 <div class="signup">
                     <div class="signup-fields">
                         <input 
                             type="text" 
                             id="custom-question" 
                             class="form-input" 
-                            placeholder="Ask your own question..." 
+                            placeholder="Ask anything in any language — live AI response" 
                             aria-label="Ask a question"
                         />
                     </div>
                     <button class="btn btn-primary" id="ask-btn" style="white-space: nowrap;">
-                        Ask Tutor →
+                        Ask Tutor
                     </button>
+                </div>
+
+                <!-- Generate Quiz Section -->
+                <div class="quiz-gen-toggle" id="quiz-gen-toggle">
+                    <button type="button" class="quiz-gen-btn" id="quiz-gen-btn">🧠 Generate a Quiz to Test Yourself</button>
+                </div>
+                <div class="quiz-gen-section" id="quiz-gen-section" style="display:none;">
+                    <div class="quiz-gen-header">
+                        <h3 style="font-size:1rem;margin:0 0 0.3rem;">Generate a Quiz</h3>
+                        <p style="font-size:13px;color:var(--fg-dim);margin:0;">Tests whether you understand the English terms — not just the concept in your language.</p>
+                    </div>
+                    <div class="quiz-gen-input-row">
+                        <input type="text" id="quiz-topic-input" class="form-input" placeholder="e.g. Photosynthesis, Fractions, The Water Cycle..." />
+                        <button type="button" class="btn btn-primary" id="quiz-gen-submit">Generate</button>
+                    </div>
+                    <div id="quiz-gen-context" style="font-size:12px;color:var(--fg-mute);font-family:var(--f-mono);margin-top:0.5rem;display:none;"></div>
+                    <div id="quiz-gen-status" style="font-size:13px;color:var(--fg-mute);font-family:var(--f-mono);margin-top:0.5rem;"></div>
+                    <div id="quiz-gen-result" style="margin-top:1rem;"></div>
                 </div>
             </div>
         </div>
     </section>
 
+    <script type="module" src="../js/supabase-client.js"></script>
     <script src="../data/mock-data.js"></script>
     <script src="../js/tutor.js"></script>
+    <script>
+        (async function() {
+            const user = await window.SupabaseAuth.getUser();
+            if (!user) {
+                const profile = getLearnerProfile();
+                if (!profile || !profile.completed) {
+                    window.location.href = 'login.html';
+                }
+            }
+        })();
+    </script>
 </body>
 </html>

@@ -11,10 +11,14 @@ module.exports = async (req, res) => {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { question } = req.body || {};
+    const { question, weakTopics, language } = req.body || {};
     if (!question) {
         return res.status(400).json({ error: 'Question is required' });
     }
+
+    const weakContext = weakTopics && weakTopics.length > 0
+        ? `The learner has struggled with these topics: ${weakTopics.join(', ')}. Adapt your explanation accordingly.`
+        : '';
 
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
@@ -59,7 +63,14 @@ module.exports = async (req, res) => {
             return { ok: true, choices };
         };
 
-        const primaryPrompt = 'Return ONLY a JSON object with keys english, isizulu, sesotho. No extra text. Do not include reasoning. Keep digits and numerals exactly the same as in the English answer. Use South African examples and context (e.g. ZAR currency, SA geography, history, culture, everyday life) when relevant.';
+        const learnerContext = weakContext ? `\n${weakContext}` : '';
+        const primaryPrompt = 'Return ONLY a JSON object with keys english, isizulu, sesotho. No extra text. Do not include reasoning. Keep digits and numerals exactly the same as in the English answer. Use South African examples and context (e.g. ZAR currency, SA geography, history, culture, everyday life) when relevant.'
+            + '\n\n'
+            + 'Personality guidelines per language:'
+            + '\n- english: You are Bi-Lingo Tutor, a clear and encouraging educational assistant. Use South African examples.'
+            + '\n- isizulu: You are Mrs. Ndlovu, a warm, patient tutor who uses kitchen-table analogies (gogo\'s pap, taxi rank examples, local shops). Answer in isiZulu naturally, as if speaking to a learner in KwaZulu-Natal.'
+            + '\n- sesotho: You are Auntie Mpho, an encouraging tutor who uses real-life connections (soccer field, market maths, village examples). Answer in Sesotho naturally, as if speaking to a learner in the Free State.'
+            + learnerContext;
         const fallbackPrompt = 'Return ONLY a JSON object with keys english, isizulu, sesotho. Do not include reasoning or extra text. Output must be valid JSON. Keep digits and numerals exactly the same as in the English answer. Use South African examples and context when relevant.';
 
         let result = await requestCompletion(primaryPrompt, 0.4, 320);

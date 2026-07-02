@@ -19,11 +19,12 @@ document.addEventListener('DOMContentLoaded', function() {
     heading.textContent = `Welcome back, ${learnerName}!`;
     contextInfo.textContent = `Grade ${profile.grade} • ${profile.languageName || profile.language}`;
 
-    populateLessons();
+    populateBuiltInLessons();
+    populateQuizzes();
     updateStats();
 });
 
-function populateLessons() {
+function populateBuiltInLessons() {
     const lessonGrid = document.getElementById('lesson-grid');
     const lessons = [
         {
@@ -48,7 +49,7 @@ function populateLessons() {
         }
     ];
 
-    lessonGrid.innerHTML = lessons.map(lesson => {
+    lessonGrid.innerHTML = lessons.map(function(lesson) {
         const buttonLabel = lesson.progress > 0 ? 'Continue Lesson' : 'Start Lesson';
         return `
             <div class="card lesson-card">
@@ -88,22 +89,71 @@ function populateLessons() {
     }).join('');
 }
 
+function populateQuizzes() {
+    var quizzes = getSavedQuizzes();
+    var grid = document.getElementById('quiz-grid');
+    var empty = document.getElementById('quiz-empty');
+
+    if (!quizzes || quizzes.length === 0) {
+        grid.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+
+    empty.style.display = 'none';
+
+    grid.innerHTML = quizzes.map(function(quiz) {
+        var score = getQuizScore(quiz.id);
+        var statusHtml = score !== null
+            ? '<span class="badge badge-success" style="display:inline-flex;">Score: ' + score.pct + '%</span>'
+            : '<span class="badge badge-info" style="display:inline-flex;">Ready</span>';
+        var dateStr = new Date(quiz.createdAt).toLocaleDateString();
+
+        return `
+            <div class="card lesson-card">
+                <div class="lesson-header">
+                    <div>
+                        <div class="lesson-title">${escapeHtml(quiz.topic)}</div>
+                        <div class="lesson-topic">${quiz.questions.length} questions · ${dateStr}</div>
+                    </div>
+                    ${statusHtml}
+                </div>
+                <p style="color: var(--fg-dim); font-size: 13px; margin: 1rem 0;">Generated from your tutor session</p>
+                <div class="card-actions" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <a href="tutor.html?quizId=${quiz.id}" class="btn btn-primary btn-sm">${score !== null ? 'Retake Quiz' : 'Take Quiz'}</a>
+                    <button onclick="deleteQuizConfirm('${quiz.id}')" class="btn btn-ghost btn-sm" style="color:var(--fg-mute);">Delete</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function deleteQuizConfirm(quizId) {
+    if (!confirm('Delete this quiz?')) return;
+    deleteQuiz(quizId);
+    populateQuizzes();
+    updateStats();
+}
+
 function getDifficultyBadge(difficulty) {
-    switch (difficulty.toLowerCase()) {
+    switch ((difficulty || '').toLowerCase()) {
         case 'easy': return 'badge-success';
         case 'medium': return 'badge-warning';
         case 'hard': return 'badge-danger';
         default: return 'badge-info';
     }
 }
-function updateStats() {
-    const total = 2;
-    const completed = 0;
-    const avgProgress = 30;
-    const streak = getStudyStreak();
 
-    document.getElementById('total-lessons').textContent = total;
-    document.getElementById('completed-lessons').textContent = completed;
-    document.getElementById('confidence-score').textContent = `${avgProgress}%`;
-    document.getElementById('streak-count').textContent = `${streak}🔥`;
+function updateStats() {
+    var quizzes = getSavedQuizzes();
+    var quizData = getQuizData();
+    var totalQuizzes = quizzes.length;
+    var quizzesTaken = quizData.attempts ? quizData.attempts.length : 0;
+    var dailyCount = getDailyQuizCount();
+    var streak = getStudyStreak();
+
+    document.getElementById('total-lessons').textContent = totalQuizzes;
+    document.getElementById('completed-lessons').textContent = quizzesTaken;
+    document.getElementById('daily-count').textContent = dailyCount + '/10';
+    document.getElementById('streak-count').textContent = streak + '🔥';
 }

@@ -155,11 +155,18 @@
                     notice.style.cssText = 'padding:0.6rem 0.9rem;margin-bottom:1.25rem;border:1px dashed var(--accent);border-radius:10px;background:color-mix(in oklch,var(--accent) 8%,transparent);font-size:13px;text-align:center;';
                     var profile = getLearnerProfile();
                     if (profile && profile.completed) {
-                        notice.innerHTML = 'You\'re logged in as <strong>' + user.email + '</strong>. <a href="dashboard.html" style="color:var(--accent);font-weight:600;">Go to Dashboard →</a>';
+                        notice.innerHTML = 'You\'re logged in as <strong>' + user.email + '</strong>. <a href="dashboard.html" style="color:var(--accent);font-weight:600;">Go to Dashboard</a> · <a href="#" id="logout-link" style="color:var(--fg-dim);">Sign Out</a>';
                     } else {
-                        notice.innerHTML = 'You\'re logged in as <strong>' + user.email + '</strong>. <a href="onboarding.html" style="color:var(--accent);font-weight:600;">Complete your profile →</a>';
+                        notice.innerHTML = 'You\'re logged in as <strong>' + user.email + '</strong>. <a href="onboarding.html" style="color:var(--accent);font-weight:600;">Complete your profile</a> · <a href="#" id="logout-link" style="color:var(--fg-dim);">Sign Out</a>';
                     }
                     document.querySelector('.auth-card .subtitle').after(notice);
+                    document.getElementById('logout-link').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        window.SupabaseAuth.signOut().then(function() {
+                            clearLearnerProfile();
+                            window.location.reload();
+                        });
+                    });
                 }
             });
 

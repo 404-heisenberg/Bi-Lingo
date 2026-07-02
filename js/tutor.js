@@ -251,6 +251,25 @@ function renderLessonTutor(lessonId) {
     currentMathQuestionId = null;
     clickedMathQuestionIds = new Set();
 
+    // Add demo notice
+    const p = getPersonality(currentLanguage);
+    const demoMsg = document.createElement('div');
+    demoMsg.className = 'message tutor';
+    const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+    demoMsg.innerHTML = `
+        <div class="message-avatar" style="background:linear-gradient(135deg,var(--accent),var(--accent-deep))">${p.avatar}</div>
+        <div>
+            <div class="message-bubble" style="border:1px dashed var(--accent);">
+                <div style="margin-bottom:0.4rem;"><span style="font-family:var(--f-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);padding:0.15rem 0.45rem;border:1px solid var(--accent);border-radius:999px;">Demo</span></div>
+                <div style="font-size:14px;line-height:1.5;">
+                    Pick one of the questions below to see how Bi-Lingo explains concepts bilingually — in English, isiZulu, and Sesotho. Switch between the language tabs above to compare.
+                </div>
+            </div>
+            <div class="message-meta">${p.metaLabel} · ${time}</div>
+        </div>
+    `;
+    chatContainer.appendChild(demoMsg);
+
     if (lessonId === 'idioms') {
         renderIdiomTutorNotes(chatContainer);
         return;

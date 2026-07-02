@@ -128,6 +128,11 @@ function populateQuizzes() {
     }).join('');
 }
 
+function escapeHtml(s) {
+    if (!s) return '';
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 function deleteQuizConfirm(quizId) {
     if (!confirm('Delete this quiz?')) return;
     deleteQuiz(quizId);

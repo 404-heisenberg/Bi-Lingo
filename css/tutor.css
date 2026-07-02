@@ -271,6 +271,7 @@
 .quiz-gen-btn {
     width: 100%;
     padding: 0.7rem 1rem;
+    margin-bottom: 1rem;
     border: 1px dashed var(--line-strong);
     border-radius: 12px;
     background: var(--card);

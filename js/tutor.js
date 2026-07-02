@@ -1069,9 +1069,8 @@ function escapeHtml(s) {
 function scrollToBottom() {
     const chatContainer = document.getElementById('chat-container');
     chatContainer.scrollTop = chatContainer.scrollHeight;
-    // Also scroll the page down so the input area is visible
     setTimeout(function() {
-        var input = document.getElementById('custom-question');
-        if (input) input.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        var btn = document.getElementById('quiz-gen-btn');
+        if (btn) btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 100);
 }

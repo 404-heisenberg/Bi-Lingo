@@ -731,22 +731,78 @@ function getDefaultQuestions(topic) {
 }
 
 var lastGeneratedQuiz = null;
+var quizLanguage = 'english';
 
-function displayGeneratedQuiz(topic, questions, container, isSaved) {
-    lastGeneratedQuiz = { id: 'quiz-' + Date.now(), topic: topic, questions: questions, createdAt: new Date().toISOString() };
+function getQuizLocalized(q, lang) {
+    lang = lang || quizLanguage;
+    if (q[lang]) return q[lang];
+    return q.english || q;
+}
 
-    var html = '<div class="quiz-gen-questions">';
-    html += '<p style="font-size:13px;color:var(--fg-dim);margin-bottom:0.75rem;">Topic: <strong>' + escapeHtml(topic) + '</strong></p>';
+function renderQuizLanguageTabs(container) {
+    var tabHtml = '<div class="tabs" id="quiz-lang-tabs" style="margin-bottom:0.75rem;">';
+    var tabs = [
+        { id: 'english', label: 'English' },
+        { id: 'isizulu', label: 'isiZulu' },
+        { id: 'sesotho', label: 'Sesotho' }
+    ];
+    tabs.forEach(function(t) {
+        tabHtml += '<button class="tab' + (t.id === quizLanguage ? ' active' : '') + '" data-lang="' + t.id + '">' + t.label + '</button>';
+    });
+    tabHtml += '</div>';
+    container.insertAdjacentHTML('afterbegin', tabHtml);
+
+    container.querySelectorAll('#quiz-lang-tabs .tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+            quizLanguage = this.dataset.lang;
+            container.querySelectorAll('#quiz-lang-tabs .tab').forEach(function(t) { t.classList.remove('active'); });
+            this.classList.add('active');
+            // Re-render question previews
+            renderQuizPreview(container.querySelector('.quiz-gen-questions'), lastGeneratedQuiz.questions);
+            // Also update inline quiz if active
+            var inline = container.querySelector('.quiz-inline');
+            if (inline) {
+                var qidx = parseInt(inline.dataset.qidx);
+                if (!isNaN(qidx) && lastGeneratedQuiz && lastGeneratedQuiz.questions[qidx]) {
+                    var localized = getQuizLocalized(lastGeneratedQuiz.questions[qidx]);
+                    var qText = inline.querySelector('.quiz-inline-question');
+                    if (qText) qText.textContent = escapeHtml(localized.question);
+                    var opts = inline.querySelectorAll('.practice-option');
+                    var letters = ['A', 'B', 'C', 'D'];
+                    opts.forEach(function(opt, idx) {
+                        if (localized.options[idx]) opt.innerHTML = letters[idx] + '. ' + escapeHtml(localized.options[idx]);
+                    });
+                }
+            }
+        });
+    });
+}
+
+function renderQuizPreview(listEl, questions) {
+    if (!listEl) return;
+    var html = '';
     questions.forEach(function(q, idx) {
+        var localized = getQuizLocalized(q);
         var letters = ['A', 'B', 'C', 'D'];
         html += '<div class="quiz-gen-question-card">';
-        html += '<div class="qg-question">' + (idx + 1) + '. ' + escapeHtml(q.question) + '</div>';
-        q.options.forEach(function(opt, oi) {
+        html += '<div class="qg-question">' + (idx + 1) + '. ' + escapeHtml(localized.question) + '</div>';
+        localized.options.forEach(function(opt, oi) {
             html += '<div class="qg-option">' + letters[oi] + '. ' + escapeHtml(opt) + '</div>';
         });
         html += '</div>';
     });
-    html += '</div>';
+    listEl.innerHTML = html;
+}
+
+function displayGeneratedQuiz(topic, questions, container, isSaved) {
+    lastGeneratedQuiz = { id: 'quiz-' + Date.now(), topic: topic, questions: questions, createdAt: new Date().toISOString() };
+    quizLanguage = 'english';
+
+    container.innerHTML = '';
+    renderQuizLanguageTabs(container);
+
+    var html = '<p style="font-size:13px;color:var(--fg-dim);margin-bottom:0.75rem;">Topic: <strong>' + escapeHtml(topic) + '</strong></p>';
+    html += '<div class="quiz-gen-questions"></div>';
     html += '<div class="quiz-gen-actions">';
     html += '<button class="btn btn-primary" id="take-quiz-now-btn">Take Quiz Now</button>';
     if (isSaved) {
@@ -756,12 +812,12 @@ function displayGeneratedQuiz(topic, questions, container, isSaved) {
     }
     html += '</div>';
 
-    container.innerHTML = html;
+    container.insertAdjacentHTML('beforeend', html);
+    renderQuizPreview(container.querySelector('.quiz-gen-questions'), questions);
 
     document.getElementById('take-quiz-now-btn').addEventListener('click', function() {
         container.innerHTML = '';
         startInlineQuiz(lastGeneratedQuiz, container, function() {
-            // After quiz completes, show actions again
             var completedHtml = '<div style="text-align:center;padding:1rem;margin-top:1rem;">';
             completedHtml += '<button class="btn btn-outline" id="save-quiz-after-btn" style="margin-right:0.5rem;">Save Quiz</button>';
             completedHtml += '<button class="btn btn-outline" onclick="location.href=\'dashboard.html\'">Back to Dashboard</button>';
@@ -795,6 +851,7 @@ function startInlineQuiz(quiz, container, onComplete) {
     var questions = quiz.questions;
     var currentIdx = 0;
     var score = 0;
+    var answered = false;
 
     function showQuestion() {
         if (currentIdx >= questions.length) {
@@ -803,51 +860,95 @@ function startInlineQuiz(quiz, container, onComplete) {
         }
 
         var q = questions[currentIdx];
+        var localized = getQuizLocalized(q);
         var letters = ['A', 'B', 'C', 'D'];
+        answered = false;
 
-        container.innerHTML = '<div class="quiz-inline">';
-        container.innerHTML += '<div class="quiz-inline-progress">Question ' + (currentIdx + 1) + ' of ' + questions.length + '</div>';
-        container.innerHTML += '<div class="quiz-inline-question">' + escapeHtml(q.question) + '</div>';
-        container.innerHTML += '<div class="quiz-inline-options practice-options" id="inline-options">';
-        q.options.forEach(function(opt, idx) {
-            container.innerHTML += '<div class="practice-option" data-index="' + idx + '">' + letters[idx] + '. ' + escapeHtml(opt) + '</div>';
+        var html = '<div class="quiz-inline" data-qidx="' + currentIdx + '">';
+        html += '<div class="quiz-inline-progress">Question ' + (currentIdx + 1) + ' of ' + questions.length + '</div>';
+        html += '<div class="quiz-inline-question">' + escapeHtml(localized.question) + '</div>';
+        html += '<div class="quiz-inline-options practice-options">';
+        localized.options.forEach(function(opt, idx) {
+            html += '<div class="practice-option" data-index="' + idx + '" data-correct="' + (idx === q.correctAnswer) + '">' + letters[idx] + '. ' + escapeHtml(opt) + '</div>';
         });
-        container.innerHTML += '</div>';
-        container.innerHTML += '<button class="btn btn-primary btn-check" id="inline-submit" style="display:none;margin-top:0.75rem;">Submit Answer</button>';
-        container.innerHTML += '<div id="inline-feedback" style="margin-top:0.75rem;"></div>';
-        container.innerHTML += '<button class="btn btn-outline" id="inline-next" style="display:none;margin-top:0.75rem;">Next</button>';
-        container.innerHTML += '</div>';
+        html += '</div>';
+        html += '<div id="inline-feedback-' + currentIdx + '" style="margin-top:0.75rem;"></div>';
+        html += '<button class="btn btn-primary btn-check" id="inline-submit-' + currentIdx + '" style="display:none;margin-top:0.75rem;" disabled>Submit Answer</button>';
+        html += '<button class="btn btn-outline" id="inline-next-' + currentIdx + '" style="display:none;margin-top:0.75rem;">Next</button>';
+        html += '</div>';
+        container.innerHTML = html;
 
-        var options = container.querySelectorAll('#inline-options .practice-option');
-        var submitBtn = container.querySelector('#inline-submit');
+        // Event delegation on container for options
         var selectedIdx = null;
+        container.querySelector('.quiz-inline').addEventListener('click', function(e) {
+            var opt = e.target.closest('.practice-option');
+            if (!opt || answered) return;
 
-        options.forEach(function(opt) {
-            opt.addEventListener('click', function() {
-                if (this.classList.contains('correct') || this.classList.contains('incorrect')) return;
-                options.forEach(function(o) { o.classList.remove('selected'); });
-                this.classList.add('selected');
-                selectedIdx = parseInt(this.dataset.index);
-                submitBtn.style.display = 'inline-flex';
+            var options = container.querySelectorAll('.practice-option');
+            options.forEach(function(o) { o.classList.remove('selected'); });
+            opt.classList.add('selected');
+            selectedIdx = parseInt(opt.dataset.index);
+
+            var submitBtn = container.querySelector('[id^="inline-submit-"]');
+            submitBtn.style.display = 'inline-flex';
+            submitBtn.disabled = false;
+        });
+
+        // Language tabs for inline quiz
+        var langTabHtml = '<div class="tabs" id="inline-quiz-lang-tabs" style="margin-bottom:0.75rem;">';
+        var langTabs = [
+            { id: 'english', label: 'English' },
+            { id: 'isizulu', label: 'isiZulu' },
+            { id: 'sesotho', label: 'Sesotho' }
+        ];
+        langTabs.forEach(function(t) {
+            langTabHtml += '<button class="tab' + (t.id === quizLanguage ? ' active' : '') + '" data-lang="' + t.id + '">' + t.label + '</button>';
+        });
+        langTabHtml += '</div>';
+        container.querySelector('.quiz-inline').insertAdjacentHTML('afterbegin', langTabHtml);
+        container.querySelectorAll('#inline-quiz-lang-tabs .tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                quizLanguage = this.dataset.lang;
+                container.querySelectorAll('#inline-quiz-lang-tabs .tab').forEach(function(t) { t.classList.remove('active'); });
+                this.classList.add('active');
+                var freshQ = questions[currentIdx];
+                var freshLocalized = getQuizLocalized(freshQ);
+                var qText = container.querySelector('.quiz-inline-question');
+                if (qText) qText.textContent = escapeHtml(freshLocalized.question);
+                var opts = container.querySelectorAll('.practice-option');
+                opts.forEach(function(opt, idx) {
+                    if (freshLocalized.options[idx]) opt.innerHTML = letters[idx] + '. ' + escapeHtml(freshLocalized.options[idx]);
+                });
+                if (answered) {
+                    var feedback = container.querySelector('[id^="inline-feedback-"]');
+                    var localized = getQuizLocalized(freshQ);
+                    if (feedback && localized.explanation) {
+                        var expHtml = escapeHtml(localized.explanation || '');
+                        feedback.innerHTML = (selectedIdx === freshQ.correctAnswer ? '<strong>✓ Correct!</strong><br>' : '<strong>✗ Not quite.</strong><br>') + expHtml;
+                    }
+                }
             });
         });
 
-        submitBtn.addEventListener('click', function() {
-            if (selectedIdx === null) return;
-            var correct = selectedIdx === q.correctAnswer;
-            var feedback = container.querySelector('#inline-feedback');
+        // Submit button
+        container.querySelector('[id^="inline-submit-"]').addEventListener('click', function() {
+            if (selectedIdx === null || answered) return;
+            answered = true;
 
-            options.forEach(function(opt, idx) {
+            var correct = selectedIdx === q.correctAnswer;
+            var opts = container.querySelectorAll('.practice-option');
+            var feedback = container.querySelector('[id^="inline-feedback-"]');
+
+            opts.forEach(function(opt, idx) {
                 if (idx === q.correctAnswer) opt.classList.add('correct');
                 else if (idx === selectedIdx && !correct) opt.classList.add('incorrect');
+                opt.style.pointerEvents = 'none';
             });
 
-            submitBtn.style.display = 'none';
+            this.style.display = 'none';
 
-            var explanationHtml = escapeHtml(q.explanation || '');
-            if (q.homeLanguageExplanation) {
-                explanationHtml += '<div style="margin-top:0.6rem;padding:0.5rem 0.75rem;background:color-mix(in oklch,var(--accent) 10%,transparent);border-radius:8px;font-size:13px;border:1px solid color-mix(in oklch,var(--accent) 20%,transparent);">🌍 <strong>In your language:</strong> ' + escapeHtml(q.homeLanguageExplanation) + '</div>';
-            }
+            var localized = getQuizLocalized(q);
+            var explanationHtml = escapeHtml(localized.explanation || q.explanation || '');
 
             if (correct) {
                 score++;
@@ -859,12 +960,13 @@ function startInlineQuiz(quiz, container, onComplete) {
             }
 
             incrementQuizCounter();
-            var nextBtn = container.querySelector('#inline-next');
+
+            var nextBtn = container.querySelector('[id^="inline-next-"]');
             nextBtn.style.display = 'inline-flex';
-            nextBtn.addEventListener('click', function() {
+            nextBtn.onclick = function() {
                 currentIdx++;
                 showQuestion();
-            }, { once: true });
+            };
         });
     }
 
@@ -874,10 +976,7 @@ function startInlineQuiz(quiz, container, onComplete) {
         var profile = getLearnerProfile();
         var lang = profile ? (profile.languageName || 'English') : 'English';
 
-        // Update tutor memory
         updateTutorMemory(quiz.topic, pct);
-
-        // Save attempt
         saveQuizAttempt(quiz.id, score, total);
 
         var message = pct >= 80 ? '🌟 Excellent! You understand the English terms clearly.'
@@ -890,9 +989,7 @@ function startInlineQuiz(quiz, container, onComplete) {
         container.innerHTML += '<div style="font-size:12px;color:var(--fg-mute);font-family:var(--f-mono);margin-bottom:1rem;">English questions · explained in English + ' + lang + '</div>';
         container.innerHTML += '</div>';
 
-        // Save quiz automatically so it appears on dashboard
         saveQuiz(quiz);
-
         if (onComplete) onComplete();
     }
 

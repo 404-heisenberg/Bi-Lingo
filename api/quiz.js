@@ -22,37 +22,49 @@ module.exports = async (req, res) => {
     }
 
     const count = numQuestions || 5;
-    const lang = homeLanguage || 'their home language';
+    const lang = homeLanguage || 'isiZulu';
 
     try {
         const contextBlock = conversationContext && conversationContext.length > 0
             ? `The student has been asking questions about this topic in ${lang}. Here are their recent questions:\n${conversationContext.join('\n')}\n\n`
             : '';
 
-        const prompt = `Generate ${count} multiple-choice quiz questions that test BILINGUAL understanding.
+        const prompt = `Generate ${count} multiple-choice quiz questions about ${topic} that test BILINGUAL understanding.
 
-${contextBlock}Context: A South African learner studies this topic in English at school but learns best in ${lang}. 
-Topic: ${topic}
+${contextBlock}Context: A South African learner studies this topic in English at school but learns best in ${lang}.
+
 ${explanation ? 'Content: ' + explanation : ''}
 ${keyPoints && keyPoints.length > 0 ? 'Key points: ' + keyPoints.join(', ') : ''}
 
-IMPORTANT — Each question must:
-1. Be written in English (like a real South African school test)
-2. Test whether the student truly understood the English terminology, not just the concept in ${lang}
-3. Include at least 2 wrong options that a second-language English learner might confuse (common translation errors, similar-sounding English terms, or concepts that are easily mixed up when learning in English)
-4. After each question, provide an explanation that shows the bilingual bridge — explain the answer in English, then add a ${lang} translation of the key insight
+IMPORTANT — Each question must be generated in THREE languages: English, isiZulu, and Sesotho.
 
-Return ONLY a valid JSON array. Each object must have this structure:
+Return ONLY a valid JSON array. Each object must have this exact structure:
 {
   "id": <number>,
-  "question": "<English question>",
-  "options": ["<option A>", "<option B>", "<option C>", "<option D>"],
-  "correctAnswer": <0-indexed number>,
-  "explanation": "<English explanation of the answer>",
-  "homeLanguageExplanation": "<short ${lang} translation of the explanation to reinforce understanding>"
+  "correctAnswer": <0-indexed number of the correct option — must be the SAME across all three languages>,
+  "english": {
+    "question": "<English question — tests English terminology>",
+    "options": ["<option A>", "<option B>", "<option C>", "<option D>"],
+    "explanation": "<English explanation of the correct answer>"
+  },
+  "isizulu": {
+    "question": "<isiZulu translation of the question>",
+    "options": ["<isiZulu translation of option A>", "<isiZulu translation of option B>", "<isiZulu translation of option C>", "<isiZulu translation of option D>"],
+    "explanation": "<isiZulu explanation of the correct answer>"
+  },
+  "sesotho": {
+    "question": "<Sesotho translation of the question>",
+    "options": ["<Sesotho translation of option A>", "<Sesotho translation of option B>", "<Sesotho translation of option C>", "<Sesotho translation of option D>"],
+    "explanation": "<Sesotho explanation of the correct answer>"
+  }
 }
 
-Use South African curriculum examples and contexts. Make wrong options plausible for a learner who understands the concept in ${lang} but confuses the English terms.`;
+Rules:
+- English questions must test whether the student truly understands English terminology (include wrong options a second-language learner might confuse)
+- isiZulu and Sesotho versions are direct translations of the same question, options, and explanation
+- The correctAnswer MUST be the same 0-based index across all three languages
+- Use South African examples and contexts
+- Make wrong options plausible for a learner who understands the concept in their home language but confuses the English terms`;
 
         const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
@@ -63,9 +75,9 @@ Use South African curriculum examples and contexts. Make wrong options plausible
             body: JSON.stringify({
                 model: 'gpt-4o',
                 temperature: 0.5,
-                max_tokens: 2500,
+                max_tokens: 4000,
                 messages: [
-                    { role: 'system', content: 'You create bilingual-aware quiz questions for South African learners. Questions test whether students understand English curriculum content, not just the concept in their home language.' },
+                    { role: 'system', content: 'You create trilingual quiz questions for South African learners. Questions test English curriculum understanding with isiZulu and Sesotho translations.' },
                     { role: 'user', content: prompt }
                 ]
             })

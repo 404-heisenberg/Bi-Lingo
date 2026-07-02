@@ -148,15 +148,18 @@
     <script type="module" src="../js/supabase-client.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // If already logged in, redirect to dashboard
-            window.SupabaseAuth.getUser().then(user => {
+            // Show a notice if already logged in
+            window.SupabaseAuth.getUser().then(function(user) {
                 if (user) {
-                    const profile = getLearnerProfile();
+                    var notice = document.createElement('div');
+                    notice.style.cssText = 'padding:0.6rem 0.9rem;margin-bottom:1.25rem;border:1px dashed var(--accent);border-radius:10px;background:color-mix(in oklch,var(--accent) 8%,transparent);font-size:13px;text-align:center;';
+                    var profile = getLearnerProfile();
                     if (profile && profile.completed) {
-                        window.location.href = 'dashboard.html';
+                        notice.innerHTML = 'You\'re logged in as <strong>' + user.email + '</strong>. <a href="dashboard.html" style="color:var(--accent);font-weight:600;">Go to Dashboard →</a>';
                     } else {
-                        window.location.href = 'onboarding.html';
+                        notice.innerHTML = 'You\'re logged in as <strong>' + user.email + '</strong>. <a href="onboarding.html" style="color:var(--accent);font-weight:600;">Complete your profile →</a>';
                     }
+                    document.querySelector('.auth-card .subtitle').after(notice);
                 }
             });
 

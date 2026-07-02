@@ -414,8 +414,8 @@
 
 /* Quiz gen result bottom spacing */
 #quiz-gen-section {
-    padding-bottom: 3rem;
-    margin-bottom: 1rem;
+    padding-bottom: .25rem;
+    margin-bottom: 2rem;
 }
 
 /* Responsive adjustments */

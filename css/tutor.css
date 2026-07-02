@@ -412,6 +412,12 @@
     background: color-mix(in oklch, #ff6b6b 10%, var(--bg-2));
 }
 
+/* Quiz gen result bottom spacing */
+#quiz-gen-result {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .chat-container {

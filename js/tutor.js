@@ -33,6 +33,7 @@ let currentLessonId = null;
 let currentMathQuestionId = null;
 let clickedMathQuestionIds = new Set();
 let lastCustomResponse = null;
+let chatHistory = [];
 
 function getPersonality(lang) {
     return TUTOR_PERSONALITIES[lang] || TUTOR_PERSONALITIES.english;
@@ -520,6 +521,7 @@ function addTutorResponse(qa) {
     
     const messageDiv = document.createElement('div');
     messageDiv.className = 'message tutor';
+    messageDiv.dataset.hasLang = 'true';
     
     const time = new Date().toLocaleTimeString('en-US', { 
         hour: '2-digit', 
@@ -533,14 +535,18 @@ function addTutorResponse(qa) {
             <div class="message-bubble">
                 <div class="language-content">
                     <div class="lang-label">${currentLanguage}</div>
-                    <div>${formatAnswer(qa[currentLanguage].answer)}</div>
+                    <div class="lang-text">${formatAnswer(qa[currentLanguage].answer)}</div>
                 </div>
             </div>
             <div class="message-meta">${p.metaLabel} · ${time}</div>
         </div>
     `;
 
+    // Store trilingual data on the element for language switching
+    messageDiv.langData = qa;
+
     chatContainer.appendChild(messageDiv);
+    chatHistory.push({ type: 'tutor', el: messageDiv, langData: qa, timestamp: Date.now() });
     scrollToBottom();
 }
 
@@ -563,7 +569,7 @@ function addTutorMessage(answer) {
             <div class="message-bubble">
                 <div class="language-content">
                     <div class="lang-label">${currentLanguage}</div>
-                    <div>${formatAnswer(answer)}</div>
+                    <div class="lang-text">${formatAnswer(answer)}</div>
                 </div>
             </div>
             <div class="message-meta">${p.metaLabel} · ${time}</div>
@@ -571,10 +577,9 @@ function addTutorMessage(answer) {
     `;
 
     chatContainer.appendChild(messageDiv);
+    chatHistory.push({ type: 'tutor', el: messageDiv, langData: null, timestamp: Date.now() });
     scrollToBottom();
 }
-
-
 
 function formatAnswer(answer) {
     // Convert line breaks to <br> and add basic formatting
@@ -616,24 +621,23 @@ function removeTypingIndicator() {
 }
 
 function rerenderCurrentQuestion() {
-    const qa = currentQuestionId ? BiLingoData.tutorQA[currentQuestionId] : null;
-    const responseSet = qa || lastCustomResponse;
-    if (!responseSet) return;
-
-    // Find and update the last tutor message
-    const messages = document.querySelectorAll('.message.tutor');
-    if (messages.length === 0) return;
-
-    const lastMessage = messages[messages.length - 1];
-    const contentDiv = lastMessage.querySelector('.language-content div:last-child');
-    
-    if (contentDiv) {
-        contentDiv.innerHTML = formatAnswer(responseSet[currentLanguage].answer);
-        const langLabel = lastMessage.querySelector('.lang-label');
-        if (langLabel) {
-            langLabel.textContent = currentLanguage;
+    // Update ALL tutor messages with trilingual data to the current language
+    chatHistory.forEach(function(entry) {
+        if (entry.type === 'tutor' && entry.el && entry.langData) {
+            var localized = entry.langData[currentLanguage] || entry.langData.english;
+            if (!localized) return;
+            var textEl = entry.el.querySelector('.lang-text');
+            if (textEl) {
+                textEl.innerHTML = formatAnswer(localized.answer || localized);
+            }
+            var label = entry.el.querySelector('.lang-label');
+            if (label) label.textContent = currentLanguage;
+        } else if (entry.type === 'tutor' && entry.el && !entry.langData) {
+            // Plain text message — just update the label
+            var label = entry.el.querySelector('.lang-label');
+            if (label) label.textContent = currentLanguage;
         }
-    }
+    });
 }
 
 function showWelcomeMessage() {
@@ -1065,4 +1069,9 @@ function escapeHtml(s) {
 function scrollToBottom() {
     const chatContainer = document.getElementById('chat-container');
     chatContainer.scrollTop = chatContainer.scrollHeight;
+    // Also scroll the page down so the input area is visible
+    setTimeout(function() {
+        var input = document.getElementById('custom-question');
+        if (input) input.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
 }

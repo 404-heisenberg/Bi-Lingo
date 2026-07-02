@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Bi-Lingo — Create a Lesson</title>
+    <meta name="description" content="Create your own lesson with AI-generated quiz" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" />
+    <link rel="stylesheet" href="../styles.css" />
+    <script>
+        (function(){var t=localStorage.getItem('biLingoTheme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();
+    </script>
+    <style>
+        .create-page {
+            padding: 2rem 0;
+        }
+        .create-page .container {
+            max-width: 760px;
+        }
+        .create-page .page-header {
+            padding-top: 0;
+        }
+        .create-page .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .create-page .form-group .form-label {
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+        .create-page .form-input,
+        .create-page .form-select,
+        .create-page .form-textarea {
+            width: 100%;
+        }
+        .create-page .form-textarea {
+            background: var(--bg-2);
+            border: 1px solid var(--line-strong);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            color: var(--fg);
+            font-family: var(--f-body);
+            font-size: 15px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+            resize: vertical;
+            min-height: 120px;
+        }
+        .create-page .form-textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .create-page .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .create-page .key-points-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .create-page .key-point-row {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .create-page .key-point-row .form-input {
+            flex: 1;
+        }
+        .create-page .key-point-row .remove-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--line-strong);
+            background: transparent;
+            color: var(--fg-mute);
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            font-size: 16px;
+            flex-shrink: 0;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .create-page .key-point-row .remove-btn:hover {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+        .create-page .add-btn {
+            padding: 0.5rem 1rem;
+            border: 1px dashed var(--line-strong);
+            border-radius: 10px;
+            background: transparent;
+            color: var(--fg-dim);
+            font-size: 13px;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+            font-family: var(--f-body);
+        }
+        .create-page .add-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .create-page .generate-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: var(--card);
+        }
+        .create-page .generate-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .create-page .generate-section p {
+            font-size: 14px;
+            color: var(--fg-dim);
+            margin-bottom: 1rem;
+        }
+        .create-page .generate-btn {
+            padding: 0.75rem 1.5rem;
+            border: 0;
+            border-radius: 10px;
+            background: var(--accent);
+            color: var(--on-accent);
+            font-family: var(--f-body);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+        }
+        .create-page .generate-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 30px -10px var(--accent-glow);
+        }
+        .create-page .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .create-page .generate-spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--on-accent);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: genSpin 0.6s linear infinite;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        @keyframes genSpin {
+            to { transform: rotate(360deg); }
+        }
+        .create-page .questions-container {
+            margin-top: 1.5rem;
+        }
+        .create-page .question-card {
+            padding: 1.25rem;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            background: var(--bg-2);
+        }
+        .create-page .question-card .q-label {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .create-page .question-card .q-field {
+            margin-bottom: 0.6rem;
+        }
+        .create-page .question-card .q-field label {
+            display: block;
+            font-size: 12px;
+            color: var(--fg-mute);
+            font-family: var(--f-mono);
+            margin-bottom: 0.2rem;
+        }
+        .create-page .question-card .q-field input,
+        .create-page .question-card .q-field textarea {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            color: var(--fg);
+            font-family: var(--f-body);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .create-page .question-card .q-field input:focus,
+        .create-page .question-card .q-field textarea:focus {
+            border-color: var(--accent);
+        }
+        .create-page .question-card .q-field textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+        .create-page .question-card .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+        .create-page .question-card .option-row {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .create-page .question-card .option-row .option-letter {
+            font-family: var(--f-mono);
+            font-size: 11px;
+            color: var(--fg-mute);
+            flex-shrink: 0;
+            width: 18px;
+        }
+        .create-page .question-card .option-row input {
+            flex: 1;
+        }
+        .create-page .question-card .correct-select {
+            padding: 0.4rem 0.6rem;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--fg);
+            font-size: 13px;
+            outline: none;
+            font-family: var(--f-body);
+        }
+        .create-page .question-card .correct-select:focus {
+            border-color: var(--accent);
+        }
+        .create-page .gen-error {
+            color: #ff6b6b;
+            font-size: 13px;
+            margin-top: 0.75rem;
+            font-family: var(--f-mono);
+        }
+        .create-page .actions-bar {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--line);
+        }
+        .create-page .save-btn {
+            padding: 0.85rem 2rem;
+            border: 0;
+            border-radius: 10px;
+            background: var(--accent);
+            color: var(--on-accent);
+            font-family: var(--f-body);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+        }
+        .create-page .save-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 30px -10px var(--accent-glow);
+        }
+        .create-page .save-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .create-page .save-success {
+            padding: 1rem;
+            background: color-mix(in oklch, #4ade80 15%, var(--bg-2));
+            border: 1px solid #4ade80;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        @media (max-width: 600px) {
+            .create-page .form-row {
+                grid-template-columns: 1fr;
+            }
+            .create-page .question-card .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="app-nav">
+        <div class="inner">
+            <a href="dashboard.html" class="nav-back">← Dashboard</a>
+            <div class="page-title">Create a Lesson</div>
+            <div class="nav-spacer"></div>
+        </div>
+    </nav>
+
+    <section class="create-page">
+        <div class="container">
+            <div class="page-header">
+                <h1>Create a New Lesson</h1>
+                <p class="subtitle">Write your own lesson content, then generate a quiz with AI to test your understanding.</p>
+            </div>
+
+            <form id="lesson-form">
+                <!-- Lesson Details -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="lesson-title">Lesson Title</label>
+                        <input type="text" id="lesson-title" class="form-input" placeholder="e.g. The Water Cycle" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="lesson-subject">Subject</label>
+                        <select id="lesson-subject" class="form-select" required>
+                            <option value="">Select subject</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="Natural Sciences">Natural Sciences</option>
+                            <option value="English">English</option>
+                            <option value="Life Sciences">Life Sciences</option>
+                            <option value="Physical Sciences">Physical Sciences</option>
+                            <option value="Geography">Geography</option>
+                            <option value="History">History</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Life Orientation">Life Orientation</option>
+                            <option value="EMS">EMS</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="lesson-topic">Topic</label>
+                        <input type="text" id="lesson-topic" class="form-input" placeholder="e.g. Earth Sciences" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="lesson-difficulty">Difficulty</label>
+                        <select id="lesson-difficulty" class="form-select">
+                            <option value="Easy">Easy</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="lesson-explanation">Lesson Explanation</label>
+                    <textarea id="lesson-explanation" class="form-textarea" placeholder="Write the lesson content here. Explain the concept clearly, as if teaching a friend." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Key Points</label>
+                    <div class="key-points-list" id="key-points-container">
+                        <div class="key-point-row">
+                            <input type="text" class="form-input key-point-input" placeholder="Key point 1" />
+                            <button type="button" class="remove-btn" onclick="this.parentElement.remove()">×</button>
+                        </div>
+                        <div class="key-point-row">
+                            <input type="text" class="form-input key-point-input" placeholder="Key point 2" />
+                            <button type="button" class="remove-btn" onclick="this.parentElement.remove()">×</button>
+                        </div>
+                        <div class="key-point-row">
+                            <input type="text" class="form-input key-point-input" placeholder="Key point 3" />
+                            <button type="button" class="remove-btn" onclick="this.parentElement.remove()">×</button>
+                        </div>
+                    </div>
+                    <button type="button" class="add-btn" id="add-key-point">+ Add key point</button>
+                </div>
+
+                <!-- AI Quiz Generation -->
+                <div class="generate-section">
+                    <h3>🧠 AI Quiz Generator</h3>
+                    <p>Generate 5 multiple-choice questions from your lesson content. You can edit the questions after they're created.</p>
+                    <button type="button" class="generate-btn" id="generate-btn">Generate Quiz with AI</button>
+                    <div id="gen-error" class="gen-error"></div>
+                    <div id="questions-container" class="questions-container"></div>
+                </div>
+
+                <!-- Save -->
+                <div class="actions-bar">
+                    <a href="dashboard.html" class="btn btn-outline">Cancel</a>
+                    <button type="submit" class="save-btn" id="save-btn">Save Lesson</button>
+                </div>
+                <div id="save-success" class="save-success" style="display:none;"></div>
+            </form>
+        </div>
+    </section>
+
+    <script src="../data/mock-data.js"></script>
+    <script>
+        // ========== Key Points ==========
+        document.getElementById('add-key-point').addEventListener('click', function() {
+            var container = document.getElementById('key-points-container');
+            var row = document.createElement('div');
+            row.className = 'key-point-row';
+            row.innerHTML = '<input type="text" class="form-input key-point-input" placeholder="Key point ' + (container.children.length + 1) + '" /><button type="button" class="remove-btn" onclick="this.parentElement.remove()">×</button>';
+            container.appendChild(row);
+        });
+
+        // ========== AI Quiz Generation ==========
+        var generatedQuestions = [];
+
+        document.getElementById('generate-btn').addEventListener('click', async function() {
+            var btn = this;
+            var errorEl = document.getElementById('gen-error');
+            var container = document.getElementById('questions-container');
+            errorEl.textContent = '';
+
+            var title = document.getElementById('lesson-title').value.trim();
+            var topic = document.getElementById('lesson-topic').value.trim();
+            var explanation = document.getElementById('lesson-explanation').value.trim();
+            var keyPointInputs = document.querySelectorAll('.key-point-input');
+            var keyPoints = [];
+            keyPointInputs.forEach(function(inp) {
+                var val = inp.value.trim();
+                if (val) keyPoints.push(val);
+            });
+
+            if (!title || !topic || !explanation) {
+                errorEl.textContent = 'Please fill in the lesson title, topic, and explanation first.';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="generate-spinner"></span>Generating…';
+
+            try {
+                var res = await fetch('/api/quiz', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ topic: title + ' - ' + topic, explanation: explanation, keyPoints: keyPoints, numQuestions: 5 })
+                });
+                var data = await res.json();
+                if (!res.ok || !data.questions || !data.questions.length) {
+                    throw new Error(data.error || 'Failed to generate questions');
+                }
+                generatedQuestions = data.questions;
+                renderQuestions();
+            } catch (err) {
+                console.error('Quiz gen error:', err);
+                errorEl.textContent = 'Could not generate quiz. Please try again, or add questions manually.';
+                // Add a default set of questions so the lesson can still be saved
+                generatedQuestions = getDefaultQuestions(title);
+                renderQuestions();
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'Generate Quiz with AI';
+        });
+
+        function getDefaultQuestions(topic) {
+            return [
+                { id: 1, question: 'What is the main topic of "' + topic + '"?', options: ['Option A', 'Option B', 'Option C', 'Option D'], correctAnswer: 0, explanation: 'Review the lesson content for the correct answer.' },
+                { id: 2, question: 'Which of the following best describes a key concept?', options: ['Concept A', 'Concept B', 'Concept C', 'Concept D'], correctAnswer: 1, explanation: 'Check the key points in your lesson.' },
+                { id: 3, question: 'Why is this concept important?', options: ['Reason 1', 'Reason 2', 'Reason 3', 'Reason 4'], correctAnswer: 2, explanation: 'Think about the main purpose of this lesson.' },
+                { id: 4, question: 'How would you apply this knowledge?', options: ['Application A', 'Application B', 'Application C', 'Application D'], correctAnswer: 0, explanation: 'Consider real-world uses of this concept.' },
+                { id: 5, question: 'What is a common mistake about this topic?', options: ['Mistake A', 'Mistake B', 'Mistake C', 'Mistake D'], correctAnswer: 3, explanation: 'Review the explanation carefully.' }
+            ];
+        }
+
+        function renderQuestions() {
+            var container = document.getElementById('questions-container');
+            if (!generatedQuestions || generatedQuestions.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+            var html = '<h4 style="font-size:1rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;">✓ Quiz generated — you can edit the questions below</h4>';
+            generatedQuestions.forEach(function(q, idx) {
+                html += '<div class="question-card" data-index="' + idx + '">';
+                html += '<div class="q-label">Question ' + (idx + 1) + '</div>';
+                html += '<div class="q-field"><label>Question</label><textarea class="q-text">' + escapeHtml(q.question) + '</textarea></div>';
+                html += '<div class="options-grid">';
+                var letters = ['A', 'B', 'C', 'D'];
+                for (var i = 0; i < 4; i++) {
+                    html += '<div class="option-row"><span class="option-letter">' + letters[i] + '</span><input type="text" class="q-option" data-optidx="' + i + '" value="' + escapeHtml(q.options[i] || '') + '" /></div>';
+                }
+                html += '</div>';
+                html += '<div class="q-field" style="margin-top:0.6rem;display:flex;gap:1rem;align-items:center;"><label>Correct answer:</label><select class="correct-select">';
+                for (var i = 0; i < 4; i++) {
+                    html += '<option value="' + i + '"' + (q.correctAnswer === i ? ' selected' : '') + '>' + letters[i] + '</option>';
+                }
+                html += '</select></div>';
+                html += '<div class="q-field"><label>Explanation</label><textarea class="q-explanation">' + escapeHtml(q.explanation || '') + '</textarea></div>';
+                html += '</div>';
+            });
+            container.innerHTML = html;
+        }
+
+        function syncQuestionsFromUI() {
+            var cards = document.querySelectorAll('.question-card');
+            cards.forEach(function(card, idx) {
+                if (generatedQuestions[idx]) {
+                    var textEl = card.querySelector('.q-text');
+                    var optionEls = card.querySelectorAll('.q-option');
+                    var correctSelect = card.querySelector('.correct-select');
+                    var explanationEl = card.querySelector('.q-explanation');
+                    if (textEl) generatedQuestions[idx].question = textEl.value;
+                    if (optionEls) {
+                        optionEls.forEach(function(opt) {
+                            var optIdx = parseInt(opt.dataset.optidx);
+                            generatedQuestions[idx].options[optIdx] = opt.value;
+                        });
+                    }
+                    if (correctSelect) generatedQuestions[idx].correctAnswer = parseInt(correctSelect.value);
+                    if (explanationEl) generatedQuestions[idx].explanation = explanationEl.value;
+                }
+            });
+        }
+
+        function escapeHtml(s) {
+            if (!s) return '';
+            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        // ========== Save Lesson ==========
+        document.getElementById('lesson-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var title = document.getElementById('lesson-title').value.trim();
+            var subject = document.getElementById('lesson-subject').value;
+            var topic = document.getElementById('lesson-topic').value.trim();
+            var difficulty = document.getElementById('lesson-difficulty').value;
+            var explanation = document.getElementById('lesson-explanation').value.trim();
+            var keyPointInputs = document.querySelectorAll('.key-point-input');
+            var keyPoints = [];
+            keyPointInputs.forEach(function(inp) {
+                var val = inp.value.trim();
+                if (val) keyPoints.push(val);
+            });
+
+            if (!title || !subject || !topic || !explanation) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Sync questions from UI
+            syncQuestionsFromUI();
+
+            var lesson = {
+                id: 'custom-' + Date.now(),
+                title: title,
+                subject: subject,
+                topic: topic,
+                difficulty: difficulty,
+                explanation: explanation,
+                keyPoints: keyPoints,
+                quiz: generatedQuestions.length > 0 ? { questions: generatedQuestions } : null,
+                createdAt: new Date().toISOString()
+            };
+
+            saveCustomLesson(lesson);
+
+            var success = document.getElementById('save-success');
+            success.style.display = 'block';
+            success.innerHTML = '✓ Lesson "' + title + '" saved! <a href="dashboard.html" style="color:var(--accent);font-weight:600;">Go to Dashboard</a>';
+
+            var saveBtn = document.getElementById('save-btn');
+            saveBtn.textContent = 'Saved!';
+            saveBtn.disabled = true;
+        });
+    </script>
+</body>
+</html>

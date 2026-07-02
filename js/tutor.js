@@ -578,6 +578,7 @@ function rerenderCurrentQuestion() {
 
 function showWelcomeMessage() {
     const chatContainer = document.getElementById('chat-container');
+    if (!chatContainer || chatContainer.children.length > 0) return;
     const p = getPersonality(currentLanguage);
     const welcomeText = getTutorWelcomeMessage(currentLanguage);
     

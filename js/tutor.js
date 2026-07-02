@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('.page-title').textContent = 'Quiz: ' + savedQuiz.topic;
             var resultEl = document.getElementById('quiz-gen-result');
             section.style.display = 'block';
-            displayGeneratedQuiz(savedQuiz.topic, savedQuiz.questions, resultEl, true);
+            displayGeneratedQuiz(savedQuiz.topic, savedQuiz.questions, resultEl, true, savedQuiz.id);
         }
     } else if (lessonId) {
         currentLessonId = lessonId;
@@ -796,8 +796,8 @@ function renderQuizPreview(listEl, questions) {
     listEl.innerHTML = html;
 }
 
-function displayGeneratedQuiz(topic, questions, container, isSaved) {
-    lastGeneratedQuiz = { id: 'quiz-' + Date.now(), topic: topic, questions: questions, createdAt: new Date().toISOString() };
+function displayGeneratedQuiz(topic, questions, container, isSaved, existingId) {
+    lastGeneratedQuiz = { id: existingId || 'quiz-' + Date.now(), topic: topic, questions: questions, createdAt: new Date().toISOString() };
     quizLanguage = 'english';
 
     var html = '';

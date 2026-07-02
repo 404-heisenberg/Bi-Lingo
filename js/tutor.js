@@ -1070,7 +1070,6 @@ function scrollToBottom() {
     const chatContainer = document.getElementById('chat-container');
     chatContainer.scrollTop = chatContainer.scrollHeight;
     setTimeout(function() {
-        var btn = document.getElementById('quiz-gen-btn');
-        if (btn) btn.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        window.scrollTo(0, 99999);
     }, 100);
 }

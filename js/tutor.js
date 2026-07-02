@@ -408,17 +408,8 @@ function askCustomQuestion(question) {
         .catch(err => {
             console.error('Live API error:', err);
             removeTypingIndicator();
-            const fallbackResponse = {
-                english: { question: question, answer: getMockResponse(question) },
-                isizulu: { question: question, answer: getTutorMemory() && getTutorMemory().weakTopics && getTutorMemory().weakTopics.length > 0
-                    ? '[isiZulu: Ngiyabona ukuthi ubusebenza ku-' + getTutorMemory().weakTopics[0] + '. Ake sibhekane nayo ndawonye!]'
-                    : '[isiZulu translation coming soon. This is a demo of how your question would be answered in isiZulu.]' },
-                sesotho: { question: question, answer: getTutorMemory() && getTutorMemory().weakTopics && getTutorMemory().weakTopics.length > 0
-                    ? '[Sesotho: Ke bona hore o ntse o sebetsa ho ' + getTutorMemory().weakTopics[0] + '. Ha re sebetsane le yona hammoho!]'
-                    : '[Sesotho translation coming soon. This is a demo of how your question would be answered in Sesotho.]' }
-            };
-            lastCustomResponse = fallbackResponse;
-            addTutorResponse(fallbackResponse);
+            var errorMsg = 'Sorry, I couldn\'t reach the tutor. Please make sure the API is deployed and try again.';
+            addTutorMessage(errorMsg);
         });
 }
 

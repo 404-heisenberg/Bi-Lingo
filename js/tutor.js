@@ -107,10 +107,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const quizId = urlParams.get('quizId');
 
     if (quizId) {
-        // Load saved quiz
+        // Load saved quiz — hide everything except quiz
         var savedQuiz = getQuizById(quizId);
         if (savedQuiz) {
+            document.getElementById('tutor-profile-bar').style.display = 'none';
+            document.getElementById('language-tabs').style.display = 'none';
+            document.getElementById('chat-container').style.display = 'none';
             document.getElementById('quiz-gen-toggle').style.display = 'none';
+            var signupEl = document.querySelector('.tutor-bottom-section .signup');
+            if (signupEl) signupEl.style.display = 'none';
             document.querySelector('.page-title').textContent = 'Quiz: ' + savedQuiz.topic;
             var resultEl = document.getElementById('quiz-gen-result');
             var section = document.getElementById('quiz-gen-section');

@@ -800,11 +800,30 @@ function displayGeneratedQuiz(topic, questions, container, isSaved) {
     lastGeneratedQuiz = { id: 'quiz-' + Date.now(), topic: topic, questions: questions, createdAt: new Date().toISOString() };
     quizLanguage = 'english';
 
-    container.innerHTML = '';
-    renderQuizLanguageTabs(container);
+    var html = '';
+    // Language tabs
+    html += '<div class="tabs" id="quiz-lang-tabs" style="margin-bottom:0.75rem;">';
+    var langOptions = ['english', 'isizulu', 'sesotho'];
+    var langLabels = ['English', 'isiZulu', 'Sesotho'];
+    for (var li = 0; li < langOptions.length; li++) {
+        html += '<button class="tab' + (langOptions[li] === 'english' ? ' active' : '') + '" data-lang="' + langOptions[li] + '">' + langLabels[li] + '</button>';
+    }
+    html += '</div>';
 
-    var html = '<p style="font-size:13px;color:var(--fg-dim);margin-bottom:0.75rem;">Topic: <strong>' + escapeHtml(topic) + '</strong></p>';
-    html += '<div class="quiz-gen-questions"></div>';
+    html += '<p style="font-size:13px;color:var(--fg-dim);margin-bottom:0.75rem;">Topic: <strong>' + escapeHtml(topic) + '</strong></p>';
+    html += '<div class="quiz-gen-questions" id="quiz-gen-questions">';
+    // Render questions inline
+    questions.forEach(function(q, idx) {
+        var localized = getQuizLocalized(q, 'english');
+        var letters = ['A', 'B', 'C', 'D'];
+        html += '<div class="quiz-gen-question-card">';
+        html += '<div class="qg-question">' + (idx + 1) + '. ' + escapeHtml(localized.question) + '</div>';
+        localized.options.forEach(function(opt, oi) {
+            html += '<div class="qg-option">' + letters[oi] + '. ' + escapeHtml(opt) + '</div>';
+        });
+        html += '</div>';
+    });
+    html += '</div>';
     html += '<div class="quiz-gen-actions">';
     html += '<button class="btn btn-primary" id="take-quiz-now-btn">Take Quiz Now</button>';
     if (isSaved) {
@@ -814,8 +833,31 @@ function displayGeneratedQuiz(topic, questions, container, isSaved) {
     }
     html += '</div>';
 
-    container.insertAdjacentHTML('beforeend', html);
-    renderQuizPreview(container.querySelector('.quiz-gen-questions'), questions);
+    container.innerHTML = html;
+
+    // Wire language tabs
+    container.querySelectorAll('#quiz-lang-tabs .tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+            quizLanguage = this.dataset.lang;
+            container.querySelectorAll('#quiz-lang-tabs .tab').forEach(function(t) { t.classList.remove('active'); });
+            this.classList.add('active');
+            var questionsEl = document.getElementById('quiz-gen-questions');
+            if (questionsEl && lastGeneratedQuiz) {
+                var qHtml = '';
+                lastGeneratedQuiz.questions.forEach(function(q, idx) {
+                    var localized = getQuizLocalized(q);
+                    var letters = ['A', 'B', 'C', 'D'];
+                    qHtml += '<div class="quiz-gen-question-card">';
+                    qHtml += '<div class="qg-question">' + (idx + 1) + '. ' + escapeHtml(localized.question) + '</div>';
+                    localized.options.forEach(function(opt, oi) {
+                        qHtml += '<div class="qg-option">' + letters[oi] + '. ' + escapeHtml(opt) + '</div>';
+                    });
+                    qHtml += '</div>';
+                });
+                questionsEl.innerHTML = qHtml;
+            }
+        });
+    });
 
     document.getElementById('take-quiz-now-btn').addEventListener('click', function() {
         container.innerHTML = '';
@@ -842,6 +884,10 @@ function displayGeneratedQuiz(topic, questions, container, isSaved) {
         });
     }
 }
+
+// Keep renderQuizLanguageTabs and renderQuizPreview as no-ops in case called elsewhere
+function renderQuizLanguageTabs() {}
+function renderQuizPreview() {}
 
 function startInlineQuiz(quiz, container, onComplete) {
     var dailyCount = getDailyQuizCount();

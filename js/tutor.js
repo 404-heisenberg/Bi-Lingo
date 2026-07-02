@@ -30,8 +30,6 @@ const TUTOR_PERSONALITIES = {
 let currentLanguage = 'english';
 let currentQuestionId = null;
 let currentLessonId = null;
-let currentMathQuestionId = null;
-let clickedMathQuestionIds = new Set();
 let lastCustomResponse = null;
 
 function getPersonality(lang) {
@@ -234,11 +232,7 @@ function setupLanguageTabs() {
                 rerenderCurrentQuestion();
             }
             if (currentLessonId) {
-                if (currentLessonId === 'math-foundations') {
-                    updateMathTutorResponseLanguage();
-                } else {
-                    renderLessonTutor(currentLessonId);
-                }
+                showWelcomeMessage();
             }
             // Update welcome message if chat is empty
             const chatContainer = document.getElementById('chat-container');
@@ -258,99 +252,12 @@ function updateTutorPageTitle(lessonId) {
 }
 
 function renderLessonTutor(lessonId) {
-    const chatContainer = document.getElementById('chat-container');
-    if (!chatContainer) return;
-    chatContainer.innerHTML = '';
-
-    removeLessonQuickQuestions();
-    currentMathQuestionId = null;
-    clickedMathQuestionIds = new Set();
-
-    // Add demo notice
-    const p = getPersonality(currentLanguage);
-    const demoMsg = document.createElement('div');
-    demoMsg.className = 'message tutor';
-    const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-    demoMsg.innerHTML = `
-        <div class="message-avatar" style="background:linear-gradient(135deg,var(--accent),var(--accent-deep))">${p.avatar}</div>
-        <div>
-            <div class="message-bubble" style="border:1px dashed var(--accent);">
-                <div style="margin-bottom:0.4rem;"><span style="font-family:var(--f-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);padding:0.15rem 0.45rem;border:1px solid var(--accent);border-radius:999px;">Demo</span></div>
-                <div style="font-size:14px;line-height:1.5;">
-                    Pick one of the questions below to see how Bi-Lingo explains concepts bilingually — in English, isiZulu, and Sesotho. Switch between the language tabs above to compare.
-                </div>
-            </div>
-            <div class="message-meta">${p.metaLabel} · ${time}</div>
-        </div>
-    `;
-    chatContainer.appendChild(demoMsg);
-
-    if (lessonId === 'idioms') {
-        renderIdiomTutorNotes(chatContainer);
-        return;
-    }
-
-    if (lessonId === 'math-foundations') {
-        renderMathTutorQuickQuestions(chatContainer);
-    }
+    // Just show the regular tutor — no demo overrides
+    // The lessonId is used for context but the tutor uses the live API
+    showWelcomeMessage();
 }
 
-function renderIdiomTutorNotes(chatContainer) {
-    const notes = (BiLingoData.lessonDetails && BiLingoData.lessonDetails.idioms && BiLingoData.lessonDetails.idioms.tutorNotes && BiLingoData.lessonDetails.idioms.tutorNotes[currentLanguage]) || [];
 
-    if (notes.length === 0) {
-        showWelcomeMessage();
-        return;
-    }
-
-    notes.forEach(note => {
-        addMessage('user', note.question, 'YOU');
-        addTutorMessage(note.answer);
-    });
-}
-
-function renderMathTutorQuickQuestions(chatContainer) {
-    const parent = chatContainer.parentElement;
-    if (!parent) return;
-
-    const section = document.createElement('div');
-    section.className = 'lesson-quick-section';
-    section.innerHTML = `
-        <p style="font-size: 12px; color: var(--fg-mute); margin-bottom: 0.75rem; font-family: var(--f-mono); letter-spacing: 0.05em; text-transform: uppercase;">Quick Questions:</p>
-        <div class="quick-questions lesson-quick-questions"></div>
-    `;
-
-    const quickWrap = section.querySelector('.lesson-quick-questions');
-    quickWrap.innerHTML = BiLingoData.mathTutorQuickQuestions.map(q => `
-        <button class="quick-question-btn" data-id="${q.id}"${clickedMathQuestionIds.has(q.id) ? ' disabled' : ''}>
-            ${q.text}
-        </button>
-    `).join('');
-
-    const bottomSection = parent.querySelector('.tutor-bottom-section');
-    if (bottomSection) {
-        bottomSection.insertBefore(section, bottomSection.firstChild);
-    } else {
-        parent.appendChild(section);
-    }
-
-    quickWrap.querySelectorAll('button').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const id = btn.dataset.id;
-            const match = BiLingoData.mathTutorQuickQuestions.find(q => q.id === id);
-            if (!match) return;
-            clickedMathQuestionIds.add(id);
-            btn.disabled = true;
-            currentMathQuestionId = id;
-            addMessage('user', match.text, 'YOU');
-            showTypingIndicator();
-            setTimeout(() => {
-                removeTypingIndicator();
-                addTutorMessage(match.responses[currentLanguage]);
-            }, 1500);
-        });
-    });
-}
 
 function askQuestion(questionId, animate = true) {
     currentQuestionId = questionId;
@@ -519,27 +426,7 @@ function addTutorMessage(answer) {
     scrollToBottom();
 }
 
-function removeLessonQuickQuestions() {
-    document.querySelectorAll('.lesson-quick-section').forEach(section => section.remove());
-}
 
-function updateMathTutorResponseLanguage() {
-    if (!currentMathQuestionId) return;
-    const chatContainer = document.getElementById('chat-container');
-    if (!chatContainer) return;
-    const tutorMessages = chatContainer.querySelectorAll('.message.tutor');
-    if (tutorMessages.length === 0) return;
-
-    const lastMessage = tutorMessages[tutorMessages.length - 1];
-    const langLabel = lastMessage.querySelector('.lang-label');
-    const responseDiv = lastMessage.querySelector('.language-content div:last-child');
-    const match = BiLingoData.mathTutorQuickQuestions.find(q => q.id === currentMathQuestionId);
-
-    if (langLabel) langLabel.textContent = currentLanguage;
-    if (responseDiv && match) {
-        responseDiv.innerHTML = formatAnswer(match.responses[currentLanguage]);
-    }
-}
 
 function formatAnswer(answer) {
     // Convert line breaks to <br> and add basic formatting
@@ -623,20 +510,7 @@ function showWelcomeMessage() {
     chatContainer.appendChild(welcomeDiv);
 }
 
-function getMockResponse(question) {
-    // Simple mock responses for custom questions
-    const lowerQ = question.toLowerCase();
-    
-    if (lowerQ.includes('math') || lowerQ.includes('calculate') || lowerQ.includes('number')) {
-        return "That's a great math question! In a full version, I would explain this step-by-step in your chosen language. For now, remember: math is like building blocks — master the basics first!";
-    }
-    
-    if (lowerQ.includes('science') || lowerQ.includes('why') || lowerQ.includes('how')) {
-        return "Excellent science question! I would explain this concept with examples from South African contexts — like comparing plant cycles to crops in Limpopo or Mpumalanga. Science is everywhere around us!";
-    }
-    
-    return "That's an interesting question! In the full version of Bi-Lingo, I'll provide detailed explanations in your home language with culturally relevant examples. Try one of the quick questions to see the multilingual experience!";
-}
+
 
 // ========== Quiz Generation ==========
 

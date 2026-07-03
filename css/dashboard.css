@@ -173,3 +173,58 @@
 .app-nav .nav-actions {
     gap: 0.25rem;
 }
+
+/* Mobile hamburger menu in app-nav */
+.app-nav {
+    position: relative;
+}
+
+.app-nav .mobile-menu {
+    position: absolute;
+    inset: 64px 0 auto 0;
+    background: color-mix(in oklch, var(--bg) 98%, transparent);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 0.75rem 1.5rem;
+    z-index: 49;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.app-nav .mobile-menu .signout-cta {
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    color: var(--fg-mute);
+}
+.app-nav .mobile-menu .signout-cta:hover {
+    border-color: var(--accent);
+    color: var(--fg);
+}
+
+@media (min-width: 991px) {
+    .app-nav .hamburger-btn {
+        display: none;
+    }
+    .app-nav .mobile-menu {
+        display: none !important;
+    }
+}
+
+@media (max-width: 990px) {
+    .app-nav .hamburger-btn {
+        display: grid;
+    }
+    .app-nav .desktop-nav-items {
+        display: none;
+    }
+}
+
+@media (min-width: 991px) {
+    .app-nav .desktop-nav-items {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+    .app-nav .desktop-nav-items .btn {
+        white-space: nowrap;
+    }
+}

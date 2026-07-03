@@ -25,13 +25,27 @@
             </a>
             <div class="page-title" id="welcome-title">Dashboard</div>
             <div class="nav-actions">
-                <a href="teacher.html" class="btn btn-ghost btn-sm">Teacher View</a>
                 <span id="user-display" style="font-size:13px;color:var(--fg-dim);font-family:var(--f-mono);display:none;"></span>
-                <button id="logout-btn" class="btn btn-ghost btn-sm" style="color: var(--fg-mute);">Sign Out</button>
+                <div class="desktop-nav-items">
+                    <a href="teacher.html" class="btn btn-ghost btn-sm">Teacher View</a>
+                    <button id="logout-btn-desktop" class="btn btn-ghost btn-sm" style="color: var(--fg-mute);">Sign Out</button>
+                </div>
+                <button class="hamburger-btn" id="hamburger-btn" aria-label="Open menu">
+                    <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg>
+                    <svg class="close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+                </button>
                 <button class="theme-btn" id="theme-toggle" aria-label="Switch theme">
                     <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                     <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
                 </button>
+            </div>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <div class="mobile-menu-links">
+                <a href="teacher.html">Teacher View</a>
+            </div>
+            <div class="mobile-menu-ctas">
+                <button id="logout-btn" class="mobile-cta signout-cta">Sign Out</button>
             </div>
         </div>
     </nav>
@@ -97,39 +111,47 @@
     <script src="../js/dashboard.js"></script>
     <script>
         // Auth guard + nav update
-        (async function() {
-            const user = await window.SupabaseAuth.getUser();
-            const logoutBtn = document.getElementById('logout-btn');
-            if (!user) {
-                const profile = getLearnerProfile();
-                if (!profile || !profile.completed) {
-                    window.location.href = 'login.html';
-                    return;
-                }
-                // Demo user — sign out clears profile
-                logoutBtn.textContent = 'Exit Demo';
-                logoutBtn.addEventListener('click', function() {
-                    if (confirm('Exit the demo and return to the homepage?')) {
-                        clearLearnerProfile();
-                        window.location.href = '../index.html';
+        (function wireLogout() {
+            const userPromise = window.SupabaseAuth ? window.SupabaseAuth.getUser() : Promise.resolve(null);
+            userPromise.then(function(user) {
+                const logoutBtns = document.querySelectorAll('#logout-btn, #logout-btn-desktop');
+                if (!user) {
+                    const profile = getLearnerProfile();
+                    if (!profile || !profile.completed) {
+                        window.location.href = 'login.html';
+                        return;
                     }
-                });
-            } else {
-                const userDisplay = document.getElementById('user-display');
-                logoutBtn.textContent = 'Sign Out';
-                if (userDisplay && user.user_metadata?.name) {
-                    userDisplay.textContent = user.user_metadata.name.split(' ')[0];
-                    userDisplay.style.display = 'inline';
+                    logoutBtns.forEach(function(btn) {
+                        btn.textContent = 'Exit Demo';
+                        btn.addEventListener('click', function() {
+                            if (confirm('Exit the demo and return to the homepage?')) {
+                                clearLearnerProfile();
+                                window.location.href = '../index.html';
+                            }
+                        });
+                    });
+                } else {
+                    const userDisplay = document.getElementById('user-display');
+                    logoutBtns.forEach(function(btn) { btn.textContent = 'Sign Out'; });
+                    if (userDisplay && user.user_metadata?.name) {
+                        userDisplay.textContent = user.user_metadata.name.split(' ')[0];
+                        userDisplay.style.display = 'inline';
+                    }
+                    logoutBtns.forEach(function(btn) {
+                        btn.addEventListener('click', async function() {
+                            await window.SupabaseAuth.signOut();
+                            clearLearnerProfile();
+                            window.location.href = '../index.html';
+                        });
+                    });
                 }
-                logoutBtn.addEventListener('click', async function() {
-                    await window.SupabaseAuth.signOut();
-                    clearLearnerProfile();
-                    window.location.href = '../index.html';
-                });
-            }
+            });
         })();
 
         (function(){var t=document.getElementById('theme-toggle');if(!t)return;t.addEventListener('click',function(){var h=document.documentElement;var l=h.getAttribute('data-theme')==='light';if(l){h.removeAttribute('data-theme');localStorage.setItem('biLingoTheme','dark');}else{h.setAttribute('data-theme','light');localStorage.setItem('biLingoTheme','light');}});})();
+
+        // Hamburger menu toggle
+        (function(){var b=document.getElementById('hamburger-btn');var m=document.getElementById('mobile-menu');if(!b||!m)return;function closeMenu(){m.classList.remove('open');b.classList.remove('open');b.setAttribute('aria-label','Open menu');document.body.style.overflow='';}b.addEventListener('click',function(){var o=m.classList.contains('open');if(o){closeMenu();}else{m.classList.add('open');b.classList.add('open');b.setAttribute('aria-label','Close menu');document.body.style.overflow='hidden';}});m.querySelectorAll('a,button').forEach(function(el){el.addEventListener('click',closeMenu);});})();
     </script>
 </body>
 </html>

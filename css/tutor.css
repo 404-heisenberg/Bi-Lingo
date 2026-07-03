@@ -457,3 +457,72 @@
         min-width: 160px;
     }
 }
+
+/* Prevent quiz content overflow at very narrow widths */
+@media (max-width: 400px) {
+    .quiz-gen-section {
+        width: 100%;
+        min-width: 0;
+        padding: 1rem;
+    }
+    #quiz-gen-result {
+        min-width: 0;
+        overflow-x: hidden;
+    }
+
+    .quiz-gen-input-row {
+        flex-direction: column;
+    }
+    .quiz-gen-input-row input {
+        width: 100%;
+    }
+    .quiz-gen-input-row button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .quiz-gen-questions {
+        min-width: 0;
+    }
+
+    .quiz-gen-actions {
+        flex-direction: column;
+    }
+    .quiz-gen-actions .btn,
+    .quiz-gen-actions .btn-outline {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .quiz-gen-question-card {
+        padding: 0.75rem;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+    .quiz-gen-question-card .qg-question,
+    .quiz-gen-question-card .qg-option {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    .quiz-inline {
+        padding: 1rem;
+    }
+    .quiz-inline .practice-option {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        padding: 0.65rem 0.8rem;
+    }
+
+    #quiz-lang-tabs,
+    #inline-quiz-lang-tabs {
+        flex-wrap: wrap;
+    }
+    #quiz-lang-tabs .tab,
+    #inline-quiz-lang-tabs .tab {
+        flex: 1 1 auto;
+        text-align: center;
+        padding: 0.5rem 0.4rem;
+        font-size: 12px;
+    }
+}

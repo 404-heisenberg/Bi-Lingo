@@ -170,18 +170,6 @@ nav.top .inner {
     align-items: center;
     gap: 0.5rem;
 }
-.demo-btn {
-    background: transparent !important;
-    border: 2px solid var(--accent);
-    color: var(--accent) !important;
-}
-.demo-btn:hover {
-    background: var(--accent) !important;
-    color: var(--on-accent) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 10px 30px -10px var(--accent-glow);
-}
-
 @media (max-width: 990px) {
     .nav-links {
         display: none;
@@ -293,16 +281,6 @@ nav.top .inner {
     transform: translateY(-1px);
     box-shadow: 0 10px 30px -10px var(--accent-glow);
 }
-.mobile-cta.demo-cta {
-    background: transparent;
-    border: 2px solid var(--accent);
-    color: var(--accent);
-}
-.mobile-cta.demo-cta:hover {
-    background: var(--accent);
-    color: var(--on-accent);
-}
-
 @media (max-width: 520px) {
     .nav-cta {
         display: none;

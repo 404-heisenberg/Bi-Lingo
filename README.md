@@ -4,7 +4,7 @@
 
 > For every child. In every language.
 
----
+
 
 ## The problem
 
@@ -15,7 +15,7 @@ The South African Constitution promises education in a child's home language. Fo
 
 Children don't fail because they can't learn — they fail because they're taught in a language they don't yet understand.
 
----
+  
 
 ## Features
 
@@ -25,7 +25,7 @@ Children don't fail because they can't learn — they fail because they're taugh
 - **Teacher Dashboard** — See exactly which learners struggle because of English comprehension, not because they don't know the material. Get actionable intervention suggestions.
 - **Voice Input** — Ask questions out loud in your home language. No typing needed for younger learners.
 
----
+
 
 ## How it works
 
@@ -34,7 +34,7 @@ Children don't fail because they can't learn — they fail because they're taugh
 3. **Learn through local examples** — CAPS concepts re-explained with analogies from your neighbourhood — not a translated textbook.
 4. **Grow with every lesson** — Progress syncs with teachers and parents. The whole village sees the learning happen.
 
----
+
 
 ## Try it
 
